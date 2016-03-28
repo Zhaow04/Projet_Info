@@ -19,7 +19,7 @@ public class Map extends ViewableObject {
 	private LivingBeing[][] livingOnMap;
 	private Obstacle[][] obstacleOnMap;
 	private SafeHouse[][] safehouseOnMap;
-	private Dungeon[][] donjonOnMap;
+	private Dungeon[][] dungeonOnMap;
 	
 	private MapController mapController;
 	
@@ -36,7 +36,7 @@ public class Map extends ViewableObject {
 		setLivingOnMap(new LivingBeing[size][size]);
 		setObstacleOnMap(new Obstacle[size][size]);
 		setSafeHouseOnMap(new SafeHouse[size][size]);
-		setDonjonOnMap(new Dungeon[size][size]);
+		setDungeonOnMap(new Dungeon[size][size]);
 		
 		setImageURL("game/view/plains.png");
 	}
@@ -164,7 +164,7 @@ public class Map extends ViewableObject {
 	 * @see {@link Dungeon}
 	 */
 	public Dungeon[][] getDungeonOnMap() {
-		return donjonOnMap;
+		return dungeonOnMap;
 	}
 	
 	/**
@@ -172,11 +172,11 @@ public class Map extends ViewableObject {
 	 * {@code Dungeon} present at the position (x,y) on the map will figures at the
 	 * same position in the matrix.
 	 * 
-	 * @param donjonOnMap
+	 * @param dungeonOnMap
 	 * @see {@link Dungeon}
 	 */
-	private void setDonjonOnMap(Dungeon[][] donjonOnMap) {
-		this.donjonOnMap = donjonOnMap;
+	private void setDungeonOnMap(Dungeon[][] dungeonOnMap) {
+		this.dungeonOnMap = dungeonOnMap;
 	}
 	
 	//******************************** Methods ********************************

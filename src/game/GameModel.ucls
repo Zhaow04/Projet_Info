@@ -239,7 +239,7 @@
   </generalization>  
   <association id="30">    
     <end type="SOURCE" refId="3" navigable="true">      
-      <attribute id="31" name="donjonOnMap"/>      
+      <attribute id="31" name="dungeonOnMap"/>      
       <multiplicity id="32" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="24" navigable="true">      
