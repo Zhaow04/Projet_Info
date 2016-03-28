@@ -74,7 +74,7 @@ public class GameView {
 						//System.out.println("mainScene.setOnKeyPressed");
 					}
 					else if(ke.getCode() == KeyCode.DIGIT1){
-						controller.getBeingController().attack(ke.getText());
+						controller.getBeingController().attack(ke.getCode().toString());
 						//System.out.println(ke.getText());
 					}
 					//System.out.println(ke.getCode());

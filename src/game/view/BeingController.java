@@ -101,7 +101,7 @@ public class BeingController {
 	}
 	
 	public void attack(String str) {
-		if(str.equals("&")) {
+		if(str.equals("DIGIT1")) {
 			getPlayer().useAttack(0);
 		}
 	}
