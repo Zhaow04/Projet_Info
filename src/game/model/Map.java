@@ -19,7 +19,7 @@ public class Map extends ViewableObject {
 	private LivingBeing[][] livingOnMap;
 	private Obstacle[][] obstacleOnMap;
 	private SafeHouse[][] safehouseOnMap;
-	private Donjon[][] donjonOnMap;
+	private Dungeon[][] donjonOnMap;
 	
 	private MapController mapController;
 	
@@ -36,7 +36,7 @@ public class Map extends ViewableObject {
 		setLivingOnMap(new LivingBeing[size][size]);
 		setObstacleOnMap(new Obstacle[size][size]);
 		setSafeHouseOnMap(new SafeHouse[size][size]);
-		setDonjonOnMap(new Donjon[size][size]);
+		setDonjonOnMap(new Dungeon[size][size]);
 		
 		setImageURL("game/view/plains.png");
 	}
@@ -156,26 +156,26 @@ public class Map extends ViewableObject {
 	}
 	
 	/**
-	 * Gets the matrix of {@code Donjon} associated to the map. An instance of
-	 * {@code Donjon} present at the position (x,y) on the map will figures at the
+	 * Gets the matrix of {@code Dungeon} associated to the map. An instance of
+	 * {@code Dungeon} present at the position (x,y) on the map will figures at the
 	 * same position in the matrix.
 	 * 
-	 * @return matrix of {@code Donjon}
-	 * @see {@link Donjon}
+	 * @return matrix of {@code Dungeon}
+	 * @see {@link Dungeon}
 	 */
-	public Donjon[][] getDonjonOnMap() {
+	public Dungeon[][] getDungeonOnMap() {
 		return donjonOnMap;
 	}
 	
 	/**
-	 * Sets the matrix of {@code Donjon} associated to the map. An instance of
-	 * {@code Donjon} present at the position (x,y) on the map will figures at the
+	 * Sets the matrix of {@code Dungeon} associated to the map. An instance of
+	 * {@code Dungeon} present at the position (x,y) on the map will figures at the
 	 * same position in the matrix.
 	 * 
 	 * @param donjonOnMap
-	 * @see {@link Donjon}
+	 * @see {@link Dungeon}
 	 */
-	private void setDonjonOnMap(Donjon[][] donjonOnMap) {
+	private void setDonjonOnMap(Dungeon[][] donjonOnMap) {
 		this.donjonOnMap = donjonOnMap;
 	}
 	
@@ -205,15 +205,27 @@ public class Map extends ViewableObject {
 		setOccupied(pos[0],pos[1]);
 	}
 	
-	public void addSafeHouseOnMap(SafeHouse safehouse){
-		int[] pos = safehouse.getPosition();
-		getSafeHouseOnMap()[pos[1]][pos[0]] = safehouse;
+	/**
+	 * Adds a {@code SafeHouse} to the map.
+	 * 
+	 * @param safeHouse
+	 * @see {@link SafeHouse}
+	 */
+	public void addSafeHouseOnMap(SafeHouse safeHouse){
+		int[] pos = safeHouse.getPosition();
+		getSafeHouseOnMap()[pos[1]][pos[0]] = safeHouse;
 		setOccupied(pos[0],pos[1]);
 	}
 	
-	public void addDonjonOnMap(Donjon donjon){
-		int[] pos = donjon.getPosition();
-		getDonjonOnMap()[pos[1]][pos[0]] = donjon;
+	/**
+	 * Adds a {@code Dungeon} to the map.
+	 * 
+	 * @param dungeon
+	 * @see {@link Dungeon}
+	 */
+	public void addDungeonOnMap(Dungeon dungeon){
+		int[] pos = dungeon.getPosition();
+		getDungeonOnMap()[pos[1]][pos[0]] = dungeon;
 		setOccupied(pos[0],pos[1]);
 	}
 	
@@ -240,12 +252,26 @@ public class Map extends ViewableObject {
 		getObstacleOnMap()[row][column] = null;
 	}
 	
+	/**
+	 * Removes the {@code SafeHouse} at the position (x = column, y = row).
+	 * 
+	 * @param column
+	 * @param row
+	 * @see {@link SafeHouse}
+	 */
 	public void removeSafeHouseOnMap(int column, int row){
 		getSafeHouseOnMap()[row][column] = null;
 	}
 	
-	public void removeDonjonOnMap(int column, int row){
-		getDonjonOnMap()[row][column] = null;
+	/**
+	 * Removes the {@code Dungeon} at the position (x = column, y = row).
+	 * 
+	 * @param column
+	 * @param row
+	 * @see {@link Dungeon}
+	 */
+	public void removeDungeonOnMap(int column, int row){
+		getDungeonOnMap()[row][column] = null;
 	}
 	
 	/**
@@ -270,12 +296,26 @@ public class Map extends ViewableObject {
 		return getObstacleOnMap()[row][column];
 	}
 	
+	/**
+	 * Gets the {@code SafeHouse} at the position (x = column, y = row).
+	 * 
+	 * @param column
+	 * @param row
+	 * @return {@code SafeHouse} at (x,y)
+	 */
 	public SafeHouse getSafeHouse(int column, int row){
 		return getSafeHouseOnMap()[row][column];
 	}
 	
-	public Donjon getDonjon(int column, int row){
-		return getDonjonOnMap()[row][column];
+	/**
+	 * Gets the {@code Dungeon} at the position (x = column, y = row).
+	 * 
+	 * @param column
+	 * @param row
+	 * @return {@code Dungeon} at (x,y)
+	 */
+	public Dungeon getDungeon(int column, int row){
+		return getDungeonOnMap()[row][column];
 	}
 	
 	/**
