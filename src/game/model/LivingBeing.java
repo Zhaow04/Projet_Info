@@ -173,6 +173,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 */
 	protected void loseHp(int hp) {
 		addHp(-hp);
+		System.out.println(getHp());
 		if(getHp() <= 0) {
 			int[] pos = getPosition();
 			emptyPosition(pos[0], pos[1]);
