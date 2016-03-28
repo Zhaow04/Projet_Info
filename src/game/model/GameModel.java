@@ -18,12 +18,12 @@ public class GameModel implements Model {
 	private ArrayList<LivingBeing> livingList = new ArrayList<LivingBeing>();
 	private ArrayList<Obstacle> obstacleList = new ArrayList<Obstacle>();
 	private ArrayList<SafeHouse> safehouseList = new ArrayList<SafeHouse>();
-
+	private ArrayList<Dungeon> dungeonList = new ArrayList<Dungeon>();
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates all the objects of the model.
+	 * Creates all the components of the model.
 	 */
 	public GameModel(){
 		Map map = new Map(10);
@@ -37,11 +37,15 @@ public class GameModel implements Model {
 		
 		SafeHouse safehouse = new SafeHouse(map,4,4);
 		
+		Dungeon dungeon = new Dungeon(map, 6,6);
+		
 		Rock rock = new Rock (map,2,3);
 		Tree tree = new Tree (map,6,5);
 		Bush bush = new Bush (map,8,8);
 		
 		getSafeHouseList().add(safehouse);
+		
+		getDungeonList().add(dungeon);
 		
 		getObstacleList().add(rock);
 		getObstacleList().add(tree);
@@ -61,6 +65,10 @@ public class GameModel implements Model {
 		
 		for(SafeHouse Safehouse : getSafeHouseList()){
 			map.addSafeHouseOnMap(Safehouse);
+		}
+		
+		for(Dungeon Dungeon : getDungeonList()){
+			map.addDungeonOnMap(dungeon);
 		}
 	}
 	
@@ -107,5 +115,9 @@ public class GameModel implements Model {
 	@Override
 	public ArrayList<SafeHouse> getSafeHouseList() {
 		return safehouseList;
+	}
+	
+	public ArrayList<Dungeon> getDungeonList() {
+		return dungeonList;
 	}
 }

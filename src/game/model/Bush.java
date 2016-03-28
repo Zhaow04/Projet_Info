@@ -4,7 +4,6 @@ package game.model;
  * Extends from {@code Obstacle} <br/>
  * Basic obstacle.
  * 
- * @author ZhaoWen
  * @see {@link Obstacle}
  *
  */

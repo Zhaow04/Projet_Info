@@ -113,10 +113,19 @@ public class Player extends LivingBeing {
 		getSkillList().add(skill);
 	}
 	
+	/**
+	 * Tells if the character can attack or not (need to be in front of a monster)
+	 * 
+	 */
 	private boolean canAttack(){
 		return (isLivingInFront() && getLivingInFront() instanceof Monster);
 	}
 	
+	/**
+	 * Makes the character use one of its attacks if he can.
+	 * 
+	 * @param skillNumber
+	 */
 	public void useAttack(int skillNumber){
 		if(canAttack()){
 			LivingBeing target = getLivingInFront();

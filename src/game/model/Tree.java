@@ -8,7 +8,7 @@ public class Tree extends Obstacle{
 		//****************************** Constructor ******************************
 		
 		/**
-		 * Creates a rock and sets the map on which it is and its position.
+		 * Creates a tree and sets the map on which it is and its position.
 		 * 
 		 * @param map
 		 * @param x

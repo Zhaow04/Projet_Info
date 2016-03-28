@@ -99,6 +99,10 @@ public abstract class Monster extends LivingBeing {
 		return playerInView;
 	}
 	
+	/**
+	 * Makes the monster move in a certain defined way if possible (drawing a square while moving)
+	 * 
+	 */
 	public void moveInPattern() {
 		int[] basePos = getBasePos();
 		int[] pos = getPosition();

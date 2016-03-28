@@ -216,7 +216,11 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 			canMove = true;
 		return canMove;
 	}
-	
+	/**
+	 * Makes the living being move if possible.
+	 * 
+	 * @param direction
+	 */
 	@Override
 	public void move(char direction) {
 		int[] pos = getPosition();

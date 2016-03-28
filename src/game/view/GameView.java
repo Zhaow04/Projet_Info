@@ -30,10 +30,13 @@ public class GameView {
 		BeingView beingView = new BeingView(model,beingController, mapView);
 		ObstacleView obstacleView = new ObstacleView(model, mapView);
 		SafeHouseView safehouseView = new SafeHouseView(model, mapView);
+		DungeonView dungeonView = new DungeonView(model, mapView);
+
 		
 		beingView.initAllObjectView();
 		obstacleView.initAllObjectView();
 		safehouseView.initAllObjectView();
+		dungeonView.initAllObjectView();
 		
 		initEventHandler();
 	}

@@ -47,5 +47,10 @@ public interface Model {
 	 */
 	public ArrayList<SafeHouse> getSafeHouseList();
 	
-	
+	/**
+	 * Gets the list of dungeons.
+	 * 
+	 * @return list of dungeons.
+	 */
+	public ArrayList<Dungeon> getDungeonList();
 }
