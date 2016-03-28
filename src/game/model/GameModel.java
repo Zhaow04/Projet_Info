@@ -9,21 +9,48 @@ public class GameModel implements Model {
 	private Map map;
 	private Player player;
 	private ArrayList<LivingBeing> livingList = new ArrayList<LivingBeing>();
+	private ArrayList<Obstacle> obstacleList = new ArrayList<Obstacle>();
+	private ArrayList<SafeHouse> safehouseList = new ArrayList<SafeHouse>();
+
 	
 	//****************************** Constructor ******************************
 	
 	public GameModel(){
 		Map map = new Map(10);
 		setMap(map);
+		
 		Player player = new Player(map);
 		setPlayer(player);
+		
 		Dragon monster1 = new Dragon(map,1,0);
 		Dragon monster2 = new Dragon(map,7,3);
+		
+		SafeHouse safehouse = new SafeHouse(map,4,4);
+		
+		Rock rock = new Rock (map,2,3);
+		Tree tree = new Tree (map,6,5);
+		Bush bush = new Bush (map,8,8);
+		
+		getSafeHouseList().add(safehouse);
+		
+		getObstacleList().add(rock);
+		getObstacleList().add(tree);
+		getObstacleList().add(bush);
+		
 		getLivingList().add(player);
 		getLivingList().add(monster1);
 		getLivingList().add(monster2);
+		
 		for(LivingBeing living : getLivingList()){
 			map.addLivingOnMap(living);
+		}
+		
+		for(Obstacle obstacle : getObstacleList()){
+			map.addObstacleOnMap(obstacle);
+		}
+		
+		for(SafeHouse Safehouse : getSafeHouseList()){
+			map.addSafeHouseOnMap(Safehouse);
 		}
 	}
 	
@@ -52,4 +79,12 @@ public class GameModel implements Model {
 		return livingList;
 	}
 	
+	
+	public ArrayList<Obstacle> getObstacleList() {
+		return obstacleList;
+	}
+	
+	public ArrayList<SafeHouse> getSafeHouseList() {
+		return safehouseList;
+	}
 }

@@ -10,10 +10,10 @@ package game.model;
 public interface Usable {
 	
 	/**
-	 * Uses the object on the player.
+	 * Uses the object on the target.
 	 * 
 	 * @param player
 	 */
-	public void use(Player player);
+	public void use(LivingBeing target);
 	
 }

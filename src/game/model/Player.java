@@ -36,6 +36,8 @@ public class Player extends LivingBeing {
 		setHp(1500);
 		setMana(500);
 		inventory = new Inventory();
+		FirstAttack firstAttack = new FirstAttack();
+		addSkill(firstAttack);
 		
 		setImageURL("game/model/blackmage_m.png");
 		setOffsetX(0);
@@ -100,6 +102,28 @@ public class Player extends LivingBeing {
 	 */
 	public void useItem(int itemNumber){
 		getInventory().getItem(itemNumber).use(this);
+	}
+	
+	/**
+	 * Adds a skill to the list of skills of the player.
+	 * 
+	 * @param skill
+	 */
+	public void addSkill(Skill skill){
+		getSkillList().add(skill);
+	}
+	
+	private boolean canAttack(){
+		return (isLivingInFront() && getLivingInFront() instanceof Monster);
+	}
+	
+	public void useAttack(int skillNumber){
+		if(canAttack()){
+			LivingBeing target = getLivingInFront();
+			Skill skill = getSkillList().get(skillNumber);
+			skill.use(target);
+		}
+		loseHp(100);
 	}
 
 }

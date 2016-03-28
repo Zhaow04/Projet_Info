@@ -5,10 +5,13 @@ import java.util.Observer;
 
 import game.model.GameModel;
 import game.model.Map;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 /**
  * Implements {@code Observer}. <br/>
@@ -22,7 +25,7 @@ public class MapView implements Observer {
 	//****************************** Attributes ******************************
 	
 	private AnchorPane root;
-	private GridPane mapContainer;
+	private AnchorPane mapContainer;
 	private Map mapModel;
 	private MapController mapController;
 	
@@ -47,11 +50,11 @@ public class MapView implements Observer {
 		this.root = root;
 	}
 
-	public GridPane getMapContainer(){
+	public AnchorPane getMapContainer(){
 		return mapContainer;
 	}
 	
-	private void setMapContainer(GridPane mapContainer) {
+	private void setMapContainer(AnchorPane mapContainer) {
 		this.mapContainer = mapContainer;
 	}
 	
@@ -86,7 +89,7 @@ public class MapView implements Observer {
 	
 	private void initGrid(){
 		GridPane mapContainer = new GridPane();
-		setMapContainer(mapContainer);
+		//setMapContainer(mapContainer);
 		AnchorPane root = getRoot();
 		root.getChildren().add(mapContainer);
 		AnchorPane.setTopAnchor(mapContainer, 0.0);
@@ -97,11 +100,18 @@ public class MapView implements Observer {
 	
 	private void initMapView(){
 		initRoot();
-		initGrid();
-		GridPane mapContainer = getMapContainer();
-		int size = getMapModel().getSize();
+		//initGrid();
+		AnchorPane mapContainer = new AnchorPane();
+		setMapContainer(mapContainer);
+		//int size = getMapModel().getSize();
 		Image image = new Image(getMapModel().getImageURL());
-		for(int i = 0; i < size; i++){
+		ImageView imageContainer = new ImageView(image);
+		imageContainer.setFitWidth(getRoot().getPrefHeight());
+		imageContainer.setFitHeight(getRoot().getPrefHeight());
+		//mapContainer.getChildren().add(imageContainer);
+		root.getChildren().addAll(imageContainer, mapContainer);
+		//mapContainer.relocate(0, 0);
+		/*for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
 				ImageView imageContainer = new ImageView(image);
 				imageContainer.setFitWidth(cellSize());
@@ -109,7 +119,15 @@ public class MapView implements Observer {
 				//imageContainer.setPreserveRatio(true);
 				mapContainer.add(imageContainer, i, j);
 			}
-		}
+		}*/
+	}
+	
+	public void addToMap(Node child, int column, int row){
+		mapContainer.getChildren().add(child);
+		double x = column*cellSize();
+		double y = row*cellSize();
+		child.setTranslateX(x);
+		child.setTranslateY(y);
 	}
 	
 	public double cellSize(){

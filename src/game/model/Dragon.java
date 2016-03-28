@@ -26,17 +26,19 @@ public class Dragon extends Monster {
 	public Dragon(Map map, int x, int y){
 		super(map);
 		setPosition(x,y);
+		setBasePos(x,y);
+		setDirectionFacing('S');
 		setHp(300);
 		
 		setImageURL("game/model/DRAGONS5.png");
 		setOffsetX(160);
-		setOffsetY(220);
-		setWidth(75);
-		setHeight(65);
+		setOffsetY(227);
+		setWidth(70);
+		setHeight(55);
 	}
 	
 	//************************** Getters and Setters **************************
 	
 	//******************************** Methods ********************************
-
+	
 }

@@ -3,6 +3,7 @@ package game.view;
 import java.util.ArrayList;
 
 import game.model.LivingBeing;
+import game.model.Monster;
 import game.model.Player;
 import javafx.scene.layout.StackPane;
 
@@ -76,17 +77,32 @@ public class BeingController {
 	
 	public void movePlayer(String str){
 		//System.out.println(str + " movePlayer");
-		if(str.equals("Z")){
+		if(str.equals("UP")){
 			getPlayer().move('N');
 		}
-		else if(str.equals("Q")){
+		else if(str.equals("LEFT")){
 			getPlayer().move('W');
 		}
-		else if(str.equals("S")){
+		else if(str.equals("DOWN")){
 			getPlayer().move('S');
 		}
 		else{
 			getPlayer().move('E');
+		}
+	}
+	
+	public void moveMonsters() {
+		for(LivingBeing living : objectList) {
+			if(living instanceof Monster) {
+				Monster monster = (Monster) living;
+				monster.moveInPattern();
+			}
+		}
+	}
+	
+	public void attack(String str) {
+		if(str.equals("&")) {
+			getPlayer().useAttack(0);
 		}
 	}
 	

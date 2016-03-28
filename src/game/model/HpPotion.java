@@ -23,9 +23,9 @@ public class HpPotion extends Potion {
 	//******************************** Methods ********************************
 	
 	@Override
-	public void use(Player player) {
+	public void use(LivingBeing target) {
 		useOnce();
-		player.addHp(getValue());
+		target.addHp(getValue());
 	}
 	
 	

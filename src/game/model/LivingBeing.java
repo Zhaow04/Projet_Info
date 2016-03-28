@@ -71,7 +71,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * 
 	 * @return direction facing
 	 */
-	protected char getDirectionFacing() {
+	public char getDirectionFacing() {
 		return directionFacing;
 	}
 	
@@ -82,15 +82,16 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 */
 	protected void setDirectionFacing(char directionFacing) {
 		this.directionFacing = directionFacing;
-		int i = 0;
-		if(directionFacing == 'N')
-			i = 3;
-		else if(directionFacing == 'W')
-			i = 1;
-		else if(directionFacing == 'E')
-			i = 2;
-		setOffsetY(48*i);
-			
+		if(this instanceof Player){
+			int i = 0;
+			if(directionFacing == 'N')
+				i = 3;
+			else if(directionFacing == 'W')
+				i = 1;
+			else if(directionFacing == 'E')
+				i = 2;
+			setOffsetY(48*i);
+		}
 	}
 	
 	/**
@@ -166,6 +167,23 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	}
 	
 	/**
+	 * Removes hp to the living being.
+	 * 
+	 * @param hp
+	 */
+	protected void loseHp(int hp) {
+		addHp(-hp);
+		if(getHp() <= 0) {
+			int[] pos = getPosition();
+			emptyPosition(pos[0], pos[1]);
+			//System.out.println(currentMap.getLivingOnMap()[pos[1]][pos[0]]);
+			System.out.println(this.toString() + " dead");
+			setChanged();
+			notifyObservers("dead");
+		}
+	}
+	
+	/**
 	 * Gets the size of the current map.
 	 * 
 	 * @return size of current map
@@ -229,7 +247,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * 
 	 * @return living being in front or not
 	 */
-	private boolean isLivingInFront(){
+	protected boolean isLivingInFront(){
 		Map currentMap = getCurrentMap();
 		int[] pos = getPosition();
 		char directionFacing = getDirectionFacing();

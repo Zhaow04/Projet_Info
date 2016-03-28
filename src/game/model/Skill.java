@@ -65,8 +65,9 @@ public abstract class Skill implements Usable {
 	
 	// Still needs implementation
 	@Override
-	public void use(Player player){
-		
+	public void use(LivingBeing target){
+		int damage = getDamage();
+		target.loseHp(damage);
 	}
 	
 }
