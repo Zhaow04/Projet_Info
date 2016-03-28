@@ -2,6 +2,13 @@ package game.model;
 
 import java.util.ArrayList;
 
+/**
+ * Implements {@code Model}. <br/>
+ * A class that serves to create a model of the game.
+ * 
+ * @author ZhaoWen
+ *
+ */
 public class GameModel implements Model {
 	
 	//****************************** Attributes ******************************
@@ -15,6 +22,9 @@ public class GameModel implements Model {
 	
 	//****************************** Constructor ******************************
 	
+	/**
+	 * Creates all the objects of the model.
+	 */
 	public GameModel(){
 		Map map = new Map(10);
 		setMap(map);
@@ -60,7 +70,12 @@ public class GameModel implements Model {
 	public Map getMap() {
 		return map;
 	}
-
+	
+	/**
+	 * Sets the map.
+	 * 
+	 * @param map
+	 */
 	private void setMap(Map map) {
 		this.map = map;
 	}
@@ -69,7 +84,12 @@ public class GameModel implements Model {
 	public Player getPlayer() {
 		return player;
 	}
-
+	
+	/**
+	 * Sets the player.
+	 * 
+	 * @param player
+	 */
 	private void setPlayer(Player player) {
 		this.player = player;
 	}
@@ -79,11 +99,12 @@ public class GameModel implements Model {
 		return livingList;
 	}
 	
-	
+	@Override
 	public ArrayList<Obstacle> getObstacleList() {
 		return obstacleList;
 	}
 	
+	@Override
 	public ArrayList<SafeHouse> getSafeHouseList() {
 		return safehouseList;
 	}

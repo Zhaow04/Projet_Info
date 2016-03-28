@@ -181,16 +181,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="game.model.Donjon" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Donjon.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-254" y="810"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="22" language="java" name="game.model.Rock" project="ProjetInfoBA2" 
+  <class id="21" language="java" name="game.model.Rock" project="ProjetInfoBA2" 
     file="/ProjetInfoBA2/src/game/model/Rock.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="-144" y="1898"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -199,7 +190,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="game.model.SafeHouse" project="ProjetInfoBA2" 
+  <class id="22" language="java" name="game.model.SafeHouse" project="ProjetInfoBA2" 
     file="/ProjetInfoBA2/src/game/model/SafeHouse.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="420" y="857"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -208,7 +199,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="game.model.Tree" project="ProjetInfoBA2" 
+  <class id="23" language="java" name="game.model.Tree" project="ProjetInfoBA2" 
     file="/ProjetInfoBA2/src/game/model/Tree.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="83" width="115" x="242" y="1864"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -217,175 +208,192 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
+  <class id="24" language="java" name="game.model.Dungeon" project="ProjetInfoBA2" 
+    file="/ProjetInfoBA2/src/game/model/Dungeon.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-245" y="807"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
   <association id="25">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="26" name="skillList">        
-        <position height="0" width="0" x="-173" y="29"/>      
-      </attribute>      
-      <multiplicity id="27" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-173" y="29"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="29">    
-    <end type="SOURCE" refId="3" navigable="true">      
-      <attribute id="30" name="livingOnMap">        
-        <position height="0" width="0" x="249" y="-1"/>      
-      </attribute>      
-      <multiplicity id="31" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="249" y="-1"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true">      
-      <attribute id="32" name="currentMap">        
-        <position height="0" width="0" x="31" y="135"/>      
-      </attribute>      
-      <multiplicity id="33" minimum="0" maximum="1">        
-        <position height="0" width="0" x="31" y="135"/>      
-      </multiplicity>    
-    </end>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <generalization id="34">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <realization id="35">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="17"/>  
-  </realization>  
-  <realization id="36">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="8"/>  
-  </realization>  
-  <generalization id="37">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <generalization id="38">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <realization id="39">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
-  </realization>  
-  <generalization id="40">    
-    <end type="SOURCE" refId="24"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <generalization id="41">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="42">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="16"/>  
-  </generalization>  
-  <generalization id="43">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="18"/>  
-  </generalization>  
-  <association id="44">    
-    <end type="SOURCE" refId="3" navigable="true">      
-      <attribute id="45" name="safehouseOnMap"/>      
-      <multiplicity id="46" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="23" navigable="true">      
-      <attribute id="47" name="currentMap"/>      
-      <multiplicity id="48" minimum="0" maximum="1"/>    
-    </end>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <generalization id="49">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="50">    
-    <end type="SOURCE" refId="23"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="51">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="10"/>  
-  </generalization>  
-  <association id="52">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="53" name="obstacleOnMap">        
+      <attribute id="26" name="obstacleOnMap">        
         <position height="0" width="0" x="39" y="314"/>      
       </attribute>      
-      <multiplicity id="54" minimum="0" maximum="2147483647">        
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="39" y="314"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <realization id="55">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="17"/>  
-  </realization>  
-  <association id="56">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="57" name="listItem">        
-        <position height="0" width="0" x="-154" y="12"/>      
-      </attribute>      
-      <multiplicity id="58" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-154" y="12"/>      
-      </multiplicity>    
+  <generalization id="28">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <generalization id="29">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="30">    
+    <end type="SOURCE" refId="3" navigable="true">      
+      <attribute id="31" name="dungeonOnMap"/>      
+      <multiplicity id="32" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
+    <end type="TARGET" refId="24" navigable="true">      
+      <attribute id="33" name="currentMap"/>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
+    </end>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="59">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="10"/>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
   </generalization>  
-  <generalization id="60">    
-    <end type="SOURCE" refId="20"/>    
+  <generalization id="36">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="37">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="38">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <realization id="39">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="17"/>  
+  </realization>  
+  <generalization id="40">    
+    <end type="SOURCE" refId="23"/>    
     <end type="TARGET" refId="5"/>  
   </generalization>  
-  <generalization id="61">    
-    <end type="SOURCE" refId="22"/>    
-    <end type="TARGET" refId="5"/>  
+  <generalization id="41">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="16"/>  
   </generalization>  
-  <generalization id="62">    
+  <generalization id="42">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <association id="63">    
-    <end type="SOURCE" refId="3" navigable="true">      
-      <attribute id="64" name="donjonOnMap"/>      
-      <multiplicity id="65" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="21" navigable="true">      
-      <attribute id="66" name="currentMap"/>      
-      <multiplicity id="67" minimum="0" maximum="1"/>    
-    </end>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="68">    
+  <generalization id="43">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <realization id="45">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <association id="46">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="69" name="inventory">        
+      <attribute id="47" name="inventory">        
         <position height="0" width="0" x="-154" y="12"/>      
       </attribute>      
-      <multiplicity id="70" minimum="0" maximum="1">        
+      <multiplicity id="48" minimum="0" maximum="1">        
         <position height="0" width="0" x="-154" y="12"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="15" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <generalization id="71">    
+  <generalization id="49">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="50">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="51" name="skillList">        
+        <position height="0" width="0" x="-173" y="29"/>      
+      </attribute>      
+      <multiplicity id="52" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-173" y="29"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="53">    
+    <end type="SOURCE" refId="3" navigable="true">      
+      <attribute id="54" name="safehouseOnMap">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true">      
+      <attribute id="56" name="currentMap">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="57" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="58">    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="10"/>  
   </generalization>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <realization id="61">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <realization id="62">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="17"/>  
+  </realization>  
+  <association id="63">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="64" name="listItem">        
+        <position height="0" width="0" x="-154" y="12"/>      
+      </attribute>      
+      <multiplicity id="65" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-154" y="12"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="67">    
+    <end type="SOURCE" refId="3" navigable="true">      
+      <attribute id="68" name="livingOnMap">        
+        <position height="0" width="0" x="249" y="-1"/>      
+      </attribute>      
+      <multiplicity id="69" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="249" y="-1"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true">      
+      <attribute id="70" name="currentMap">        
+        <position height="0" width="0" x="31" y="135"/>      
+      </attribute>      
+      <multiplicity id="71" minimum="0" maximum="1">        
+        <position height="0" width="0" x="31" y="135"/>      
+      </multiplicity>    
+    </end>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

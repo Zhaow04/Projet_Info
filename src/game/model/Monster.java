@@ -28,17 +28,33 @@ public abstract class Monster extends LivingBeing {
 	
 	//************************** Getters and Setters **************************
 	
+	/**
+	 * Gets the base position of the monster (i.e. where it was first on the map).
+	 * 
+	 * @return base position
+	 */
 	public int[] getBasePos() {
 		return basePos;
 	}
-
+	
+	/**
+	 * Sets the base position of the monster (i.e. where it was first on the map).
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	protected void setBasePos(int x, int y) {
 		basePos = new int[2];
 		basePos[0] = x; basePos[1] = y;
 	}
 	
 	//******************************** Methods ********************************
-
+	
+	/**
+	 * Returns whether or not the player is in view.
+	 * 
+	 * @return player in view or not
+	 */
 	protected boolean isPlayerInView() {
 		LivingBeing[][] livingOnMap = getCurrentMap().getLivingOnMap();
 		int x = getPosition()[0];

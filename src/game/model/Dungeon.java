@@ -8,7 +8,7 @@ package game.model;
  * @see {@link ViewableObject}
  *
  */
-public class Donjon extends ViewableObject {
+public class Dungeon extends ViewableObject {
 
 	//****************************** Attributes ******************************
 
@@ -18,12 +18,12 @@ public class Donjon extends ViewableObject {
 	//****************************** Constructor ******************************
 
 	/**
-	 * Creates a donjon on the current map.
+	 * Creates a dungeon on the current map.
 	 * 
 	 * @param map
 	 * @see {@link ViewableObject}
 	 */
-	public Donjon (Map map, int x, int y){
+	public Dungeon (Map map, int x, int y){
 		setCurrentMap(map);
 		setPosition(x,y);
 
@@ -37,7 +37,7 @@ public class Donjon extends ViewableObject {
 	//************************** Getters and Setters **************************
 
 	/**
-	 * Gets the map on which the donjon currently is.
+	 * Gets the map on which the dungeon currently is.
 	 * 
 	 * @return current map
 	 */
@@ -46,7 +46,7 @@ public class Donjon extends ViewableObject {
 	}
 
 	/**
-	 * Sets the map on which the donjon currently is.
+	 * Sets the map on which the dungeon currently is.
 	 * 
 	 * @param map
 	 */
@@ -78,17 +78,17 @@ public class Donjon extends ViewableObject {
 	 */
 	protected void setNewPosition(int x,int y){
 		setPosition(x,y);
-		currentMap.addDonjonOnMap(this);
+		currentMap.addDungeonOnMap(this);
 	}
 
 	/**
-	 * Sets the position (x,y) to empty (no donjon).
+	 * Sets the position (x,y) to empty (no dungeon).
 	 * 
 	 * @param x
 	 * @param y
 	 */
 	public void emptyPosition(int x, int y){
-		getCurrentMap().removeDonjonOnMap(x, y);
+		getCurrentMap().removeDungeonOnMap(x, y);
 		getCurrentMap().setEmpty(x,y);
 	}
 }
