@@ -131,18 +131,50 @@ public class Map extends ViewableObject {
 		this.obstacleOnMap = obstacleOnMap;
 	}
 	
+	/**
+	 * Gets the matrix of {@code SafeHouse} associated to the map. An instance of
+	 * {@code SafeHouse} present at the position (x,y) on the map will figures at the
+	 * same position in the matrix.
+	 * 
+	 * @return matrix of {@code SafeHouse}
+	 * @see {@link SafeHouse}
+	 */
 	public SafeHouse[][] getSafeHouseOnMap() {
 		return safehouseOnMap;
 	}
 	
+	/**
+	 * Sets the matrix of {@code SafeHouse} associated to the map. An instance of
+	 * {@code SafeHouse} present at the position (x,y) on the map will figures at the
+	 * same position in the matrix.
+	 * 
+	 * @param safehouseOnMap
+	 * @see {@link SafeHouse}
+	 */
 	private void setSafeHouseOnMap(SafeHouse[][] safehouseOnMap) {
 		this.safehouseOnMap = safehouseOnMap;
 	}
 	
+	/**
+	 * Gets the matrix of {@code Donjon} associated to the map. An instance of
+	 * {@code Donjon} present at the position (x,y) on the map will figures at the
+	 * same position in the matrix.
+	 * 
+	 * @return matrix of {@code Donjon}
+	 * @see {@link Donjon}
+	 */
 	public Donjon[][] getDonjonOnMap() {
 		return donjonOnMap;
 	}
 	
+	/**
+	 * Sets the matrix of {@code Donjon} associated to the map. An instance of
+	 * {@code Donjon} present at the position (x,y) on the map will figures at the
+	 * same position in the matrix.
+	 * 
+	 * @param donjonOnMap
+	 * @see {@link Donjon}
+	 */
 	private void setDonjonOnMap(Donjon[][] donjonOnMap) {
 		this.donjonOnMap = donjonOnMap;
 	}
