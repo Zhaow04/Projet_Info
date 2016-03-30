@@ -35,6 +35,8 @@ public class Player extends LivingBeing {
 		setDirectionFacing('S');
 		setHp(1500);
 		setMana(500);
+		setXp(0);
+		setLevel(1);
 		inventory = new Inventory();
 		FirstAttack firstAttack = new FirstAttack();
 		addSkill(firstAttack);
@@ -113,17 +115,51 @@ public class Player extends LivingBeing {
 		getSkillList().add(skill);
 	}
 	
+	/**
+	 * Tells if the character can attack or not (need to be in front of a monster)
+	 * 
+	 */
 	private boolean canAttack(){
 		return (isLivingInFront() && getLivingInFront() instanceof Monster);
 	}
 	
+	/**
+	 * Makes the character use one of its attacks if he can.
+	 * 
+	 * @param skillNumber
+	 */
 	public void useAttack(int skillNumber){
 		if(canAttack()){
-			LivingBeing target = getLivingInFront();
+			Monster target =(Monster) getLivingInFront();
 			Skill skill = getSkillList().get(skillNumber);
 			skill.use(target);
+			if(target.getHp() <= 0) {
+				gainKillXp(target);
+				upgradeLevel();
+				System.out.println(getXp());
+				System.out.println(getLevel());
+			}
 		}
-		loseHp(100);
 	}
-
+	/**
+	 * Defines the maximum of Hp a player can have (depending on his level).
+	 * 
+	 * return maxHp
+	 */
+	private int maxHp(){
+		return 1500 + getLevel()*200;
+	}
+	
+	/**
+	 * Upgrades the level of the player
+	 * 
+	 * return maxHp
+	 */
+	private void upgradeLevel(){
+		setLevel(getLevel() + getXp() / ((getLevel()*getLevel()*50))); // peut etre une meilleure formule Xp/Level 
+	}
+	
+	private void gainKillXp(Monster target){
+		addXp(target.getKillXp());
+	}
 }

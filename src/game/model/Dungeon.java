@@ -4,7 +4,7 @@ package game.model;
  * Extends from {@code ViewableObject} <br/>
  * Special environment with high level monsters and a boss.
  * 
- * @author ZhaoWen
+ * 
  * @see {@link ViewableObject}
  *
  */
@@ -27,11 +27,11 @@ public class Dungeon extends ViewableObject {
 		setCurrentMap(map);
 		setPosition(x,y);
 
-		setImageURL("game/model/safehouse.png");
-		setOffsetX(250);
-		setOffsetY(180);
-		setWidth(170);
-		setHeight(170);
+		setImageURL("game/model/safehouse.png");  // we still need a good picture of a dungeon on the map, it needs to take 9 places
+		setOffsetX(0);
+		setOffsetY(0);
+		setWidth(190);
+		setHeight(190);
 	}
 
 	//************************** Getters and Setters **************************

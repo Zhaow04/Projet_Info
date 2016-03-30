@@ -19,12 +19,12 @@ public class GameModel implements Model {
 	private ArrayList<Obstacle> obstacleList = new ArrayList<Obstacle>();
 	private ArrayList<SafeHouse> safehouseList = new ArrayList<SafeHouse>();
 	private ArrayList<Item> itemList = new ArrayList<Item>();
-
+	private ArrayList<Dungeon> dungeonList = new ArrayList<Dungeon>();
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates all the objects of the model.
+	 * Creates all the components of the model.
 	 */
 	public GameModel(){
 		Map map = new Map(10);
@@ -33,10 +33,12 @@ public class GameModel implements Model {
 		Player player = new Player(map);
 		setPlayer(player);
 		
-		Dragon monster1 = new Dragon(map,1,0);
-		Dragon monster2 = new Dragon(map,7,3);
+		BlueDragon monster1 = new BlueDragon(map,1,0, player.getLevel());
+		BlueDragon monster2 = new BlueDragon(map,7,3, player.getLevel());
 		
 		SafeHouse safehouse = new SafeHouse(map,4,4);
+		
+		//Dungeon dungeon = new Dungeon(map, 6,6);
 		
 		Rock rock = new Rock (map,2,3);
 		Tree tree = new Tree (map,6,5);
@@ -45,6 +47,8 @@ public class GameModel implements Model {
 		HpPotion hpPotion = new HpPotion(100, 2, 8);
 		
 		getSafeHouseList().add(safehouse);
+		
+		//getDungeonList().add(dungeon);
 		
 		getObstacleList().add(rock);
 		getObstacleList().add(tree);
@@ -67,6 +71,10 @@ public class GameModel implements Model {
 		for(SafeHouse Safehouse : getSafeHouseList()){
 			map.addSafeHouseOnMap(Safehouse);
 		}
+		
+		//for(Dungeon Dungeon : getDungeonList()){
+		//	map.addDungeonOnMap(dungeon);
+		//}
 	}
 	
 	//************************** Getters and Setters **************************

@@ -13,6 +13,7 @@ public abstract class Monster extends LivingBeing {
 	//****************************** Attributes ******************************
 	
 	private int[] basePos;
+	private int killxp;
 	
 	//****************************** Constructor ******************************
 	
@@ -46,6 +47,24 @@ public abstract class Monster extends LivingBeing {
 	protected void setBasePos(int x, int y) {
 		basePos = new int[2];
 		basePos[0] = x; basePos[1] = y;
+	}
+	
+	/**
+	 * Gets the Xp gained by the player when the monster is killed.
+	 * 
+	 * @return killxp
+	 */
+	public int getKillXp() {
+		return killxp;
+	}
+	
+	/**
+	 * Sets the Xp gained by the player when the monster is killed.
+	 * 
+	 * @param killxp
+	 */
+	protected void setKillXp(int killxp) {
+		this.killxp = killxp;
 	}
 	
 	//******************************** Methods ********************************
@@ -99,6 +118,10 @@ public abstract class Monster extends LivingBeing {
 		return playerInView;
 	}
 	
+	/**
+	 * Makes the monster move in a certain defined way, if possible (here, drawing a square while moving).
+	 * 
+	 */
 	public void moveInPattern() {
 		int[] basePos = getBasePos();
 		int[] pos = getPosition();
