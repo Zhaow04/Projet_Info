@@ -19,29 +19,29 @@ public interface Viewable {
 	/**
 	 * Gets the x offset of the image to be displayed.
 	 * 
-	 * @return double
+	 * @return int
 	 */
-	public double getOffsetX();
+	public int getOffsetX();
 	
 	/**
 	 * Gets the y offset of the image to be displayed.
 	 * 
-	 * @return double
+	 * @return int
 	 */
-	public double getOffsetY();
+	public int getOffsetY();
 	
 	/**
 	 * Gets the width of the image to be displayed.
 	 * 
-	 * @return double
+	 * @return int
 	 */
-	public double getWidth();
+	public int getWidth();
 
 	/**
 	 * Gets the height of the image to be displayed.
 	 * 
-	 * @return double
+	 * @return int
 	 */
-	public double getHeight();
+	public int getHeight();
 	
 }

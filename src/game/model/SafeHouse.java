@@ -19,7 +19,7 @@ public class SafeHouse extends ViewableObject {
 				setCurrentMap(map);
 				setPosition(x,y);
 				
-				setImageURL("game/model/safehouse.png");
+				setImageURL("game/utilities/safehouse.png");
 				setOffsetX(250);
 				setOffsetY(180);
 				setWidth(170);

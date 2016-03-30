@@ -1,5 +1,6 @@
 package game;
 
+import game.controller.Controller;
 import game.model.GameModel;
 import game.view.GameView;
 import javafx.application.Application;
@@ -29,7 +30,7 @@ public class Main extends Application {
 		GameView view = new GameView(model,controller);
 		//initEventHandler();
 		primaryStage.setTitle("RPG");
-		primaryStage.setScene(view.getMainScene());
+		primaryStage.setScene(view.getStartScene());
 		primaryStage.show();
 	}
 	

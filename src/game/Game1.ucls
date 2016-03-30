@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="game.view.BeingController" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/view/BeingController.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="game.controller.BeingController" project="ProjetInfoBA2" 
+    file="/ProjetInfoBA2/src/game/controller/BeingController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="456" y="189"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="game.view.MapController" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/view/MapController.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="game.controller.MapController" project="ProjetInfoBA2" 
+    file="/ProjetInfoBA2/src/game/controller/MapController.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="281" width="206" x="6" y="92"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -56,78 +56,126 @@
     </display>  
   </class>  
   <association id="7">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="8" name="mapModel"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="6" navigable="true">      
+      <attribute id="8" name="mapController">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="9" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="10">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="11" name="beingController"/>      
-      <multiplicity id="12" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="13">    
-    <end type="SOURCE" refId="5" navigable="true">      
-      <attribute id="14" name="beingController"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true">      
-      <attribute id="16" name="objectList"/>      
-      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+    <end type="TARGET" refId="2" navigable="true">      
+      <attribute id="10" name="mapModel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="11" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="18">    
+  <association id="12">    
     <end type="SOURCE" refId="2" navigable="true">      
-      <attribute id="19" name="mapView"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
+      <attribute id="13" name="mapView">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true">      
-      <attribute id="21" name="mapController"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
+      <attribute id="15" name="mapController">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <association id="23">    
-    <end type="SOURCE" refId="5" navigable="true">      
-      <attribute id="24" name="currentMap"/>      
-      <multiplicity id="25" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true">      
-      <attribute id="26" name="livingOnMap"/>      
-      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="28">    
+  <association id="17">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="29" name="mapView"/>      
-      <multiplicity id="30" minimum="0" maximum="1"/>    
+      <attribute id="18" name="mapView">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
+  <association id="20">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="21" name="beingController">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="23">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="24" name="mapModel">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <end type="SOURCE" refId="5" navigable="true">      
+      <attribute id="27" name="beingController">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true">      
+      <attribute id="29" name="livingList">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
   <association id="31">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="32" name="livingList"/>      
-      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+      <attribute id="32" name="livingList">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
   <association id="34">    
-    <end type="SOURCE" refId="6" navigable="true">      
-      <attribute id="35" name="mapController"/>      
-      <multiplicity id="36" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="5" navigable="true">      
+      <attribute id="35" name="currentMap">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="36" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true">      
-      <attribute id="37" name="mapModel"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
+    <end type="TARGET" refId="6" navigable="true">      
+      <attribute id="37" name="livingOnMap">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="38" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <display labels="false" multiplicity="true"/>  
   </association>  

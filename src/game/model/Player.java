@@ -39,7 +39,7 @@ public class Player extends LivingBeing {
 		FirstAttack firstAttack = new FirstAttack();
 		addSkill(firstAttack);
 		
-		setImageURL("game/model/blackmage_m.png");
+		setImageURL("game/utilities/blackmage_m.png");
 		setOffsetX(0);
 		setOffsetY(0);
 		setWidth(32);

@@ -27,7 +27,7 @@ public class Bush extends Obstacle{
 		super(map);
 		setPosition(x,y);
 
-		setImageURL("game/model/treecomp.PNG");
+		setImageURL("game/utilities/treecomp.PNG");
 		setOffsetX(290);
 		setOffsetY(130);
 		setWidth(90);

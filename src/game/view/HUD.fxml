@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1">
+<StackPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.view.HUDController">
 <StackPane prefHeight="32.0" prefWidth="136.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <HBox alignment="CENTER_RIGHT" prefWidth="139.0" spacing="5.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100;" text="P" />
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100;" text="I" />
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100;" text="C" />
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100;" text="S" />
+                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="P" />
+                  <Button fx:id="inventoryButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#openInventory" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="I" />
+                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="C" />
+                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="S" />
                </children>
                <StackPane.margin>
                   <Insets />
@@ -26,4 +26,3 @@
          </children>
       </StackPane>
 </StackPane>
-

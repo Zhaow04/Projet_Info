@@ -1,6 +1,7 @@
-package game.view;
+package game.controller;
 
 import game.model.Map;
+import game.view.MapView;
 //import javafx.event.ActionEvent;
 //import javafx.event.EventHandler;
 //import javafx.geometry.Pos;

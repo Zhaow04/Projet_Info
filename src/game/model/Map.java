@@ -1,6 +1,6 @@
 package game.model;
 
-import game.view.MapController;
+import game.controller.MapController;
 
 /**
  * Extends from {@code ViewableObject}. <br/>
@@ -38,7 +38,7 @@ public class Map extends ViewableObject {
 		setSafeHouseOnMap(new SafeHouse[size][size]);
 		setDungeonOnMap(new Dungeon[size][size]);
 		
-		setImageURL("game/view/plains.png");
+		setImageURL("game/utilities/plains.png");
 	}
 	
 	//************************** Getters and Setters **************************

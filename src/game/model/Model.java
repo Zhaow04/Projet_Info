@@ -43,9 +43,16 @@ public interface Model {
 	/**
 	 * Gets the list of safe houses.
 	 * 
-	 * @return list of safe houses.
+	 * @return list of safe houses
 	 */
 	public ArrayList<SafeHouse> getSafeHouseList();
+	
+	/**
+	 * Gets the list of items.
+	 * 
+	 * @return list of items
+	 */
+	public ArrayList<Item> getItemList();
 	
 	
 }

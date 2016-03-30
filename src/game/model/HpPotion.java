@@ -16,8 +16,15 @@ public class HpPotion extends Potion {
 	 * 
 	 * @param value
 	 */
-	public HpPotion(int value){
+	public HpPotion(int value, int x, int y){
 		super(value);
+		setPosition(x, y);
+		
+		setImageURL("game/utilities/HpPotion.png");
+		setOffsetX(10);
+		setOffsetY(5);
+		setWidth(45);
+		setHeight(55);
 	}
 	
 	//******************************** Methods ********************************

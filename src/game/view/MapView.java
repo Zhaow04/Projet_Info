@@ -3,6 +3,7 @@ package game.view;
 import java.util.Observable;
 import java.util.Observer;
 
+import game.controller.MapController;
 import game.model.GameModel;
 import game.model.Map;
 import javafx.scene.Node;

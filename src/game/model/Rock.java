@@ -19,7 +19,7 @@ public class Rock extends Obstacle{
 			super(map);
 			setPosition(x,y);
 			
-			setImageURL("game/model/forest.png");
+			setImageURL("game/utilities/forest.png");
 			setOffsetX(0);
 			setOffsetY(0);
 			setWidth(60);

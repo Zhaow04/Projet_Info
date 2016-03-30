@@ -19,7 +19,7 @@ public class Tree extends Obstacle{
 			super(map);
 			setPosition(x,y);
 			
-			setImageURL("game/model/treecomp.PNG");
+			setImageURL("game/utilities/treecomp.PNG");
 			setOffsetX(0);
 			setOffsetY(65);
 			setWidth(63);

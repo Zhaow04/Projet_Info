@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import game.controller.BeingController;
 import game.model.GameModel;
 import game.model.LivingBeing;
 import game.model.Monster;
 import game.model.Movable;
 import game.model.Player;
+import game.utilities.ObjectTranslate;
+import game.utilities.SpriteAnimation;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Rectangle2D;
@@ -38,6 +41,7 @@ public class BeingView implements Observer {
 			living.addObserver(this);
 		}
 		setBeingController(beingController);
+		beingController.setBeingView(this);
 		beingController.setBeingList(livingList);
 		beingController.setPlayer((Player) livingList.get(0));
 		for(LivingBeing living : livingList){
@@ -100,7 +104,12 @@ public class BeingView implements Observer {
 			if(arg == null){
 				//mapView.getRoot().getChildren().remove(objectContainer);
 				StackPane objectContainer = getContainer((Movable) o);
-				updateBeingPosition((LivingBeing) o, objectContainer);
+				try {
+					updateBeingPosition((LivingBeing) o, objectContainer);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				//int[] pos = ((Movable) o).getPosition();
 				//mapView.getMapContainer().add(objectContainer, pos[0], pos[1]);
 				//System.out.println(o);
@@ -119,102 +128,19 @@ public class BeingView implements Observer {
 		}
 	}
 	
-	private void updateBeingPosition(LivingBeing living, StackPane container) {
+	private void updateBeingPosition(LivingBeing living, StackPane container) throws InterruptedException {
+		//if(container.getTranslateX()%mapView.cellSize() < 0.2 && container.getTranslateY()%mapView.cellSize() < 0.2) {
+		int[] pos = living.getPosition();
+		//System.out.println(pos[0] + " "+ pos[1]);
+		new ObjectTranslate(Duration.millis(400), container,
+				pos[0]*mapView.cellSize(), pos[1]*mapView.cellSize());
 		if(living instanceof Player) {
-			updateContainer(living, container);
-			int[] pos = living.getPosition();
-			new Thread(){
-				public void run(){
-					TranslateTransition tt = new TranslateTransition(Duration.millis(500),container);
-					tt.setToX(pos[0]*mapView.cellSize());
-					tt.setToY(pos[1]*mapView.cellSize());
-					tt.setCycleCount(1);
-					tt.play();
-				}
-			}.start();
+			//updateContainer(living, container);
+			new SpriteAnimation(living,
+					(ImageView) container.getChildren().get(0), Duration.millis(400), 5, 4);
 
-			if(living.getDirectionFacing() == 'N'){
-				new Thread(){
-					public void run(){
-						final Animation animation = new SpriteAnimation(
-								(ImageView) container.getChildren().get(0),
-								Duration.millis(500),
-								5, 4,
-								0, 3*48,
-								32, 48
-								);
-						animation.setCycleCount(1);
-						animation.play();
-					}
-				}.start();
-			}
-			else if(living.getDirectionFacing() == 'S'){
-				new Thread(){
-					public void run(){
-						final Animation animation = new SpriteAnimation(
-								(ImageView) container.getChildren().get(0),
-								Duration.millis(500),
-								5, 4,
-								0, 0,
-								32, 48
-								);
-						animation.setCycleCount(1);
-						animation.play();
-					}
-				}.start();
-			}
-			else if(living.getDirectionFacing() == 'W'){
-				new Thread(){
-					public void run(){
-						final Animation animation = new SpriteAnimation(
-								(ImageView) container.getChildren().get(0),
-								Duration.millis(500),
-								5, 4,
-								0, 48,
-								32, 48
-								);
-						animation.setCycleCount(1);
-						animation.play();
-					}
-				}.start();
-			}
-			else if(living.getDirectionFacing() == 'E'){
-				new Thread(){
-					public void run(){
-						final Animation animation = new SpriteAnimation(
-								(ImageView) container.getChildren().get(0),
-								Duration.millis(500),
-								5, 4,
-								0, 2*48,
-								32, 48
-								);
-						animation.setCycleCount(1);
-						animation.play();
-					}
-				}.start();
-			}
 		}
-		
-		else if(living instanceof Monster) {
-			int[] pos = living.getPosition();
-			Monster monster = (Monster) living;
-			int[] basePos = monster.getBasePos();
-			//System.out.println(container.getTranslateX() + " / " + container.getTranslateY());
-			//System.out.println(pos[0] + " " + pos[1]);
-			new Thread(){
-				public void run(){
-					TranslateTransition tt = new TranslateTransition(Duration.millis(500),container);
-					/*System.out.println(living);
-					System.out.println("     " + pos[0]*mapView.cellSize());
-					System.out.println("     " + pos[1]*mapView.cellSize());*/
-					tt.setToX(pos[0]*mapView.cellSize());
-					tt.setToY(pos[1]*mapView.cellSize());
-					tt.setCycleCount(1);
-					tt.play();
-				}
-			}.start();
-		}
-		
+		//}
 		//System.out.println(pos[0] + "+" + pos[1]);
 		//container.setTranslateX(pos[0]*mapView.cellSize());
 		//container.setTranslateY(pos[1]*mapView.cellSize());
@@ -252,7 +178,7 @@ public class BeingView implements Observer {
 		getContainerList().add(container);
 		return container;
 	}
-	
+	/*
 	private void updateContainer(LivingBeing living, StackPane container){
 		String imageURL = living.getImageURL();
 		double offsetX = living.getOffsetX();
@@ -269,9 +195,9 @@ public class BeingView implements Observer {
 	//	imageContainer
 		container.getChildren().remove(0);
 		container.getChildren().add(imageContainer);
-	}
+	}*/
 	
-	private StackPane getContainer(Movable movable){
+	public StackPane getContainer(Movable movable){
 		int index = getBeingList().indexOf(movable);
 		//System.out.println(index);
 		return getContainerList().get(index);
@@ -287,6 +213,28 @@ public class BeingView implements Observer {
 		//System.out.println(getBeingList());
 		//System.out.println(objectContainer.getChildren());
 		//System.gc();
+	}
+	
+	public boolean isViewUpToDate() {
+		boolean upToDate = true;
+		int i = 0;
+		while(upToDate && i < getContainerList().size()){
+			StackPane container = getContainerList().get(i);
+			if(container.getTranslateX() % mapView.cellSize() > mapView.cellSize() ||
+					container.getTranslateY()%mapView.cellSize() > mapView.cellSize()) {
+				upToDate = false;
+			}
+			i++;
+		}
+		return upToDate;
+	}
+	
+	public double containerPosX(StackPane container) {
+		return container.getTranslateX() / mapView.cellSize();
+	}
+	
+	public double containerPosY(StackPane container) {
+		return container.getTranslateY() / mapView.cellSize();
 	}
 	
 }

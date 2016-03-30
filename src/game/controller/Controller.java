@@ -1,9 +1,7 @@
-package game;
+package game.controller;
 
 import game.model.GameModel;
 import game.view.GameView;
-import game.view.MapController;
-import game.view.BeingController;
 
 public class Controller {
 	

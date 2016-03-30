@@ -18,6 +18,7 @@ public class GameModel implements Model {
 	private ArrayList<LivingBeing> livingList = new ArrayList<LivingBeing>();
 	private ArrayList<Obstacle> obstacleList = new ArrayList<Obstacle>();
 	private ArrayList<SafeHouse> safehouseList = new ArrayList<SafeHouse>();
+	private ArrayList<Item> itemList = new ArrayList<Item>();
 
 	
 	//****************************** Constructor ******************************
@@ -41,6 +42,8 @@ public class GameModel implements Model {
 		Tree tree = new Tree (map,6,5);
 		Bush bush = new Bush (map,8,8);
 		
+		HpPotion hpPotion = new HpPotion(100, 2, 8);
+		
 		getSafeHouseList().add(safehouse);
 		
 		getObstacleList().add(rock);
@@ -50,6 +53,8 @@ public class GameModel implements Model {
 		getLivingList().add(player);
 		getLivingList().add(monster1);
 		getLivingList().add(monster2);
+		
+		getItemList().add(hpPotion);
 		
 		for(LivingBeing living : getLivingList()){
 			map.addLivingOnMap(living);
@@ -107,5 +112,10 @@ public class GameModel implements Model {
 	@Override
 	public ArrayList<SafeHouse> getSafeHouseList() {
 		return safehouseList;
+	}
+	
+	@Override
+	public ArrayList<Item> getItemList() {
+		return itemList;
 	}
 }

@@ -1,6 +1,6 @@
 package game.model;
 
-import game.view.BeingController;
+import game.controller.BeingController;
 
 /**
  * Extends from {@code ViewableObject}. <br/>
@@ -52,9 +52,11 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 		currentMap = map;
 	}
 	
+	@Override
 	public int[] getPosition(){
 		return position;
 	}
+	
 	/**
 	 * Sets the position to (x,y).
 	 * 
@@ -66,6 +68,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 		position[0] = x; position[1] = y;
 		currentMap.setOccupied(x, y);
 	}
+	
 	/**
 	 * Gets the direction the living being is facing to.
 	 * 
@@ -234,6 +237,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 			//setChanged();
 			//notifyObservers();
 		}
+		//System.out.println("       " + pos[0] + " "+ pos[1]);
 		setChanged();
 		notifyObservers();
 		/*for(int i = 0; i < currentMap.grid.length; i++){

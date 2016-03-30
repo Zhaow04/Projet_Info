@@ -30,7 +30,7 @@ public class Dragon extends Monster {
 		setDirectionFacing('S');
 		setHp(300);
 		
-		setImageURL("game/model/DRAGONS5.png");
+		setImageURL("game/utilities/DRAGONS5.png");
 		setOffsetX(160);
 		setOffsetY(227);
 		setWidth(70);

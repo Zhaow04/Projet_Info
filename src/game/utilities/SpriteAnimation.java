@@ -1,5 +1,6 @@
-package game.view;
+package game.utilities;
 
+import game.model.LivingBeing;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
@@ -18,30 +19,36 @@ public class SpriteAnimation extends Transition {
 
     private int lastIndex;
 
-    public SpriteAnimation(
-            ImageView imageView, 
-            Duration duration, 
-            int count,   int columns,
-            int offsetX, int offsetY,
-            int width,   int height) {
+    public SpriteAnimation(LivingBeing living, ImageView imageView, Duration duration,
+    		int count, int columns) {
         this.imageView = imageView;
         this.count     = count;
         this.columns   = columns;
-        this.offsetX   = offsetX;
-        this.offsetY   = offsetY;
-        this.width     = width;
-        this.height    = height;
+        this.offsetX   = living.getOffsetX();
+        this.offsetY   = living.getOffsetY();
+        this.width     = living.getWidth();
+        this.height    = living.getHeight();
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
+        setCycleCount(1);
+        this.play();
+        
     }
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
+        //System.out.println(index);
         if (index != lastIndex) {
             final int x = (index % columns) * width  + offsetX;
             final int y = 0*(index / columns) * height + offsetY;
+            //System.out.println(x);
             imageView.setViewport(new Rectangle2D(x, y, width, height));
             lastIndex = index;
         }
     }
+    /*
+	@Override
+	public void run() {
+		this.play();
+	}*/
 }

@@ -14,7 +14,7 @@ public abstract class ViewableObject extends Observable implements Viewable {
 	//****************************** Attributes ******************************
 	
 	private String imageURL;
-	private double offsetX, offsetY, width, height;
+	private int offsetX, offsetY, width, height;
 	
 	//****************************** Constructor ******************************
 	
@@ -42,7 +42,7 @@ public abstract class ViewableObject extends Observable implements Viewable {
 	}
 	
 	@Override
-	public double getOffsetX() {
+	public int getOffsetX() {
 		return offsetX;
 	}
 	
@@ -51,12 +51,12 @@ public abstract class ViewableObject extends Observable implements Viewable {
 	 * 
 	 * @param offsetX
 	 */
-	protected void setOffsetX(double offsetX) {
+	protected void setOffsetX(int offsetX) {
 		this.offsetX = offsetX;
 	}
 	
 	@Override
-	public double getOffsetY() {
+	public int getOffsetY() {
 		return offsetY;
 	}
 	
@@ -65,12 +65,12 @@ public abstract class ViewableObject extends Observable implements Viewable {
 	 * 
 	 * @param offsetY
 	 */
-	protected void setOffsetY(double offsetY) {
+	protected void setOffsetY(int offsetY) {
 		this.offsetY = offsetY;
 	}
 	
 	@Override
-	public double getWidth() {
+	public int getWidth() {
 		return width;
 	}
 	
@@ -79,12 +79,12 @@ public abstract class ViewableObject extends Observable implements Viewable {
 	 * 
 	 * @param width
 	 */
-	protected void setWidth(double width) {
+	protected void setWidth(int width) {
 		this.width = width;
 	}
 	
 	@Override
-	public double getHeight() {
+	public int getHeight() {
 		return height;
 	}
 	
@@ -93,7 +93,7 @@ public abstract class ViewableObject extends Observable implements Viewable {
 	 * 
 	 * @param height
 	 */
-	protected void setHeight(double height) {
+	protected void setHeight(int height) {
 		this.height = height;
 	}
 	
