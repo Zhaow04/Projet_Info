@@ -87,7 +87,6 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 */
 	protected void setDirectionFacing(char directionFacing) {
 		this.directionFacing = directionFacing;
-		if(this instanceof Player){
 			int i = 0;
 			if(directionFacing == 'N')
 				i = 3;
@@ -95,8 +94,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 				i = 1;
 			else if(directionFacing == 'E')
 				i = 2;
-			setOffsetY(48*i);
-		}
+			setOffsetY(getHeight()*i);
 	}
 	
 	/**
