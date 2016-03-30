@@ -32,8 +32,8 @@ public class GameModel implements Model {
 		Player player = new Player(map);
 		setPlayer(player);
 		
-		Dragon monster1 = new Dragon(map,1,0);
-		Dragon monster2 = new Dragon(map,7,3);
+		GiantRat monster1 = new GiantRat(map,1,0, player.getLevel());
+		RedDragon monster2 = new RedDragon(map,7,3, player.getLevel());
 		
 		SafeHouse safehouse = new SafeHouse(map,4,4);
 		

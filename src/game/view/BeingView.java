@@ -120,7 +120,7 @@ public class BeingView implements Observer {
 	}
 	
 	private void updateBeingPosition(LivingBeing living, StackPane container) {
-		if(living instanceof Player) {
+		//if(living instanceof Player) {
 			updateContainer(living, container);
 			int[] pos = living.getPosition();
 			new Thread(){
@@ -140,9 +140,9 @@ public class BeingView implements Observer {
 								(ImageView) container.getChildren().get(0),
 								Duration.millis(500),
 								5, 4,
-								0, 3*48,
-								32, 48
-								);
+								0, 3*(int) (living.getHeight()),
+								(int) (living.getWidth()),(int) (living.getHeight())
+								) ;
 						animation.setCycleCount(1);
 						animation.play();
 					}
@@ -156,7 +156,7 @@ public class BeingView implements Observer {
 								Duration.millis(500),
 								5, 4,
 								0, 0,
-								32, 48
+								(int) (living.getWidth()), (int) (living.getHeight())
 								);
 						animation.setCycleCount(1);
 						animation.play();
@@ -170,8 +170,8 @@ public class BeingView implements Observer {
 								(ImageView) container.getChildren().get(0),
 								Duration.millis(500),
 								5, 4,
-								0, 48,
-								32, 48
+								0, (int) (living.getHeight()),
+								(int) (living.getWidth()), (int) (living.getHeight())
 								);
 						animation.setCycleCount(1);
 						animation.play();
@@ -185,16 +185,16 @@ public class BeingView implements Observer {
 								(ImageView) container.getChildren().get(0),
 								Duration.millis(500),
 								5, 4,
-								0, 2*48,
-								32, 48
+								0, 2*(int) (living.getHeight()),
+								(int) (living.getWidth()), (int) (living.getHeight())
 								);
 						animation.setCycleCount(1);
 						animation.play();
 					}
 				}.start();
 			}
-		}
-		
+		//}
+		/*
 		else if(living instanceof Monster) {
 			int[] pos = living.getPosition();
 			Monster monster = (Monster) living;
@@ -204,9 +204,9 @@ public class BeingView implements Observer {
 			new Thread(){
 				public void run(){
 					TranslateTransition tt = new TranslateTransition(Duration.millis(500),container);
-					/*System.out.println(living);
+					System.out.println(living);
 					System.out.println("     " + pos[0]*mapView.cellSize());
-					System.out.println("     " + pos[1]*mapView.cellSize());*/
+					System.out.println("     " + pos[1]*mapView.cellSize());
 					tt.setToX(pos[0]*mapView.cellSize());
 					tt.setToY(pos[1]*mapView.cellSize());
 					tt.setCycleCount(1);
@@ -214,7 +214,7 @@ public class BeingView implements Observer {
 				}
 			}.start();
 		}
-		
+		*/
 		//System.out.println(pos[0] + "+" + pos[1]);
 		//container.setTranslateX(pos[0]*mapView.cellSize());
 		//container.setTranslateY(pos[1]*mapView.cellSize());

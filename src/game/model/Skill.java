@@ -68,6 +68,6 @@ public abstract class Skill implements Usable {
 	public void use(LivingBeing target){
 		int damage = getDamage();
 		target.loseHp(damage);
-	}
+		}
 	
 }

@@ -18,6 +18,8 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	private int[] position; // w/o initialization
 	private char directionFacing;
 	private int hp; // w/o initialization
+	private int xp;
+	private int level;
 	
 	private BeingController beingController;
 	
@@ -111,6 +113,41 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	protected void setHp(int hp){
 		this.hp = hp;
 	}
+	/**
+	 * Gets the level of the living being.
+	 * 
+	 * @return level
+	 */
+	protected int getLevel(){
+		return level;
+	}
+	
+	/**
+	 * Sets the level of the living being.
+	 * 
+	 * @param level
+	 */
+	protected void setLevel(int level){
+		this.level = level;
+	}
+	
+	/**
+	 * Gets the xp of the living being.
+	 * 
+	 * @return xp
+	 */
+	protected int getXp(){
+		return xp;
+	}
+	
+	/**
+	 * Sets the Xp of the living being.
+	 * 
+	 * @param hp
+	 */
+	protected void setXp(int xp){
+		this.xp = xp;
+	}
 	
 	/**
 	 * Gets the controller of the living being.
@@ -154,6 +191,16 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	public void emptyPosition(int x, int y){
 		getCurrentMap().removeLivingOnMap(x, y);
 		getCurrentMap().setEmpty(x,y);
+	}
+	
+	/**
+	 * Adds xp to the living being.
+	 * 
+	 * @param xp
+	 */
+	protected void addXp(int xp){
+		int x = getXp();
+		setXp(x+xp);
 	}
 	
 	/**

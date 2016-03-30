@@ -20,4 +20,11 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/game/model/BlueDragon.png</name>
+			<type>1</type>
+			<location>C:/Users/PC/Desktop/INFO/ProjetInfoBA2_2.0/src/game/model/Dragon.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>
