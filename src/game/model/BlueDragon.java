@@ -32,7 +32,7 @@ public class BlueDragon extends Monster {
 		setHp(maxHp());
 		setKillXp(50);
 		
-		setImageURL("game/model/BlueDragon.png");
+		setImageURL("game/utilities/Dragon.png");
 		setOffsetX(0);
 		setOffsetY(0);
 		setWidth(96);

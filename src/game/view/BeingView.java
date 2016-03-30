@@ -134,12 +134,12 @@ public class BeingView implements Observer {
 		//System.out.println(pos[0] + " "+ pos[1]);
 		new ObjectTranslate(Duration.millis(400), container,
 				pos[0]*mapView.cellSize(), pos[1]*mapView.cellSize());
-		if(living instanceof Player) {
+		//if(living instanceof Player) {
 			//updateContainer(living, container);
 			new SpriteAnimation(living,
 					(ImageView) container.getChildren().get(0), Duration.millis(400), 5, 4);
 
-		}
+		//}
 		//}
 		//System.out.println(pos[0] + "+" + pos[1]);
 		//container.setTranslateX(pos[0]*mapView.cellSize());
