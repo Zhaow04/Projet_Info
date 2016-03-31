@@ -24,9 +24,36 @@ public class GameModel implements Model {
 	//****************************** Constructor ******************************
 	
 	/**
+	 * Creates all the components of the model. The size of the map is defined by {@code mapSize}.
+	 * 
+	 * @param mapSize
+	 */
+	public GameModel(int mapSize) {
+		
+		map = new Map(mapSize, "ok");
+		
+		player = new Player(map,0,0);
+		//new Player(map,5,5);
+		
+		RedDragon monster1 = new RedDragon(map,1,0, player.getLevel());
+		GiantRat monster2 = new GiantRat(map,7,3, player.getLevel());
+		
+		SafeHouse safehouse = new SafeHouse(map,4,4);
+		
+		//Dungeon dungeon = new Dungeon(map, 6,6);
+		
+		Rock rock = new Rock (map,2,3);
+		Tree tree = new Tree (map,6,5);
+		Bush bush = new Bush (map,8,8);
+		
+		HpPotion hpPotion = new HpPotion(map, 100, 2, 8);
+		HpPotion hpPotion2 = new HpPotion(map, 100, 8, 2);
+	}
+	
+	/**
 	 * Creates all the components of the model.
 	 */
-	public GameModel(){
+	/*public GameModel(){
 		Map map = new Map(11);
 		setMap(map);
 		
@@ -74,7 +101,7 @@ public class GameModel implements Model {
 		//for(Dungeon Dungeon : getDungeonList()){
 		//	map.addDungeonOnMap(dungeon);
 		//}
-	}
+	}*/
 	
 	//************************** Getters and Setters **************************
 	

@@ -1,5 +1,8 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+import game.view.ObstacleView;
+
 /**
  * Extends from {@code Obstacle} <br/>
  * Basic obstacle.
@@ -11,7 +14,9 @@ package game.model;
 public class Bush extends Obstacle{
 
 	//****************************** Attributes ******************************
-
+	
+	private ImageSettings imageSettings =
+			new ImageSettings("game/utilities/treecomp.PNG", 290, 130, 90, 90);
 
 	//****************************** Constructor ******************************
 
@@ -26,16 +31,17 @@ public class Bush extends Obstacle{
 	public Bush (Map map, int x, int y){
 		super(map);
 		setPosition(x,y);
-
-		setImageURL("game/utilities/treecomp.PNG");
-		setOffsetX(290);
-		setOffsetY(130);
-		setWidth(90);
-		setHeight(90);
+		
+		new ObstacleView(this);
 	}
 
 	//************************** Getters and Setters **************************
 
 	//******************************** Methods ********************************
-
+	
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
+	
 }

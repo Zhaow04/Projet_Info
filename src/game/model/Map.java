@@ -1,29 +1,68 @@
 package game.model;
 
-import game.controller.MapController;
+import java.util.ArrayList;
+import java.util.Observable;
+
+import game.utilities.ImageSettings;
+import game.view.MapView;
 
 /**
- * Extends from {@code ViewableObject}. <br/>
  * Map of the game. It knows whether or not a position
  * is occupied and which object is occupying it.
  * 
  * @author ZhaoWen
- * @see {@link ViewableObject}
+ * @see {@link ImageSettings}
  *
  */
-public class Map extends ViewableObject {
+public class Map extends Observable {
 	
 	//****************************** Attributes ******************************
+	
+	private ArrayList<Viewable> viewableOnMap = new ArrayList<Viewable>();
 	
 	public boolean[][] grid;
 	private LivingBeing[][] livingOnMap;
 	private Obstacle[][] obstacleOnMap;
 	private SafeHouse[][] safehouseOnMap;
 	private Dungeon[][] dungeonOnMap;
+	private Item[][] itemOnMap;
 	
-	private MapController mapController;
+	private ImageSettings imageSettings = new ImageSettings("game/utilities/plains.png");
 	
 	//****************************** Constructor ******************************
+	
+	/**
+	 * Creates a map (matrix) with the same number (defined by {@code size}) of rows and
+	 * columns. Sets the image of the map (ground) and creates the view.
+	 * 
+	 * @param size
+	 */
+	public Map(int size, String arg){
+		this(size);
+		new MapView(this);
+		/*
+		RedDragon monster1 = new RedDragon(this,0,1,1);
+		viewableOnMap.add(monster1);
+		GiantRat monster2 = new GiantRat(this,7,3,1);
+		viewableOnMap.add(monster2);
+		
+		SafeHouse safehouse = new SafeHouse(this,4,4);
+		viewableOnMap.add(safehouse);
+		
+		//Dungeon dungeon = new Dungeon(map, 6,6);
+		
+		Rock rock = new Rock (this,2,3);
+		viewableOnMap.add(rock);
+		Tree tree = new Tree (this,6,5);
+		viewableOnMap.add(tree);
+		Bush bush = new Bush (this,8,8);
+		viewableOnMap.add(bush);
+		
+		HpPotion hpPotion = new HpPotion(this, 100, 2, 8);
+		viewableOnMap.add(hpPotion);
+		HpPotion hpPotion2 = new HpPotion(this, 100, 8, 2);
+		viewableOnMap.add(hpPotion2);*/
+	}
 	
 	/**
 	 * Creates a map (matrix) with the same number (defined by {@code size}) of rows and
@@ -37,8 +76,9 @@ public class Map extends ViewableObject {
 		setObstacleOnMap(new Obstacle[size][size]);
 		setSafeHouseOnMap(new SafeHouse[size][size]);
 		setDungeonOnMap(new Dungeon[size][size]);
+		itemOnMap = new Item[size][size];
 		
-		setImageURL("game/utilities/plains.png");
+		//setImageURL("game/utilities/plains.png");
 	}
 	
 	//************************** Getters and Setters **************************
@@ -61,26 +101,6 @@ public class Map extends ViewableObject {
 	private void setSize(int size){
 		grid = new boolean[size][size];
 		emptyGrid();
-	}
-	
-	/**
-	 * Gets the controller of the map.
-	 * 
-	 * @return controller of the map
-	 * @see {@link MapController}
-	 */
-	public MapController getMapController() {
-		return mapController;
-	}
-	
-	/**
-	 * Sets the controller of the map.
-	 * 
-	 * @param mapController
-	 * @see {@link MapController}
-	 */
-	public void setMapController(MapController mapController) {
-		this.mapController = mapController;
 	}
 	
 	/**
@@ -181,6 +201,15 @@ public class Map extends ViewableObject {
 	
 	//******************************** Methods ********************************
 	
+	
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
+
+	public void addToViewable(Viewable viewable) {
+		viewableOnMap.add(viewable);
+	}
+
 	/**
 	 * Adds a {@code LivingBeing} to the map.
 	 * 
@@ -229,6 +258,17 @@ public class Map extends ViewableObject {
 		setOccupied(pos[0],pos[1]);
 	}
 	
+	/**
+	 * Adds a {@code Item} to the map.
+	 * 
+	 * @param item
+	 * @see {@link Item}
+	 */
+	public void addItemOnMap(Item item){
+		int[] pos = item.getPosition();
+		itemOnMap[pos[1]][pos[0]] = item;
+	}
+	
 	
 	/**
 	 * Removes the {@code LivingBeing} at the position (x = column, y = row).
@@ -275,6 +315,19 @@ public class Map extends ViewableObject {
 	}
 	
 	/**
+	 * Removes the {@code Item} at the position (x = column, y = row).
+	 * 
+	 * @param column
+	 * @param row
+	 * @see {@link Item}
+	 */
+	public void removeItemOnMap(int column, int row){
+		Item item = itemOnMap[row][column];
+		item.removedFromMap();
+		itemOnMap[row][column] = null;
+	}
+	
+	/**
 	 * Gets the {@code LivingBeing} at the position (x = column, y = row).
 	 * 
 	 * @param column
@@ -316,6 +369,17 @@ public class Map extends ViewableObject {
 	 */
 	public Dungeon getDungeon(int column, int row){
 		return getDungeonOnMap()[row][column];
+	}
+	
+	/**
+	 * Gets the {@code Item} at the position (x = column, y = row).
+	 * 
+	 * @param column
+	 * @param row
+	 * @return {@code Item} at (x,y)
+	 */
+	public Item getItem(int column, int row){
+		return itemOnMap[row][column];
 	}
 	
 	/**
@@ -375,6 +439,19 @@ public class Map extends ViewableObject {
 				grid[i][j] = false;
 			}
 		}
+	}
+	
+	/**
+	 * Gets the {@code Item} at the position (x = column, y = row) and removes it from the map.
+	 * 
+	 * @param column
+	 * @param row
+	 * @return {@code Item} at (x,y)
+	 */
+	public Item getAndRemoveItem(int column, int row){
+		Item item = itemOnMap[row][column];
+		removeItemOnMap(column, row);
+		return item;
 	}
 
 }

@@ -15,6 +15,18 @@ public abstract class Potion extends Item {
 	private int value;
 	
 	//****************************** Constructor ******************************
+	
+	/**
+	 * Creates a potion with a value of 200 and 3 uses. Sets the map on which it is.
+	 * 
+	 * @param value
+	 */
+	public Potion(Map map, int value) {
+		super(map);
+		setNumberOfUse(3);
+		this.value = 200;
+	}
+	
 	/**
 	 * Creates a potion with a value of 200 and 3 uses.
 	 * 

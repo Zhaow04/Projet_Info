@@ -1,16 +1,18 @@
 package game.model;
 
-import game.controller.BeingController;
+import java.util.Observable;
+
+import game.utilities.ImageSettings;
 
 /**
- * Extends from {@code ViewableObject}. <br/>
+ * Extends from {@code ImageSettings}. <br/>
  * Abstract class that serves as a super class for all the living beings of the game.
  * 
  * @author ZhaoWen
- * @see {@link ViewableObject}
+ * @see {@link ImageSettings}
  *
  */
-public abstract class LivingBeing extends ViewableObject implements Movable {
+public abstract class LivingBeing extends Observable implements Viewable,Movable {
 	
 	//****************************** Attributes ******************************
 	
@@ -21,7 +23,9 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	private int xp;
 	private int level;
 	
-	private BeingController beingController;
+	//private BeingController beingController;
+	
+	private ImageSettings imageSettings;
 	
 	//****************************** Constructor ******************************
 	
@@ -30,18 +34,27 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * 
 	 * @param map
 	 */
+	public LivingBeing(Map map, int x, int y, int hp, int level){
+		currentMap = map;
+		setNewPosition(x, y);
+		this.hp = hp;
+		xp = 0;
+		this.level = level;
+	}
+	
+	/**
+	 * Creates a living being and sets the map on which it is.
+	 * 
+	 * @param map
+	 */
 	public LivingBeing(Map map){
-		setCurrentMap(map);
+		this.currentMap = map;
 	}
 	
 	//************************** Getters and Setters **************************
 	
-	/**
-	 * Gets the map on which the living being currently is.
-	 * 
-	 * @return current map
-	 */
-	protected Map getCurrentMap(){
+	@Override
+	public Map getCurrentMap(){
 		return currentMap;
 	}
 	
@@ -50,7 +63,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * 
 	 * @param map
 	 */
-	private void setCurrentMap(Map map){
+	protected void setCurrentMap(Map map){
 		currentMap = map;
 	}
 	
@@ -76,7 +89,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * 
 	 * @return direction facing
 	 */
-	public char getDirectionFacing() {
+	protected char getDirectionFacing() {
 		return directionFacing;
 	}
 	
@@ -94,7 +107,8 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 				i = 1;
 			else if(directionFacing == 'E')
 				i = 2;
-			setOffsetY(getHeight()*i);
+			imageSettings.setOffsetY(imageSettings.getHeight()*i);
+			//System.out.println(imageSettings.getOffsetY());
 	}
 	
 	/**
@@ -150,28 +164,17 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 		this.xp = xp;
 	}
 	
-	/**
-	 * Gets the controller of the living being.
-	 * 
-	 * @return controller of the living being
-	 * @see {@link BeingController}
-	 */
-	protected BeingController getBeingController() {
-		return beingController;
-	}
-	
-	/**
-	 * Sets the controller of the living being.
-	 * 
-	 * @param beingController
-	 * @see {@link BeingController}
-	 */
-	public void setBeingController(BeingController beingController) {
-		this.beingController = beingController;
-	}
-	
 	//******************************** Methods ********************************
 	
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
+	
+	protected void setImageSettings(ImageSettings imageSettings) {
+		this.imageSettings = imageSettings;
+	}
+
 	/**
 	 * Sets the position to (x,y). Used when a previous position is defined.
 	 * 
@@ -189,7 +192,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * @param x
 	 * @param y
 	 */
-	public void emptyPosition(int x, int y){
+	protected void emptyPosition(int x, int y){
 		getCurrentMap().removeLivingOnMap(x, y);
 		getCurrentMap().setEmpty(x,y);
 	}
@@ -237,7 +240,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * 
 	 * @return size of current map
 	 */
-	private int getCurrentMapSize(){
+	protected int getCurrentMapSize(){
 		return getCurrentMap().getSize();
 	}
 	
@@ -248,22 +251,22 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * @return can move in the direction or not
 	 */
 	protected boolean canMove(char direction){
-		int[] pos = getPosition();
 		boolean canMove = false;
-		if(direction == 'N' && pos[1]-1 > -1 &&
-				getCurrentMap().isEmpty(pos[0], pos[1]-1))
+		if(direction == 'N' && position[1]-1 > -1 &&
+				currentMap.isEmpty(position[0], position[1]-1))
 			canMove = true;
-		else if(direction == 'S' && pos[1]+1 < getCurrentMapSize() &&
-				getCurrentMap().isEmpty(pos[0], pos[1]+1))
+		else if(direction == 'S' && position[1]+1 < getCurrentMapSize() &&
+				currentMap.isEmpty(position[0], position[1]+1))
 			canMove = true;
-		else if(direction == 'W' && pos[0]-1 > -1 &&
-				getCurrentMap().isEmpty(pos[0]-1, pos[1]))
+		else if(direction == 'W' && position[0]-1 > -1 &&
+				currentMap.isEmpty(position[0]-1, position[1]))
 			canMove = true;
-		else if(direction == 'E' && pos[0]+1 < getCurrentMapSize() &&
-				getCurrentMap().isEmpty(pos[0]+1, pos[1]))
+		else if(direction == 'E' && position[0]+1 < getCurrentMapSize() &&
+				currentMap.isEmpty(position[0]+1, position[1]))
 			canMove = true;
 		return canMove;
 	}
+	
 	/**
 	 * Makes the living being move if possible.
 	 * 
@@ -271,7 +274,7 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 */
 	@Override
 	public void move(char direction) {
-		int[] pos = getPosition();
+		int[] pos = position;
 		setDirectionFacing(direction);
 		if(canMove(direction)){
 			if(direction == 'N')
@@ -283,17 +286,9 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 			else if(direction == 'E')
 				setNewPosition(pos[0]+1, pos[1]);
 			emptyPosition(pos[0], pos[1]);
-			//setChanged();
-			//notifyObservers();
 		}
-		//System.out.println("       " + pos[0] + " "+ pos[1]);
 		setChanged();
 		notifyObservers();
-		/*for(int i = 0; i < currentMap.grid.length; i++){
-			for(int j = 0; j < currentMap.grid[0].length; j++){
-				System.out.println(currentMap.grid[i][j]);
-			}
-		}*/
 	}
 	
 	/**
@@ -302,17 +297,14 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	 * @return living being in front or not
 	 */
 	protected boolean isLivingInFront(){
-		Map currentMap = getCurrentMap();
-		int[] pos = getPosition();
-		char directionFacing = getDirectionFacing();
 		boolean isLivingInFront = false;
-		if(directionFacing == 'N' && currentMap.isOccupied(pos[0], pos[1]-1))
+		if(directionFacing == 'N' && currentMap.isOccupied(position[0], position[1]-1))
 			isLivingInFront = true;
-		else if(directionFacing == 'S' && currentMap.isOccupied(pos[0], pos[1]+1))
+		else if(directionFacing == 'S' && currentMap.isOccupied(position[0], position[1]+1))
 			isLivingInFront = true;
-		else if(directionFacing == 'W' && currentMap.isOccupied(pos[0]-1, pos[1]))
+		else if(directionFacing == 'W' && currentMap.isOccupied(position[0]-1, position[1]))
 			isLivingInFront = true;
-		else if(directionFacing == 'E' && currentMap.isOccupied(pos[0]+1, pos[1]))
+		else if(directionFacing == 'E' && currentMap.isOccupied(position[0]+1, position[1]))
 			isLivingInFront = true;
 		return isLivingInFront;
 	}
@@ -326,17 +318,14 @@ public abstract class LivingBeing extends ViewableObject implements Movable {
 	protected LivingBeing getLivingInFront(){
 		LivingBeing livingInFront = null;
 		if(isLivingInFront()){
-			Map currentMap = getCurrentMap();
-			int[] pos = getPosition();
-			char directionFacing = getDirectionFacing();
 			if(directionFacing == 'N')
-				livingInFront = currentMap.getLiving(pos[0], pos[1]-1);
+				livingInFront = currentMap.getLiving(position[0], position[1]-1);
 			else if(directionFacing == 'S')
-				livingInFront = currentMap.getLiving(pos[0], pos[1]+1);
+				livingInFront = currentMap.getLiving(position[0], position[1]+1);
 			else if(directionFacing == 'W')
-				livingInFront = currentMap.getLiving(pos[0]-1, pos[1]);
+				livingInFront = currentMap.getLiving(position[0]-1, position[1]);
 			else if(directionFacing == 'E')
-				livingInFront = currentMap.getLiving(pos[0]+1, pos[1]);
+				livingInFront = currentMap.getLiving(position[0]+1, position[1]);
 		}
 		return livingInFront;
 	}

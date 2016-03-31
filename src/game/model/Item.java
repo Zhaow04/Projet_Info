@@ -1,32 +1,65 @@
 package game.model;
 
+import java.util.Observable;
+
+import game.utilities.ImageSettings;
+
 /**
  * Implements {@code Usable}. <br/>
- * Extends from {@code ViewableObject} <br/>
+ * Extends from {@code ImageSettings} <br/>
  * Abstract class that serves as a super class for all the items.
  * 
  * @author ZhaoWen
  * @see {@link Usable}
  *
  */
-public abstract class Item extends ViewableObject implements Usable {
+public abstract class Item extends Observable implements Viewable, Usable {
 	
 	//****************************** Attributes ******************************
 	
+	private Map currentMap;
+	private Inventory inventory;
 	private int numberOfUse;
 	private int[] position;
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates an item. Currently void.
+	 * Creates an item.
 	 * 
 	 */
-	public Item(){
+	public Item() {
+		this(null);
+	}
+	
+	/**
+	 * Creates an item ands sets the map on which it is.
+	 * 
+	 */
+	public Item(Map map) {
+		currentMap = map;
 	}
 	
 	//************************** Getters and Setters **************************
+	/**
+	 * Gets the map on which the obstacle currently is.
+	 * 
+	 * @return current map
+	 */
+	public Map getCurrentMap(){
+		return currentMap;
+	}
 	
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+		setChanged();
+		notifyObservers("inventory");
+	}
+
 	/**
 	 * Gets the remaining number of use.
 	 * 
@@ -62,10 +95,14 @@ public abstract class Item extends ViewableObject implements Usable {
 	protected void setPosition(int x, int y){
 		position = new int[2];
 		position[0] = x; position[1] = y;
+		currentMap.addItemOnMap(this);
 	}
 	
 	//******************************** Methods ********************************
 	
+	@Override
+	public abstract ImageSettings getImageSettings();
+
 	/**
 	 * Adds a number of use to the item.
 	 * 
@@ -80,6 +117,12 @@ public abstract class Item extends ViewableObject implements Usable {
 	 */
 	public void useOnce(){
 		numberOfUse --;
+	}
+	
+	public void removedFromMap() {
+		setPosition(0, 0);
+		setChanged();
+		notifyObservers("removed");
 	}
 
 }

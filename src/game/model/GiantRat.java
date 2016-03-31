@@ -1,5 +1,8 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+import game.view.BeingView;
+
 /**
  * Extends from {@code Monster} <br/>
  * Giant rat - enemy.
@@ -12,6 +15,8 @@ public class GiantRat extends Monster {
 	
 	//****************************** Attributes ******************************
 	
+	//private ImageSettings imageSettings =
+		//	new ImageSettings("game/utilities/GiantRat.png", 0, 0, 80, 80);
 	
 	//****************************** Constructor ******************************
 	
@@ -25,23 +30,28 @@ public class GiantRat extends Monster {
 	 */
 	public GiantRat(Map map, int x, int y, int level){
 		super(map);
-		setPosition(x,y);
+		setImageSettings(new ImageSettings("game/utilities/GiantRat.png", 0, 0, 80, 80));
+		setNewPosition(x,y);
 		setBasePos(x,y);
 		setDirectionFacing('S');  
 		setLevel(level);
 		setHp(maxHp());
 		setKillXp(50);
 		
-		setImageURL("game/utilities/GiantRat.png");
-		setOffsetX(0);
-		setOffsetY(0);
-		setWidth(80);
-		setHeight(80);
+		new BeingView(this);
 	}
 	
 	//************************** Getters and Setters **************************
 	
+	
+
 	//******************************** Methods ********************************
+	/*
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}*/
+	
 	/**
 	 * Defines the maximum of Hp this living being can have (depending on his level).
 	 * 

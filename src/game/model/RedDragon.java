@@ -1,5 +1,8 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+import game.view.BeingView;
+
 /**
  * Extends from {@code Monster} <br/>
  * Red Dragon - enemy.
@@ -12,6 +15,7 @@ public class RedDragon extends Monster {
 	
 	//****************************** Attributes ******************************
 	
+	//private ImageSettings imageSettings = new ImageSettings("game/utilities/RedDragon.png", 0, 0, 96, 96);
 	
 	//****************************** Constructor ******************************
 	
@@ -25,23 +29,27 @@ public class RedDragon extends Monster {
 	 */
 	public RedDragon(Map map, int x, int y, int level){
 		super(map);
-		setPosition(x,y);
+		setImageSettings(new ImageSettings("game/utilities/RedDragon.png", 0, 0, 96, 96));
+		setNewPosition(x,y);
 		setBasePos(x,y);
 		setDirectionFacing('S');  
 		setLevel(level);
 		setHp(maxHp());
 		setKillXp(50);
 		
-		setImageURL("game/utilities/RedDragon.png");
-		setOffsetX(0);
-		setOffsetY(0);
-		setWidth(96);
-		setHeight(96);
+		new BeingView(this);
 	}
 	
 	//************************** Getters and Setters **************************
 	
+
 	//******************************** Methods ********************************
+	/*
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}*/
+	
 	/**
 	 * Defines the maximum of Hp this living being can have (depending on his level).
 	 * 

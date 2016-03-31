@@ -2,11 +2,6 @@ package game.controller;
 
 import game.model.Map;
 import game.view.MapView;
-//import javafx.event.ActionEvent;
-//import javafx.event.EventHandler;
-//import javafx.geometry.Pos;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 //import javafx.scene.Scene;
 //import javafx.scene.input.KeyEvent;
 //import javafx.scene.paint.Color;
@@ -18,9 +13,6 @@ public class MapController {
 	
 	private Map mapModel;
 	private MapView mapView;
-	
-	private GridPane mapContainer;
-	private StackPane playerContainer;
 	
 	//****************************** Constructor ******************************
 	
@@ -49,7 +41,7 @@ public class MapController {
 		return mapModel;
 	}
 
-	private void setMapModel(Map mapModel){
+	public void setMapModel(Map mapModel){
 		this.mapModel = mapModel;
 	}
 	
@@ -59,18 +51,6 @@ public class MapController {
 
 	public void setMapView(MapView mapView) {
 		this.mapView = mapView;
-	}
-
-	public GridPane getMapContainer(){
-		return mapContainer;
-	}
-	
-	private void setMapContainer(GridPane mapContainer) {
-		this.mapContainer = mapContainer;
-	}
-
-	public StackPane getPlayerContainer(){
-		return playerContainer;
 	}
 	
 	//******************************** Methods ********************************

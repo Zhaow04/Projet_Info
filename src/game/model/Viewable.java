@@ -1,5 +1,6 @@
 package game.model;
 
+import game.utilities.ImageSettings;
 
 /**
  * A class implements {@code Viewable} when it needs an image to be displayed on screen
@@ -10,38 +11,26 @@ package game.model;
 public interface Viewable {
 	
 	/**
-	 * Gets the image URL.
+	 * Gets the {@code ImageSettings} associated with the object.
 	 * 
-	 * @return URL
+	 * @return {@code ImageSettings}
+	 * @see {@link ImageSettings}
+	 * 
 	 */
-	public String getImageURL();
+	public ImageSettings getImageSettings();
 	
 	/**
-	 * Gets the x offset of the image to be displayed.
+	 * Gets the position (x,y).
 	 * 
-	 * @return int
+	 * @return position
 	 */
-	public int getOffsetX();
+	public int[] getPosition();
 	
 	/**
-	 * Gets the y offset of the image to be displayed.
+	 * Gets the map on which the viewable currently is.
 	 * 
-	 * @return int
+	 * @return current map
 	 */
-	public int getOffsetY();
-	
-	/**
-	 * Gets the width of the image to be displayed.
-	 * 
-	 * @return int
-	 */
-	public int getWidth();
-
-	/**
-	 * Gets the height of the image to be displayed.
-	 * 
-	 * @return int
-	 */
-	public int getHeight();
+	public Map getCurrentMap();
 	
 }
