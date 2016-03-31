@@ -1,5 +1,7 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+
 /**
  * Extends from {@code Monster} <br/>
  * Blue Dragon - enemy.
@@ -12,6 +14,8 @@ public class BlueDragon extends Monster {
 	
 	//****************************** Attributes ******************************
 	
+	private ImageSettings imageSettings =
+			new ImageSettings("game/utilities/Dragon.png", 0, 0, 96, 96);
 	
 	//****************************** Constructor ******************************
 	
@@ -31,17 +35,18 @@ public class BlueDragon extends Monster {
 		setLevel(level);
 		setHp(maxHp());
 		setKillXp(50);
-		
-		setImageURL("game/utilities/Dragon.png");
-		setOffsetX(0);
-		setOffsetY(0);
-		setWidth(96);
-		setHeight(96);
 	}
 	
 	//************************** Getters and Setters **************************
 	
+
 	//******************************** Methods ********************************
+	
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
+	
 	/**
 	 * Defines the maximum of Hp this living being can have (depending on his level).
 	 * 

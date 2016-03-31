@@ -1,33 +1,39 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+import game.view.ObstacleView;
+
 public class Rock extends Obstacle{
-	
+
 	//****************************** Attributes ******************************
 	
+	private ImageSettings imageSettings =
+			new ImageSettings("game/utilities/forest.png", 0, 0, 60, 60);
 	
-		//****************************** Constructor ******************************
+	//****************************** Constructor ******************************
+	
+	/**
+	 * Creates a rock and sets the map on which it is and its position. Creates the view.
+	 * 
+	 * @param map
+	 * @param x
+	 * @param y
+	 * @see {@link Obstacle#Obstacle(Map)}
+	 */
+	public Rock(Map map, int x, int y){
+		super(map);
+		setPosition(x,y);
 		
-		/**
-		 * Creates a rock and sets the map on which it is and its position.
-		 * 
-		 * @param map
-		 * @param x
-		 * @param y
-		 * @see {@link Obstacle#Obstacle(Map)}
-		 */
-		public Rock(Map map, int x, int y){
-			super(map);
-			setPosition(x,y);
-			
-			setImageURL("game/utilities/forest.png");
-			setOffsetX(0);
-			setOffsetY(0);
-			setWidth(60);
-			setHeight(60);
-		}
-		
-		//************************** Getters and Setters **************************
-		
-		//******************************** Methods ********************************
+		new ObstacleView(this);
+	}
+
+	//************************** Getters and Setters **************************
+
+	//******************************** Methods ********************************
+	
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
 	
 }

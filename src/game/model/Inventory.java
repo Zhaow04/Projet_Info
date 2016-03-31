@@ -1,5 +1,6 @@
 package game.model;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * Inventory of the player.
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * @author ZhaoWen
  *
  */
-public class Inventory {
+public class Inventory extends Observable {
 	
 	//****************************** Attributes ******************************
 	
@@ -51,6 +52,9 @@ public class Inventory {
 	 */
 	public void addItem(Item item){
 		listItem.add(item);
+		item.setInventory(this);
+		setChanged();
+		notifyObservers(listItem.indexOf(item));
 	}
 	
 	/**

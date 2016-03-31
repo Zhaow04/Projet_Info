@@ -3,35 +3,55 @@ package game.view;
 import java.io.IOException;
 
 import game.Main;
-import game.controller.BeingController;
 import game.controller.Controller;
-import game.controller.ItemController;
-import game.controller.MapController;
 import game.model.GameModel;
-import game.model.Player;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class GameView {
 	
 	//****************************** Attributes ******************************
 	
-	private Scene startScene, mainScene;
 	private GameModel model;
+	
+	static Stage stage;
+	private Scene currentScene;
+	
+	private Scene startScene, mainScene;
+	
 	private Controller controller;
 	private HUDController hudController;
 	
 	//****************************** Constructor ******************************
 	
+	public GameView(GameModel model, Stage stage) {
+		this.model = model;
+		GameView.stage = stage;
+		currentScene = stage.getScene();
+		
+		AnchorPane root = MapView.getRootList().get(0);
+		stage.getScene().setRoot(root);
+		
+		root.requestFocus();
+		//System.out.println(currentScene.getHeight());
+		//System.out.println(stage.getHeight());
+		
+		stage.minHeightProperty().bind(root.widthProperty());
+		stage.minWidthProperty().bind(root.heightProperty());
+		initEventHandler();
+	}
+	/*
 	public GameView(GameModel model, Controller controller){
 
 		setModel(model);
 		setController(controller);
-		MapController mapController = new MapController();
+		MapController mapController = controller.getMapController();
 		MapView mapView = new MapView(model, mapController);
 		setMainScene(new Scene(mapView.getRoot()));
 		
@@ -40,11 +60,11 @@ public class GameView {
 			loader.setLocation(Main.class.getResource("view/StartScene.fxml"));
 			AnchorPane startRoot = (AnchorPane) loader.load();
 			StartSceneController startSceneController = (StartSceneController) loader.getController();
+			
 			startSceneController.setMainScene(mainScene);
 			Scene startScene = new Scene(startRoot);
 			setStartScene(startScene);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -83,7 +103,7 @@ public class GameView {
 		itemView.initAllItemView();
 		
 		initEventHandler();
-	}
+	}*/
 	
 	//************************** Getters and Setters **************************
 
@@ -120,10 +140,11 @@ public class GameView {
 		}
 
 		private void initEventHandler() {
-			mainScene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+			currentScene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent ke){
-					controller.getBeingController().addKey(ke.getCode().toString().toUpperCase());
+					//System.out.println(ke.getCode());
+					BeingView.beingController.addKey(ke.getCode().toString().toUpperCase());
 					//System.out.println(ke.getCode());
 					//System.out.println(ke.getCode());
 				}

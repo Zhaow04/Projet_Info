@@ -1,5 +1,7 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+
 /**
  * Extends from {@code Monster} <br/>
  * Orange bat - enemy.
@@ -11,6 +13,8 @@ public class OrangeBat extends Monster {
 	
 	//****************************** Attributes ******************************
 	
+	private ImageSettings imageSettings =
+			new ImageSettings("game/model/batman.png", 0, 0, 100, 100);
 	
 	//****************************** Constructor ******************************
 	
@@ -30,17 +34,19 @@ public class OrangeBat extends Monster {
 		setLevel(level);
 		setHp(maxHp());
 		setKillXp(50);
-		
-		setImageURL("game/model/batman.png");
-		setOffsetX(0);
-		setOffsetY(0);
-		setWidth(100);
-		setHeight(100);
 	}
 	
 	//************************** Getters and Setters **************************
 	
+	
+
 	//******************************** Methods ********************************
+	
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
+	
 	/**
 	 * Defines the maximum of Hp this living being can have (depending on his level).
 	 * 

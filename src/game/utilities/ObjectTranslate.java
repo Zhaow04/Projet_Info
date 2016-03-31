@@ -20,6 +20,16 @@ public class ObjectTranslate {
 	
 	//****************************** Constructor ******************************
 	
+	public ObjectTranslate(Duration duration, Node node, double toXorY, String s) {
+		tt = new TranslateTransition(duration,node);
+		if(s.toLowerCase() == "x")
+			tt.setToX(toXorY);
+		else if(s.toLowerCase() == "y")
+			tt.setToY(toXorY);
+		tt.setCycleCount(1);
+		tt.play();
+	}
+	
 	public ObjectTranslate(Duration duration, Node node, double toX, double toY) {
 		tt = new TranslateTransition(duration,node);
 		tt.setToX(toX);

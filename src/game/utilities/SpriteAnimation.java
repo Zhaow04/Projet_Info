@@ -24,13 +24,16 @@ public class SpriteAnimation extends Transition {
         this.imageView = imageView;
         this.count     = count;
         this.columns   = columns;
-        this.offsetX   = living.getOffsetX();
-        this.offsetY   = living.getOffsetY();
-        this.width     = living.getWidth();
-        this.height    = living.getHeight();
+        ImageSettings imageSettings = living.getImageSettings();
+        this.offsetX   = (int) imageSettings.getOffsetX();
+        this.offsetY   = (int) imageSettings.getOffsetY();
+        this.width     = (int) imageSettings.getWidth();
+        this.height    = (int) imageSettings.getHeight();
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
         setCycleCount(1);
+        //System.out.println(offsetY);
+        //System.out.println("ok2");
         this.play();
         
     }

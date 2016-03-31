@@ -6,7 +6,6 @@ import game.model.LivingBeing;
 import game.model.Monster;
 import game.model.Player;
 import game.view.BeingView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
 public class BeingController {
@@ -19,7 +18,6 @@ public class BeingController {
 	private ArrayList<String> keyList = new ArrayList<String>();
 	
 	private ArrayList<StackPane> containerList = new ArrayList<StackPane>();
-	private StackPane playerContainer;
 	
 	//****************************** Constructor ******************************
 	
@@ -30,9 +28,6 @@ public class BeingController {
 	public BeingController(ArrayList<LivingBeing> objectList){
 		setBeingList(objectList);
 		setPlayer((Player) objectList.get(0));
-		for(LivingBeing living : objectList){
-			living.setBeingController(this);
-		}
 	}
 	
 	//************************** Getters and Setters **************************
@@ -63,14 +58,6 @@ public class BeingController {
 
 	public ArrayList<StackPane> getContainerList() {
 		return containerList;
-	}
-
-	public StackPane getPlayerContainer(){
-		return playerContainer;
-	}
-
-	private void setPlayerContainer(StackPane playerContainer) {
-		this.playerContainer = playerContainer;
 	}
 	
 	public ArrayList<String> getKeyList() {
@@ -104,27 +91,39 @@ public class BeingController {
 	public void movePlayer(String str){
 		Player player = getPlayer();
 		int[] pos = player.getPosition();
-		StackPane container = beingView.getContainer(player);
+		StackPane container = BeingView.getContainer(player);
 		/*System.out.println(pos[0]-0.2 < beingView.containerPosX(container) &&
 				pos[1]-0.2 < beingView.containerPosY(container));
 		System.out.println(pos[0] + " " + pos[1] + "<-------");
 		System.out.println(beingView.containerPosX(container) + " " +
 				beingView.containerPosY(container) + "<-------");*/
-		if(pos[0]-0.1 < beingView.containerPosX(container) &&
-				pos[0]+0.1 > beingView.containerPosX(container) &&
-				pos[1]-0.1 < beingView.containerPosY(container) &&
-				pos[1]+0.1 > beingView.containerPosY(container)) {
+		if(pos[0]-0.2 < BeingView.containerPosX(container) &&
+				pos[0]+0.2 > BeingView.containerPosX(container) &&
+				pos[1]-0.2 < BeingView.containerPosY(container) &&
+				pos[1]+0.2 > BeingView.containerPosY(container)) {
 			if(str.equals("UP")){
 				player.move('N');
+				if(player.isItemAtFeet()) {
+					player.takeItem();
+				}
 			}
 			else if(str.equals("LEFT")){
 				player.move('W');
+				if(player.isItemAtFeet()) {
+					player.takeItem();
+				}
 			}
 			else if(str.equals("DOWN")){
 				player.move('S');
+				if(player.isItemAtFeet()) {
+					player.takeItem();
+				}
 			}
 			else{
 				player.move('E');
+				if(player.isItemAtFeet()) {
+					player.takeItem();
+				}
 			}
 		}
 	}
@@ -134,11 +133,11 @@ public class BeingController {
 			if(living instanceof Monster) {
 				Monster monster = (Monster) living;
 				int[] pos = living.getPosition();
-				StackPane container = beingView.getContainer(living);
-				if(pos[0]-0.1 < beingView.containerPosX(container) &&
-						pos[0]+0.1 > beingView.containerPosX(container) &&
-						pos[1]-0.1 < beingView.containerPosY(container) &&
-						pos[1]+0.1 > beingView.containerPosY(container)) {
+				StackPane container = BeingView.getContainer(living);
+				if(pos[0]-0.1 < BeingView.containerPosX(container) &&
+						pos[0]+0.1 > BeingView.containerPosX(container) &&
+						pos[1]-0.1 < BeingView.containerPosY(container) &&
+						pos[1]+0.1 > BeingView.containerPosY(container)) {
 					monster.moveInPattern();
 				}
 			}

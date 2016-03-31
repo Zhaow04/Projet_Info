@@ -1,19 +1,24 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+
 /**
- * Extends from {@code ViewableObject} <br/>
+ * Extends from {@code ImageSettings} <br/>
  * Special environment with high level monsters and a boss.
  * 
  * 
- * @see {@link ViewableObject}
+ * @see {@link ImageSettings}
  *
  */
-public class Dungeon extends ViewableObject {
+public class Dungeon implements Viewable {
 
 	//****************************** Attributes ******************************
 
 	private Map currentMap;
 	private int[] position; // w/o initialization
+	
+	// we still need a good picture of a dungeon on the map, it needs to take 9 places
+	private ImageSettings imageSettings = new ImageSettings("game/model/safehouse.png",0,0,190,190);
 
 	//****************************** Constructor ******************************
 
@@ -21,27 +26,17 @@ public class Dungeon extends ViewableObject {
 	 * Creates a dungeon on the current map.
 	 * 
 	 * @param map
-	 * @see {@link ViewableObject}
+	 * @see {@link ImageSettings}
 	 */
 	public Dungeon (Map map, int x, int y){
 		setCurrentMap(map);
 		setPosition(x,y);
-
-		setImageURL("game/model/safehouse.png");  // we still need a good picture of a dungeon on the map, it needs to take 9 places
-		setOffsetX(0);
-		setOffsetY(0);
-		setWidth(190);
-		setHeight(190);
 	}
 
 	//************************** Getters and Setters **************************
-
-	/**
-	 * Gets the map on which the dungeon currently is.
-	 * 
-	 * @return current map
-	 */
-	protected Map getCurrentMap(){
+	
+	@Override
+	public Map getCurrentMap(){
 		return currentMap;
 	}
 
@@ -69,6 +64,11 @@ public class Dungeon extends ViewableObject {
 		currentMap.setOccupied(x, y);
 	}
 	//******************************** Methods ********************************
+
+	@Override
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
 
 	/**
 	 * Sets the position to (x,y). Used when a previous position is defined.

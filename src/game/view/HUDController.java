@@ -14,16 +14,12 @@ public class HUDController {
 	
 	
 	private InventoryViewController inventoryViewController;
+	private Stage inventoryWindow;
 	
 	@FXML
 	private Button inventoryButton;
 	
 	public HUDController() {
-		
-	}
-	
-	@FXML
-	private void openInventory() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/InventoryView.fxml"));
@@ -31,18 +27,17 @@ public class HUDController {
 			inventoryViewController = (InventoryViewController) loader.getController();
 			
 			Scene inventoryScene = new Scene(inventoryView);
-			Stage inventoryWindow = new Stage();
+			inventoryWindow = new Stage();
 			inventoryWindow.setScene(inventoryScene);
-			inventoryWindow.initOwner(inventoryButton.getScene().getWindow());
-			inventoryWindow.show();
-			/*
-			mapView.getRoot().getChildren().add(hud);
-			AnchorPane.setBottomAnchor(hud, 0.0);
-			AnchorPane.setRightAnchor(hud, 0.0);*/
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	private void openInventory() {
+		inventoryWindow.initOwner(inventoryButton.getScene().getWindow());
+		inventoryWindow.show();
 	}
 
 	public InventoryViewController getInventoryViewController() {
