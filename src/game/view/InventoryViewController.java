@@ -1,16 +1,12 @@
 package game.view;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import game.model.Inventory;
-import game.model.Item;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
-public class InventoryViewController implements Observer {
+public class InventoryViewController {
 	
 	private Inventory inventory;
 	
@@ -36,7 +32,7 @@ public class InventoryViewController implements Observer {
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
 	}
-
+/*
 	@Override
 	public void update(Observable o, Object arg) {
 		if(true) {
@@ -49,5 +45,5 @@ public class InventoryViewController implements Observer {
 			ItemView.removeContainer(item);
 		}
 	}
-	
+	*/
 }

@@ -1,7 +1,6 @@
 package game.model;
 
 import game.utilities.ImageSettings;
-import game.view.BeingView;
 
 /**
  * Extends from {@code Monster} <br/>
@@ -33,12 +32,10 @@ public class GiantRat extends Monster {
 		setImageSettings(new ImageSettings("game/utilities/GiantRat.png", 0, 0, 80, 80));
 		setNewPosition(x,y);
 		setBasePos(x,y);
-		setDirectionFacing('S');  
+		setDirectionFacing(0,1);  
 		setLevel(level);
 		setHp(maxHp());
 		setKillXp(50);
-		
-		new BeingView(this);
 	}
 	
 	//************************** Getters and Setters **************************

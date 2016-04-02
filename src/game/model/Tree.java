@@ -1,7 +1,6 @@
 package game.model;
 
 import game.utilities.ImageSettings;
-import game.view.ObstacleView;
 
 public class Tree extends Obstacle{
 
@@ -23,8 +22,6 @@ public class Tree extends Obstacle{
 	public Tree (Map map, int x, int y){
 		super(map);
 		setPosition(x,y);
-		
-		new ObstacleView(this);
 	}
 
 	//************************** Getters and Setters **************************

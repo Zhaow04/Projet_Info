@@ -1,8 +1,10 @@
 package game.model;
 
-import java.util.Observable;
+import java.util.ArrayList;
 
 import game.utilities.ImageSettings;
+import game.utilities.Vector2D;
+import game.view.Observer;
 
 /**
  * Extends from {@code ImageSettings}. <br/>
@@ -12,13 +14,13 @@ import game.utilities.ImageSettings;
  * @see {@link ImageSettings}
  *
  */
-public abstract class LivingBeing extends Observable implements Viewable,Movable {
+public abstract class LivingBeing implements Observable,Movable {
 	
 	//****************************** Attributes ******************************
 	
 	private Map currentMap;
 	private int[] position; // w/o initialization
-	private char directionFacing;
+	private Vector2D directionFacing;
 	private int hp; // w/o initialization
 	private int xp;
 	private int level;
@@ -26,6 +28,7 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	//private BeingController beingController;
 	
 	private ImageSettings imageSettings;
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	//****************************** Constructor ******************************
 	
@@ -37,6 +40,7 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	public LivingBeing(Map map, int x, int y, int hp, int level){
 		currentMap = map;
 		setNewPosition(x, y);
+		map.addMovable(this);
 		this.hp = hp;
 		xp = 0;
 		this.level = level;
@@ -49,6 +53,7 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 */
 	public LivingBeing(Map map){
 		this.currentMap = map;
+		map.addMovable(this);
 	}
 	
 	//************************** Getters and Setters **************************
@@ -81,7 +86,7 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	protected void setPosition(int x, int y){
 		position = new int[2];
 		position[0] = x; position[1] = y;
-		currentMap.setOccupied(x, y);
+		currentMap.addObservableOnMap(this);
 	}
 	
 	/**
@@ -89,7 +94,7 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 * 
 	 * @return direction facing
 	 */
-	protected char getDirectionFacing() {
+	protected Vector2D getDirectionFacing() {
 		return directionFacing;
 	}
 	
@@ -98,17 +103,16 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 * 
 	 * @param directionFacing
 	 */
-	protected void setDirectionFacing(char directionFacing) {
-		this.directionFacing = directionFacing;
+	protected void setDirectionFacing(int x, int y) {
+		directionFacing = new Vector2D(x,y);
 			int i = 0;
-			if(directionFacing == 'N')
+			if(directionFacing.equals(0, -1))
 				i = 3;
-			else if(directionFacing == 'W')
+			else if(directionFacing.equals(-1, 0))
 				i = 1;
-			else if(directionFacing == 'E')
+			else if(directionFacing.equals(1, 0))
 				i = 2;
-			imageSettings.setOffsetY(imageSettings.getHeight()*i);
-			//System.out.println(imageSettings.getOffsetY());
+			imageSettings.updateDirection(i);
 	}
 	
 	/**
@@ -167,6 +171,23 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	//******************************** Methods ********************************
 	
 	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		this.notifyObservers(null);
+	}
+
+	@Override
+	public void notifyObservers(Object arg) {
+		for(Observer o : observers) {
+			o.update(this, arg);
+		}
+	}
+
+	@Override
 	public ImageSettings getImageSettings() {
 		return imageSettings;
 	}
@@ -183,7 +204,7 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 */
 	protected void setNewPosition(int x,int y){
 		setPosition(x,y);
-		currentMap.addLivingOnMap(this);
+		currentMap.addObservableOnMap(this);
 	}
 	
 	/**
@@ -193,8 +214,8 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 * @param y
 	 */
 	protected void emptyPosition(int x, int y){
-		getCurrentMap().removeLivingOnMap(x, y);
-		getCurrentMap().setEmpty(x,y);
+		getCurrentMap().removeObservableOnMap(x,y);
+		//getCurrentMap().setEmpty(x,y);
 	}
 	
 	/**
@@ -227,10 +248,10 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 		System.out.println(getHp());
 		if(getHp() <= 0) {
 			int[] pos = getPosition();
-			emptyPosition(pos[0], pos[1]);
+			emptyPosition(pos[0],pos[1]);
+			currentMap.getMovableList().remove(this);
 			//System.out.println(currentMap.getLivingOnMap()[pos[1]][pos[0]]);
 			System.out.println(this.toString() + " dead");
-			setChanged();
 			notifyObservers("dead");
 		}
 	}
@@ -250,20 +271,16 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 * @param direction
 	 * @return can move in the direction or not
 	 */
-	protected boolean canMove(char direction){
+	protected boolean canMove(int x, int y){
 		boolean canMove = false;
-		if(direction == 'N' && position[1]-1 > -1 &&
-				currentMap.isEmpty(position[0], position[1]-1))
+		Vector2D direction = new Vector2D(x,y);
+		direction.add(position[0], position[1]);
+		if(direction.isPositive() &&
+				direction.getIntX() < currentMap.getSize() &&
+				direction.getIntY() < currentMap.getSize() &&
+				currentMap.isEmpty(direction.getIntX(),direction.getIntY())) {
 			canMove = true;
-		else if(direction == 'S' && position[1]+1 < getCurrentMapSize() &&
-				currentMap.isEmpty(position[0], position[1]+1))
-			canMove = true;
-		else if(direction == 'W' && position[0]-1 > -1 &&
-				currentMap.isEmpty(position[0]-1, position[1]))
-			canMove = true;
-		else if(direction == 'E' && position[0]+1 < getCurrentMapSize() &&
-				currentMap.isEmpty(position[0]+1, position[1]))
-			canMove = true;
+		}
 		return canMove;
 	}
 	
@@ -273,21 +290,13 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 * @param direction
 	 */
 	@Override
-	public void move(char direction) {
+	public void move(int x, int y) {
 		int[] pos = position;
-		setDirectionFacing(direction);
-		if(canMove(direction)){
-			if(direction == 'N')
-				setNewPosition(pos[0], pos[1]-1);
-			else if(direction == 'S')
-				setNewPosition(pos[0], pos[1]+1);
-			else if(direction == 'W')
-				setNewPosition(pos[0]-1, pos[1]);
-			else if(direction == 'E')
-				setNewPosition(pos[0]+1, pos[1]);
+		setDirectionFacing(x,y);
+		if(canMove(x,y)){
+			setNewPosition(pos[0] + directionFacing.getIntX(), pos[1] + directionFacing.getIntY());
 			emptyPosition(pos[0], pos[1]);
 		}
-		setChanged();
 		notifyObservers();
 	}
 	
@@ -298,13 +307,9 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	 */
 	protected boolean isLivingInFront(){
 		boolean isLivingInFront = false;
-		if(directionFacing == 'N' && currentMap.isOccupied(position[0], position[1]-1))
-			isLivingInFront = true;
-		else if(directionFacing == 'S' && currentMap.isOccupied(position[0], position[1]+1))
-			isLivingInFront = true;
-		else if(directionFacing == 'W' && currentMap.isOccupied(position[0]-1, position[1]))
-			isLivingInFront = true;
-		else if(directionFacing == 'E' && currentMap.isOccupied(position[0]+1, position[1]))
+		int x = position[0] + directionFacing.getIntX();
+		int y = position[1] + directionFacing.getIntY();
+		if(currentMap.getObservableOnMap(x, y) instanceof LivingBeing)
 			isLivingInFront = true;
 		return isLivingInFront;
 	}
@@ -318,14 +323,9 @@ public abstract class LivingBeing extends Observable implements Viewable,Movable
 	protected LivingBeing getLivingInFront(){
 		LivingBeing livingInFront = null;
 		if(isLivingInFront()){
-			if(directionFacing == 'N')
-				livingInFront = currentMap.getLiving(position[0], position[1]-1);
-			else if(directionFacing == 'S')
-				livingInFront = currentMap.getLiving(position[0], position[1]+1);
-			else if(directionFacing == 'W')
-				livingInFront = currentMap.getLiving(position[0]-1, position[1]);
-			else if(directionFacing == 'E')
-				livingInFront = currentMap.getLiving(position[0]+1, position[1]);
+			int x = position[0] + directionFacing.getIntX();
+			int y = position[1] + directionFacing.getIntY();
+			livingInFront = (LivingBeing) currentMap.getObservableOnMap(x, y);
 		}
 		return livingInFront;
 	}

@@ -2,9 +2,6 @@ package game;
 
 import java.io.IOException;
 
-import game.controller.Controller;
-import game.model.GameModel;
-import game.view.GameView;
 import game.view.StartSceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

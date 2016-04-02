@@ -1,17 +1,8 @@
 package game.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import game.Main;
 import game.utilities.ImageSettings;
-import game.view.BeingView;
-import game.view.HUDController;
-import game.view.InventoryViewController;
-import game.view.MapView;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 /**
  * Extends from {@code LivingBeing} <br/>
@@ -46,15 +37,12 @@ public class Player extends LivingBeing {
 	public Player(Map map, int x, int y){
 		super(map,x,y,1500,1);
 		setImageSettings(new ImageSettings("game/utilities/blackmage_m.png", 0, 0, 32, 48));
-		setDirectionFacing('S');
-		map.addToViewable(this);
+		setDirectionFacing(0,1);
+		//map.addToViewable(this);
 		mana = 500;
 		inventory = new Inventory();
 		FirstAttack firstAttack = new FirstAttack();
 		addSkill(firstAttack);
-		
-		new BeingView(this);
-		createHUD();
 	}
 	
 	/**
@@ -66,9 +54,9 @@ public class Player extends LivingBeing {
 	public Player(Map map){
 		super(map);
 		setPosition(0,0);
-		setDirectionFacing('S');
+		setDirectionFacing(0,-1);
 		setHp(1500);
-		setMana(500);
+		mana = 500;
 		setXp(0);
 		setLevel(1);
 		inventory = new Inventory();
@@ -85,15 +73,6 @@ public class Player extends LivingBeing {
 	 */
 	protected int getMana() {
 		return mana;
-	}
-	
-	/**
-	 * Sets the amount of mana.
-	 * 
-	 * @param mana
-	 */
-	private void setMana(int mana) {
-		this.mana = mana;
 	}
 	
 	/**
@@ -114,36 +93,23 @@ public class Player extends LivingBeing {
 		return skillList;
 	}
 	
-	/**
-	 * Sets the skills list of the player.
-	 * 
-	 * @param skillList
-	 */
-	public void setSkillList(ArrayList<Skill> skillList) {
-		this.skillList = skillList;
-	}
-	
 	//******************************** Methods ********************************
 	/*
 	@Override
 	public ImageSettings getImageSettings() {
 		return imageSettings;
 	}*/
-
-	private void createHUD() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/HUD.fxml"));
-			StackPane hud = (StackPane) loader.load();
-			MapView.currentRoot.getChildren().add(hud);
-			AnchorPane.setBottomAnchor(hud, 0.0);
-			AnchorPane.setRightAnchor(hud, 0.0);
-			
-			HUDController hudController = (HUDController) loader.getController();
-			InventoryViewController inventoryViewController = hudController.getInventoryViewController();
-			inventory.addObserver(inventoryViewController);
-		} catch (IOException e) {
-			e.printStackTrace();
+	
+	/**
+	 * Makes the living being move if possible.
+	 * 
+	 * @param direction
+	 */
+	@Override
+	public void move(int x, int y) {
+		super.move(x,y);
+		if(isItemAtFeet()) {
+			takeItem();
 		}
 	}
 	

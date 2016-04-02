@@ -31,7 +31,7 @@ public class BlueDragon extends Monster {
 		super(map);
 		setPosition(x,y);
 		setBasePos(x,y);
-		setDirectionFacing('S');  
+		setDirectionFacing(0,1);  
 		setLevel(level);
 		setHp(maxHp());
 		setKillXp(50);

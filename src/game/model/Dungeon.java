@@ -1,6 +1,7 @@
 package game.model;
 
 import game.utilities.ImageSettings;
+import game.view.Observer;
 
 /**
  * Extends from {@code ImageSettings} <br/>
@@ -10,7 +11,7 @@ import game.utilities.ImageSettings;
  * @see {@link ImageSettings}
  *
  */
-public class Dungeon implements Viewable {
+public class Dungeon implements Observable {
 
 	//****************************** Attributes ******************************
 
@@ -61,9 +62,27 @@ public class Dungeon implements Viewable {
 	protected void setPosition(int x, int y){
 		position = new int[2];
 		position[0] = x; position[1] = y;
-		currentMap.setOccupied(x, y);
+		//currentMap.setOccupied(x, y);
 	}
 	//******************************** Methods ********************************
+
+	@Override
+	public void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyObservers(Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public ImageSettings getImageSettings() {
@@ -78,7 +97,7 @@ public class Dungeon implements Viewable {
 	 */
 	protected void setNewPosition(int x,int y){
 		setPosition(x,y);
-		currentMap.addDungeonOnMap(this);
+		currentMap.addObservableOnMap(this);
 	}
 
 	/**
@@ -88,7 +107,7 @@ public class Dungeon implements Viewable {
 	 * @param y
 	 */
 	public void emptyPosition(int x, int y){
-		getCurrentMap().removeDungeonOnMap(x, y);
-		getCurrentMap().setEmpty(x,y);
+		getCurrentMap().removeObservableOnMap(x, y);
+		//getCurrentMap().setEmpty(x,y);
 	}
 }

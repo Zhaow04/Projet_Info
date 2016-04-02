@@ -36,7 +36,9 @@ public class HUDController {
 	
 	@FXML
 	private void openInventory() {
-		inventoryWindow.initOwner(inventoryButton.getScene().getWindow());
+		if(inventoryWindow.getOwner() == null) {
+			inventoryWindow.initOwner(inventoryButton.getScene().getWindow());
+		}
 		inventoryWindow.show();
 	}
 
