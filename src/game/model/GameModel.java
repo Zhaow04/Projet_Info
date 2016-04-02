@@ -15,7 +15,6 @@ public class GameModel implements Model {
 	
 	private Map map;
 	private Player player;
-	private ArrayList<Dungeon> dungeonList = new ArrayList<Dungeon>();
 	
 	//****************************** Constructor ******************************
 	
@@ -28,7 +27,7 @@ public class GameModel implements Model {
 		
 		map = new Map(mapSize, "ok");
 		
-		player = new Player(map,0,0);
+		player = new Player(map,5,5);
 		//new Player(map,5,5);
 	}
 	

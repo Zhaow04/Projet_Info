@@ -135,8 +135,10 @@ public class GameController {
 		}
 	}
 */
-	public void attack(String str) {
-		model.getPlayer().useAttack(0);
+	public void attack(String str) {   
+		if(str.equals("DIGIT1")) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack
+			model.getPlayer().useDirectAttack(0);
+		}
 	}
 
 }

@@ -1,5 +1,7 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+
 /**
  * Extends from {@code DirectAttack}. <br/>
  * First attack of the player.
@@ -18,6 +20,7 @@ public class FirstAttack extends DirectAttack {
 	public FirstAttack(){
 		super();
 		setDamage(100);
+		setImageSettings(new ImageSettings("game/utilities/LightningAnim.png", 0, 0, 700, 700));
 	}
 	
 }
