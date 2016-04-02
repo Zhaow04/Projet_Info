@@ -15,10 +15,6 @@ public class GameModel implements Model {
 	
 	private Map map;
 	private Player player;
-	private ArrayList<LivingBeing> livingList = new ArrayList<LivingBeing>();
-	private ArrayList<Obstacle> obstacleList = new ArrayList<Obstacle>();
-	private ArrayList<SafeHouse> safehouseList = new ArrayList<SafeHouse>();
-	private ArrayList<Item> itemList = new ArrayList<Item>();
 	private ArrayList<Dungeon> dungeonList = new ArrayList<Dungeon>();
 	
 	//****************************** Constructor ******************************
@@ -34,20 +30,6 @@ public class GameModel implements Model {
 		
 		player = new Player(map,0,0);
 		//new Player(map,5,5);
-		
-		RedDragon monster1 = new RedDragon(map,1,0, player.getLevel());
-		GiantRat monster2 = new GiantRat(map,7,3, player.getLevel());
-		
-		SafeHouse safehouse = new SafeHouse(map,4,4);
-		
-		//Dungeon dungeon = new Dungeon(map, 6,6);
-		
-		Rock rock = new Rock (map,2,3);
-		Tree tree = new Tree (map,6,5);
-		Bush bush = new Bush (map,8,8);
-		
-		HpPotion hpPotion = new HpPotion(map, 100, 2, 8);
-		HpPotion hpPotion2 = new HpPotion(map, 100, 8, 2);
 	}
 	
 	/**
@@ -110,46 +92,9 @@ public class GameModel implements Model {
 		return map;
 	}
 	
-	/**
-	 * Sets the map.
-	 * 
-	 * @param map
-	 */
-	private void setMap(Map map) {
-		this.map = map;
-	}
-	
 	@Override
 	public Player getPlayer() {
 		return player;
 	}
 	
-	/**
-	 * Sets the player.
-	 * 
-	 * @param player
-	 */
-	private void setPlayer(Player player) {
-		this.player = player;
-	}
-	
-	@Override
-	public ArrayList<LivingBeing> getLivingList() {
-		return livingList;
-	}
-	
-	@Override
-	public ArrayList<Obstacle> getObstacleList() {
-		return obstacleList;
-	}
-	
-	@Override
-	public ArrayList<SafeHouse> getSafeHouseList() {
-		return safehouseList;
-	}
-	
-	@Override
-	public ArrayList<Item> getItemList() {
-		return itemList;
-	}
 }

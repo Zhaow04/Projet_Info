@@ -1,7 +1,6 @@
 package game.model;
 
 import game.utilities.ImageSettings;
-import game.view.ItemView;
 
 /**
  * Extends from {@code Potion}. <br/>
@@ -25,8 +24,6 @@ public class HpPotion extends Potion {
 	public HpPotion(Map map, int value, int x, int y) {
 		super(map,value);
 		setPosition(x, y);
-		
-		new ItemView(this);
 	}
 	
 	/**

@@ -1,8 +1,9 @@
 package game.model;
 
-import java.util.Observable;
+import java.util.ArrayList;
 
 import game.utilities.ImageSettings;
+import game.view.Observer;
 
 /**
  * Implements {@code Usable}. <br/>
@@ -13,7 +14,7 @@ import game.utilities.ImageSettings;
  * @see {@link Usable}
  *
  */
-public abstract class Item extends Observable implements Viewable, Usable {
+public abstract class Item implements Observable, Usable {
 	
 	//****************************** Attributes ******************************
 	
@@ -21,6 +22,8 @@ public abstract class Item extends Observable implements Viewable, Usable {
 	private Inventory inventory;
 	private int numberOfUse;
 	private int[] position;
+	
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	//****************************** Constructor ******************************
 	
@@ -56,8 +59,7 @@ public abstract class Item extends Observable implements Viewable, Usable {
 
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
-		setChanged();
-		notifyObservers("inventory");
+		notifyObservers(inventory.getItemNumber(this));
 	}
 
 	/**
@@ -65,7 +67,7 @@ public abstract class Item extends Observable implements Viewable, Usable {
 	 * 
 	 * @return remaining number of use
 	 */
-	private int getNumberOfUse() {
+	public int getNumberOfUse() {
 		return numberOfUse;
 	}
 	
@@ -101,6 +103,23 @@ public abstract class Item extends Observable implements Viewable, Usable {
 	//******************************** Methods ********************************
 	
 	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		this.notifyObservers(null);
+	}
+
+	@Override
+	public void notifyObservers(Object arg) {
+		for(Observer o : observers) {
+			o.update(this, arg);
+		}
+	}
+
+	@Override
 	public abstract ImageSettings getImageSettings();
 
 	/**
@@ -117,12 +136,6 @@ public abstract class Item extends Observable implements Viewable, Usable {
 	 */
 	public void useOnce(){
 		numberOfUse --;
-	}
-	
-	public void removedFromMap() {
-		setPosition(0, 0);
-		setChanged();
-		notifyObservers("removed");
 	}
 
 }

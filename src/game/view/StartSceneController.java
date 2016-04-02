@@ -62,14 +62,18 @@ public class StartSceneController {
 			new GameView(model, stage);
 		}
 	}
-	
+
 	private boolean isMapSizeInputValid() {
-		int mapSize = Integer.parseInt(mapSizeField.getText());
-		if(mapSize > 0 && mapSize < 100) {
-			return true;
+		boolean isValid = false;
+		int mapSize;
+		try {
+			mapSize = Integer.parseInt(mapSizeField.getText());
+			if(mapSize > 0 && mapSize < 100)
+				isValid = true;
+		} catch (NumberFormatException e) {
+			isValid = false;
 		}
-		else
-			return false;
+		return isValid;
 	}
 
 }

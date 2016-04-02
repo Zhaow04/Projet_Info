@@ -1,6 +1,6 @@
 package game.utilities;
 
-import game.model.LivingBeing;
+import game.model.Observable;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
@@ -19,12 +19,12 @@ public class SpriteAnimation extends Transition {
 
     private int lastIndex;
 
-    public SpriteAnimation(LivingBeing living, ImageView imageView, Duration duration,
+    public SpriteAnimation(Observable o, ImageView imageView, Duration duration,
     		int count, int columns) {
         this.imageView = imageView;
         this.count     = count;
         this.columns   = columns;
-        ImageSettings imageSettings = living.getImageSettings();
+        ImageSettings imageSettings = o.getImageSettings();
         this.offsetX   = (int) imageSettings.getOffsetX();
         this.offsetY   = (int) imageSettings.getOffsetY();
         this.width     = (int) imageSettings.getWidth();

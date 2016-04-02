@@ -90,4 +90,10 @@ public class ImageSettings {
 	public double getHeight() {
 		return height;
 	}
+	
+	//******************************** Methods ********************************
+	
+	public void updateDirection(int i) {
+		offsetY = height*i;
+	}
 }

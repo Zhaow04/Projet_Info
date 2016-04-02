@@ -1,5 +1,7 @@
 package game.model;
 
+import game.utilities.Vector2D;
+
 /**
  * Extends from {@code LivingBeing} <br/>
  * Abstract class that serves as a super class for all the different monsters.
@@ -75,42 +77,29 @@ public abstract class Monster extends LivingBeing {
 	 * @return player in view or not
 	 */
 	protected boolean isPlayerInView() {
-		LivingBeing[][] livingOnMap = getCurrentMap().getLivingOnMap();
+		Observable[][] entityOnMap = getCurrentMap().getObservableMatrix();
 		int x = getPosition()[0];
 		int y = getPosition()[1];
+		Vector2D directionFacing = getDirectionFacing();
 		boolean playerInView = false;
 		
-		if(getDirectionFacing() == 'N') {
+		if(directionFacing.getIntX() == 0) {
 			for(int i = 0; i <= 1; i++) {
 				for(int j = -1; j <= 1; j++) {
-					if (livingOnMap[y-i][x+j] instanceof Player)
+					int row = y + i*directionFacing.getIntY();
+					int column = x + j;
+					if (entityOnMap[row][column] instanceof Player)
 						playerInView = true;
 				}
 			}
 		}
 		
-		else if(getDirectionFacing() == 'S') {
-			for(int i = 0; i <= 1; i++) {
-				for(int j = -1; j <= 1; j++) {
-					if (livingOnMap[y+i][x+j] instanceof Player)
-						playerInView = true;
-				}
-			}
-		}
-		
-		else if(getDirectionFacing() == 'W') {
+		else {
 			for(int i = -1; i <= 1; i++) {
 				for(int j = 0; j <= 1; j++) {
-					if (livingOnMap[y+i][x-j] instanceof Player)
-						playerInView = true;
-				}
-			}
-		}
-		
-		else if(getDirectionFacing() == 'E') {
-			for(int i = -1; i <= 1; i++) {
-				for(int j = 0; j <= 1; j++) {
-					if (livingOnMap[y+i][x+j] instanceof Player)
+					int row = y + i;
+					int column = x + j*directionFacing.getIntX();
+					if (entityOnMap[row][column] instanceof Player)
 						playerInView = true;
 				}
 			}
@@ -122,18 +111,23 @@ public abstract class Monster extends LivingBeing {
 	 * Makes the monster move in a certain defined way, if possible (here, drawing a square while moving).
 	 * 
 	 */
-	public void moveInPattern() {
+	@Override
+	public void move(int x, int y) {
+		moveInPattern();
+	}
+	
+	private void moveInPattern() {
 		int[] basePos = getBasePos();
 		int[] pos = getPosition();
 		//System.out.println(canMove('S') && pos[1] == basePos[1]);
-		if(canMove('S') && pos[1] == basePos[1] && pos[0] == basePos[0])
-			move('S');
-		else if(canMove('E') && pos[1] == basePos[1] + 1 && pos[0] == basePos[0])
-			move('E');
-		else if(canMove('N') && pos[1] == basePos[1] + 1 && pos[0] == basePos[0] + 1)
-			move('N');
-		else if(canMove('W') && pos[1] == basePos[1] && pos[0] == basePos[0] + 1)
-			move('W');
+		if(canMove(0,1) && pos[1] == basePos[1] && pos[0] == basePos[0])
+			super.move(0,1);
+		else if(canMove(1,0) && pos[1] == basePos[1] + 1 && pos[0] == basePos[0])
+			super.move(1,0);
+		else if(canMove(0,-1) && pos[1] == basePos[1] + 1 && pos[0] == basePos[0] + 1)
+			super.move(0,-1);
+		else if(canMove(-1,0) && pos[1] == basePos[1] && pos[0] == basePos[0] + 1)
+			super.move(-1,0);
 	}
 
 }

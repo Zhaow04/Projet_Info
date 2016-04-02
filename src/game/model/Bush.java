@@ -1,7 +1,6 @@
 package game.model;
 
 import game.utilities.ImageSettings;
-import game.view.ObstacleView;
 
 /**
  * Extends from {@code Obstacle} <br/>
@@ -31,8 +30,6 @@ public class Bush extends Obstacle{
 	public Bush (Map map, int x, int y){
 		super(map);
 		setPosition(x,y);
-		
-		new ObstacleView(this);
 	}
 
 	//************************** Getters and Setters **************************

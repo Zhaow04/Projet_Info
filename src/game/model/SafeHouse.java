@@ -1,9 +1,11 @@
 package game.model;
 
-import game.utilities.ImageSettings;
-import game.view.SafeHouseView;
+import java.util.ArrayList;
 
-public class SafeHouse implements Viewable {
+import game.utilities.ImageSettings;
+import game.view.Observer;
+
+public class SafeHouse implements Observable {
 
 	//****************************** Attributes ******************************
 
@@ -12,6 +14,7 @@ public class SafeHouse implements Viewable {
 	
 	private ImageSettings imageSettings =
 			new ImageSettings("game/utilities/safehouse.png", 250, 180, 170, 170);
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 
 	//****************************** Constructor ******************************
 
@@ -24,8 +27,6 @@ public class SafeHouse implements Viewable {
 	public SafeHouse (Map map, int x, int y){
 		setCurrentMap(map);
 		setPosition(x,y);
-		
-		new SafeHouseView(this);
 	}
 
 	//************************** Getters and Setters **************************
@@ -60,9 +61,26 @@ public class SafeHouse implements Viewable {
 	protected void setPosition(int x, int y){
 		position = new int[2];
 		position[0] = x; position[1] = y;
-		currentMap.setOccupied(x, y);
+		currentMap.addObservableOnMap(this);
 	}
 	//******************************** Methods ********************************
+
+	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		this.notifyObservers(null);
+	}
+
+	@Override
+	public void notifyObservers(Object arg) {
+		for(Observer o : observers) {
+			o.update(this, arg);
+		}
+	}
 
 	@Override
 	public ImageSettings getImageSettings() {
@@ -77,7 +95,7 @@ public class SafeHouse implements Viewable {
 	 */
 	protected void setNewPosition(int x,int y){
 		setPosition(x,y);
-		currentMap.addSafeHouseOnMap(this);
+		currentMap.addObservableOnMap(this);
 	}
 
 	/**
@@ -87,7 +105,6 @@ public class SafeHouse implements Viewable {
 	 * @param y
 	 */
 	public void emptyPosition(int x, int y){
-		getCurrentMap().removeSafeHouseOnMap(x, y);
-		getCurrentMap().setEmpty(x,y);
+		getCurrentMap().removeObservableOnMap(x, y);
 	}
 }
