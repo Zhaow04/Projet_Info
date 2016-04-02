@@ -35,17 +35,22 @@ public class Map {
 	public Map(int size, String arg){
 		this(size);
 		
-		RedDragon monster1 = new RedDragon(this,0,1,1);
+		RedDragon monster1 = new RedDragon(this,3,3,1);
 		//viewableOnMap.add(monster1);
 		GiantRat monster2 = new GiantRat(this,7,3,1);
 		//viewableOnMap.add(monster2);
 		
-		SafeHouse safehouse = new SafeHouse(this,4,4);
+		SafeHouse safehouse = new SafeHouse(this,7,7);
 		//viewableOnMap.add(safehouse);
 		
 		//Dungeon dungeon = new Dungeon(map, 6,6);
 		
-		Rock rock = new Rock (this,2,3);
+		for (int i=0 ;i < size; i++){
+			new Tree (this,0,i);
+			new Tree (this,i,0);
+		}
+		
+		Rock rock = new Rock (this,8,5);
 		//viewableOnMap.add(rock);
 		Tree tree = new Tree (this,6,5);
 		//viewableOnMap.add(tree);

@@ -3,8 +3,12 @@ package game.view;
 import java.util.ArrayList;
 
 import game.model.Item;
+import game.model.LivingBeing;
+import game.model.Monster;
 import game.model.Observable;
 import game.model.Player;
+import game.model.Skill;
+import game.utilities.ImageSettings;
 import game.utilities.ObjectTranslate;
 import game.utilities.SpriteAnimation;
 import game.utilities.ViewUtils;
@@ -79,9 +83,20 @@ public class ObservableView implements Observer {
 				mapView.updateWindowView(o);
 			}
 		}
-		else if(arg == "dead") {
-			removeContainer(o);
+		else if(arg instanceof Skill && o instanceof Monster) {
+			Skill attack = (Skill) arg;
+			Monster target = (Monster) o;
+			int[] targetPosition = target.getPosition();
+			AttackAnimation(attack, targetPosition);
+			removeLivingObservable(o);
 		}
+		else if(arg instanceof Integer && o instanceof Player) {
+			Player player = (Player) o;
+			Skill attack = player.getSkillList().get((Integer)arg);
+			int[] targetPosition = player.getLivingInFront().getPosition();
+			AttackAnimation(attack, targetPosition);
+		}
+		
 		else if(o instanceof Item) {
 			transferContainer(o, (int) arg);
 		}
@@ -131,6 +146,26 @@ public class ObservableView implements Observer {
 				(ImageView) container.getChildren().get(0), Duration.millis(300), 5, 4);
 	}
 	
+	private void AttackAnimation(Skill attack, int[] position) {
+		ImageSettings imageSettings = attack.getImageSettings();
+		StackPane container =
+				ViewUtils.initContainer(imageSettings,mapView.cellSize());  //maybe imageSize to add
+		containerList.add(container);
+		mapView.addToMap(container, position[0], position[1]);
+		ImageView imageView = (ImageView) container.getChildren().get(0);
+		SpriteAnimation anim = new SpriteAnimation(imageSettings,
+				imageView, Duration.millis(300), 5, 4);
+		anim.setOnFinished(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent disappear) {
+				mapView.getMapContainer().getChildren().remove(container);
+				containerList.remove(container);
+			}
+		});
+	}
+	
+
+	
 	public StackPane getContainer(Observable entity){
 		int index = observableList.indexOf(entity);
 		return containerList.get(index);
@@ -141,6 +176,24 @@ public class ObservableView implements Observer {
 		mapView.getMapContainer().getChildren().remove(objectContainer);
 		containerList.remove(objectContainer);
 		observableList.remove(observable);
+	}
+	
+	private void removeLivingObservable(Observable o) {
+		LivingBeing living= (LivingBeing) o;
+		StackPane observableContainer = getContainer(o);
+		FadeTransition t = new FadeTransition(Duration.millis(300), observableContainer);
+		t.setOnFinished(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent kill) {
+				living.Kill();
+				removeContainer(o);
+			}
+		});
+		t.setToValue(0.9);
+		t.setCycleCount(1);
+		t.setDelay(Duration.millis(100));
+		t.play();
+		
 	}
 	
 	private void transferContainer(Observable o, int index) {

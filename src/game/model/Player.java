@@ -144,17 +144,21 @@ public class Player extends LivingBeing {
 	 * 
 	 * @param skillNumber
 	 */
-	public void useAttack(int skillNumber){
+	public void useDirectAttack(Integer skillNumber){	// keep it Integer for the arg instanceof Integer in update observableView
 		if(canAttack()){
 			Monster target =(Monster) getLivingInFront();
 			System.out.println(target);
 			Skill skill = getSkillList().get(skillNumber);
 			skill.use(target);
 			if(target.getHp() <= 0) {
+				target.notifyObservers(skill);
 				gainKillXp(target);
 				upgradeLevel();
 				System.out.println(getXp());
 				System.out.println(getLevel());
+			}
+			else {
+				notifyObservers(skillNumber);
 			}
 		}
 	}

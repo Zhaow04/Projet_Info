@@ -244,16 +244,20 @@ public abstract class LivingBeing implements Observable,Movable {
 	 * @param hp
 	 */
 	protected void loseHp(int hp) {
-		addHp(-hp);
-		System.out.println(getHp());
-		if(getHp() <= 0) {
+		if (getHp() >= 0) {
+			addHp(-hp);
+			System.out.println(getHp());
+		}
+		/*if(getHp() <= 0) {
 			int[] pos = getPosition();
 			emptyPosition(pos[0],pos[1]);
-			currentMap.getMovableList().remove(this);
+			currentMap.removeMovable(this);
+			currentMap.removeObservableOnMap(pos[0],pos[1]);
 			//System.out.println(currentMap.getLivingOnMap()[pos[1]][pos[0]]);
 			System.out.println(this.toString() + " dead");
 			notifyObservers("dead");
-		}
+		}*/
+			
 	}
 	
 	/**
@@ -320,7 +324,7 @@ public abstract class LivingBeing implements Observable,Movable {
 	 * @return living in front
 	 * @see {@link #isLivingInFront}
 	 */
-	protected LivingBeing getLivingInFront(){
+	public LivingBeing getLivingInFront(){
 		LivingBeing livingInFront = null;
 		if(isLivingInFront()){
 			int x = position[0] + directionFacing.getIntX();
@@ -328,6 +332,15 @@ public abstract class LivingBeing implements Observable,Movable {
 			livingInFront = (LivingBeing) currentMap.getObservableOnMap(x, y);
 		}
 		return livingInFront;
+	}
+	
+	public void Kill(){
+		int[] pos = getPosition();
+		emptyPosition(pos[0],pos[1]);
+		getCurrentMap().removeMovable(this);
+		getCurrentMap().removeObservableOnMap(pos[0],pos[1]);
+		//System.out.println(currentMap.getLivingOnMap()[pos[1]][pos[0]]);
+		System.out.println(this.toString() + " dead");
 	}
 
 }

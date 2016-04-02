@@ -1,5 +1,7 @@
 package game.model;
 
+import game.utilities.ImageSettings;
+
 /**
  * Implements {@code Usable}. <br/>
  * Abstract class that serves as a super class for all the skills.
@@ -14,6 +16,7 @@ public abstract class Skill implements Usable {
 	
 	private int damage;
 	private int range;
+	private ImageSettings imageSettings;
 	
 	//****************************** Constructor ******************************
 	
@@ -59,6 +62,14 @@ public abstract class Skill implements Usable {
 	 */
 	protected void setRange(int range) {
 		this.range = range;
+	}
+	
+	public ImageSettings getImageSettings() {
+		return imageSettings;
+	}
+	
+	protected void setImageSettings(ImageSettings imageSettings) {
+		this.imageSettings = imageSettings;
 	}
 	
 	//******************************** Methods ********************************
