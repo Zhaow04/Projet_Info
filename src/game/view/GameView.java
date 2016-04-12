@@ -5,122 +5,123 @@ import java.io.IOException;
 import game.Main;
 import game.controller.GameController;
 import game.model.GameModel;
-import game.model.Inventory;
+import game.model.Player;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
-public class GameView {
+public class GameView extends AnchorPane {
 
 	//****************************** Attributes ******************************
 
 	private GameModel model;
 	private GameController gameController;
-	private MapView mapView;
+	public MapView mapView;
+	private PlayerView playerView;
+	private InventoryViewController inventoryViewController;
 
 	private final Stage mainStage;
 	private Scene mainScene;
 
 	//****************************** Constructor ******************************
 
-	public GameView(GameModel model, Stage mainStage) {
-		this.model = model;
-		this.mainStage = mainStage;
-		mainScene = mainStage.getScene();
-		Inventory inventory = model.getPlayer().getInventory();
-		
-		gameController = new GameController(model, this);
-		mapView = new MapView(model.getMap(), gameController);
-		
-		
-		createHUD(mapView, inventory, gameController);
-		mainScene.setRoot(mapView);
-		mapView.requestFocus();
-		
-		//System.out.println(currentScene.getHeight());
-		//System.out.println(stage.getHeight());
-
-		mainStage.minHeightProperty().bind(mapView.widthProperty());
-		mainStage.minWidthProperty().bind(mapView.heightProperty());
-	}
-	
-	/*
-	public GameView(GameModel model, Controller controller){
-
+	public GameView(GameModel model, Stage stage) {
+		super();
+		this.setPrefSize(100, 100);
 		setModel(model);
-		setController(controller);
-		GameController mapController = controller.getMapController();
-		MapView mapView = new MapView(model, mapController);
-		setMainScene(new Scene(mapView.getRoot()));
+		this.mainStage = stage;
+		mainScene = stage.getScene();
+		
+		GameController gameController = new GameController(model, this);
+		setGameController(gameController);
+		MapView mapView = new MapView(model.getMap(), this, getGameController());
+		mapView.setOnKeyPressed(gameController);
+		setMapView(mapView);
+		this.getChildren().add(mapView);
+		initPlayerViewAndHUD(model.getPlayer(), mapView, gameController);
+		//mapView.toBack();
+		
+		mainScene.setRoot(this);
+		mapView.requestFocus();
 
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/StartScene.fxml"));
-			AnchorPane startRoot = (AnchorPane) loader.load();
-			StartSceneController startSceneController = (StartSceneController) loader.getController();
-
-			startSceneController.setMainScene(mainScene);
-			Scene startScene = new Scene(startRoot);
-			setStartScene(startScene);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/HUD.fxml"));
-			StackPane hud = (StackPane) loader.load();
-			mapView.getRoot().getChildren().add(hud);
-			AnchorPane.setBottomAnchor(hud, 0.0);
-			AnchorPane.setRightAnchor(hud, 0.0);
-
-			hudController = (HUDController) loader.getController();
-			Player player = (Player) model.getLivingList().get(0);
-			//System.out.println(hudController.getInventoryViewController());
-			//hudController.getInventoryViewController().setInventory(player.getInventory());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-		BeingController beingController = controller.getBeingController();
-
-		BeingView beingView = new BeingView(model,beingController, mapView);
-		ObstacleView obstacleView = new ObstacleView(model, mapView);
-		SafeHouseView safehouseView = new SafeHouseView(model, mapView);
-
-		ItemController itemController = new ItemController();
-		//System.out.println(hudController);
-		//itemController.setInventoryController(hudController.getInventoryViewController());
-		ItemView itemView = new ItemView(model,itemController, mapView);
-
-		beingView.initAllObjectView();
-		obstacleView.initAllObjectView();
-		safehouseView.initAllObjectView();
-		itemView.initAllItemView();
-
-		initEventHandler();
-	}*/
+		mainStage.minHeightProperty().bind(this.widthProperty());
+		mainStage.minWidthProperty().bind(this.heightProperty());
+		mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				Platform.exit();
+				System.exit(0);
+			}
+		});
+	}
 
 	//************************** Getters and Setters **************************
 	
-	private void createHUD(MapView mapView, Inventory inventory, GameController gameController) {
+	public GameModel getModel() {
+		return model;
+	}
+
+	private void setModel(GameModel model) {
+		this.model = model;
+	}
+
+	public GameController getGameController() {
+		return gameController;
+	}
+
+	private void setGameController(GameController gameController) {
+		this.gameController = gameController;
+	}
+
+	public MapView getMapView() {
+		return mapView;
+	}
+
+	private void setMapView(MapView mapView) {
+		this.mapView = mapView;
+	}
+
+	public PlayerView getPlayerView() {
+		return playerView;
+	}
+
+	private void setPlayerView(PlayerView playerView) {
+		this.playerView = playerView;
+	}
+
+	public InventoryViewController getInventoryViewController() {
+		return inventoryViewController;
+	}
+
+	private void setInventoryViewController(InventoryViewController inventoryViewController) {
+		this.inventoryViewController = inventoryViewController;
+	}
+	
+	private void initPlayerViewAndHUD(Player player, MapView mapView, GameController gameController) {
+		PlayerView playerView = new PlayerView(getModel().getPlayer(), mapView);
+		setPlayerView(playerView);
+		createHUD(getModel().getPlayer(), gameController);
+	}
+
+	private void createHUD(Player player, GameController gameController) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/HUD.fxml"));
 			StackPane hud = (StackPane) loader.load();
-			mapView.getChildren().add(hud);
+			this.getChildren().add(hud);
 			AnchorPane.setBottomAnchor(hud, 0.0);
 			AnchorPane.setRightAnchor(hud, 0.0);
 			
 			HUDController hudController = (HUDController) loader.getController();
 			gameController.setHudController(hudController);
 			InventoryViewController inventoryViewController = hudController.getInventoryViewController();
-			inventoryViewController.setInventory(inventory);
-			mapView.getObservableView().setInventoryViewController(inventoryViewController);
+			setInventoryViewController(inventoryViewController);
+			inventoryViewController.setPlayer(player);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

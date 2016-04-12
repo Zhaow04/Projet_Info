@@ -4,6 +4,10 @@ public class Vector2D {
 	
 	private double x,y;
 	
+	public Vector2D() {
+		x = 0; y = 0;
+	}
+	
 	public Vector2D(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -23,6 +27,10 @@ public class Vector2D {
 	
 	public int getIntY() {
 		return (int) this.y;
+	}
+	
+	public void setXY(double x, double y) {
+		this.x = x; this.y = y;
 	}
 	
 	public boolean equals(double x, double y) {

@@ -41,10 +41,5 @@ public class ObjectTranslate {
 	//************************** Getters and Setters **************************
 	
 	//******************************** Methods ********************************
-	/*
-	@Override
-	public void run() {
-		tt.play();
-	}*/
 	
 }

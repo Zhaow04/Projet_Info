@@ -1,6 +1,7 @@
 package game.utilities;
 
 import game.model.Observable;
+import game.model.component.ViewSettings;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
@@ -19,34 +20,45 @@ public class SpriteAnimation extends Transition {
 
     private int lastIndex;
 
+    public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, int millis) {
+        this.imageView = imageView;
+        this.count     = 5;
+        this.columns   = 4;
+        this.offsetX   = (int) viewSettings.getOffsetX();
+        this.offsetY   = (int) viewSettings.getOffsetY();
+        this.width     = (int) viewSettings.getWidth();
+        this.height    = (int) viewSettings.getHeight();
+        setCycleDuration(Duration.millis(millis));
+        setInterpolator(Interpolator.LINEAR);
+        setCycleCount(1);
+    }
+    
     public SpriteAnimation(Observable o, ImageView imageView, Duration duration,
     		int count, int columns) {
         this.imageView = imageView;
         this.count     = count;
         this.columns   = columns;
-        ImageSettings imageSettings = o.getImageSettings();
-        this.offsetX   = (int) imageSettings.getOffsetX();
-        this.offsetY   = (int) imageSettings.getOffsetY();
-        this.width     = (int) imageSettings.getWidth();
-        this.height    = (int) imageSettings.getHeight();
+        ViewSettings viewSettings = o.getViewSettings();
+        this.offsetX   = (int) viewSettings.getOffsetX();
+        this.offsetY   = (int) viewSettings.getOffsetY();
+        this.width     = (int) viewSettings.getWidth();
+        this.height    = (int) viewSettings.getHeight();
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
         setCycleCount(1);
-        //System.out.println(offsetY);
-        //System.out.println("ok2");
         this.play();
         
     }
     
-    public SpriteAnimation(ImageSettings imageSettings, ImageView imageView, Duration duration,
+    public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, Duration duration,
     		int count, int columns) {
         this.imageView = imageView;
         this.count     = count;
         this.columns   = columns;
-        this.offsetX   = (int) imageSettings.getOffsetX();
-        this.offsetY   = (int) imageSettings.getOffsetY();
-        this.width     = (int) imageSettings.getWidth();
-        this.height    = (int) imageSettings.getHeight();
+        this.offsetX   = (int) viewSettings.getOffsetX();
+        this.offsetY   = (int) viewSettings.getOffsetY();
+        this.width     = (int) viewSettings.getWidth();
+        this.height    = (int) viewSettings.getHeight();
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
         setCycleCount(1);

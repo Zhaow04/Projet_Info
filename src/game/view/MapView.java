@@ -1,21 +1,19 @@
 package game.view;
 
+import java.util.ArrayList;
+
 import game.controller.GameController;
 import game.model.Map;
-import game.model.Observable;
+import game.model.MapComponent;
 import game.model.Player;
+import game.model.item.Item;
+import game.model.monster.Monster;
 import game.utilities.ObjectTranslate;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.util.Duration;
 
 /**
@@ -25,164 +23,208 @@ import javafx.util.Duration;
  * @author ZhaoWen
  *
  */
-public class MapView extends AnchorPane {
+public class MapView extends Group {
 	
 	//****************************** Attributes ******************************
 	
-	private AnchorPane mapContainer;
+	private AnchorPane bottomLayer;
+	private AnchorPane stepOnLayer;
+	private AnchorPane interactiveLayer;
 	private Map mapModel;
+	private GameView gameView;
 	
-	private ObservableView observableView;
+	private ArrayList<MapComponentView> mapComponentViews = new ArrayList<MapComponentView>();
 	
 	//****************************** Constructor ******************************
 	
-	public MapView(Map mapModel, GameController gameController) {
+	public MapView(Map mapModel, GameView gameView, GameController gameController) {
 		super();
 		
-		this.mapModel = mapModel;
-		
-		this.setPrefSize(600, 600);
-		
-		initMapView();
-		observableView = new ObservableView(this, mapModel.getObservableMatrix(),
-				mapModel.getItemOnMap());
-		initEventHandler(gameController);
-	}
-	/*
-	public MapView(GameModel model, GameController gameController){
-		Map mapModel = model.getMap();
 		setMapModel(mapModel);
-		mapModel.addObserver(this);
-		setMapController(gameController);
-		gameController.setMapView(this);
-		initMapView();
-	}*/
+		setGameView(gameView);
+		
+		//this.setPrefSize(mapModel.getSize()*cellSize(), mapModel.getSize()*cellSize());
+		
+		initBottomLayer(mapModel.getMapCompos());
+		initStepOnLayer(mapModel.getItems());
+		initInteractiveLayer(mapModel.getMonsters());
+	}
 	
 	//************************** Getters and Setters **************************
-
-	public AnchorPane getMapContainer(){
-		return mapContainer;
-	}
 	
 	public Map getMapModel() {
 		return mapModel;
 	}
+	
+	private void setMapModel(Map mapModel) {
+		this.mapModel = mapModel;
+	}
 
-	public ObservableView getObservableView() {
-		return observableView;
+	public GameView getGameView() {
+		return gameView;
+	}
+
+	private void setGameView(GameView gameView) {
+		this.gameView = gameView;
+	}
+
+	public ArrayList<MapComponentView> getMapComponentViews() {
+		return mapComponentViews;
 	}
 	
 	//******************************** Methods ********************************
 	
-	private void initMapView(){
-		mapContainer = new AnchorPane();
+	private AnchorPane initLayer() {
+		AnchorPane layer = new AnchorPane();
 		int mapSize = mapModel.getSize();
-		mapContainer.setPrefSize(cellSize()*mapSize, cellSize()*mapSize);
-		Image image = new Image(mapModel.getImageSettings().getImageURL());
-		ImageView imageContainer = new ImageView(image);
-		imageContainer.setFitHeight(500);
-		imageContainer.setFitWidth(500);
-		BackgroundImage backimage = new BackgroundImage(image,BackgroundRepeat.REPEAT,
-				BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
-		//imageContainer.fitWidthProperty().bind(mapContainer.widthProperty());
-		//imageContainer.fitHeightProperty().bind(mapContainer.heightProperty());
-		mapContainer.setBackground(new Background(backimage));
-		this.getChildren().add(mapContainer);
+		layer.setPrefSize(cellSize()*mapSize, cellSize()*mapSize);
+		return layer;
 	}
 	
-	private void initEventHandler(GameController controller) {
-		this.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent ke){
-				//System.out.println(ke.getCode());
-				controller.addKey(ke.getCode().toString().toUpperCase());
-				//System.out.println(ke.getCode());
-				//System.out.println(ke.getCode());
-			}
-		});
+	private void initBottomLayer(ArrayList<MapComponent> mapComponents){
+		bottomLayer = initLayer();
+		for(MapComponent o : mapComponents) {
+			new MapComponentView(o,this);
+		}
+		Image image = new Image(mapModel.getViewSettings().getImageURL());
+		BackgroundImage backimage = new BackgroundImage(image, null, null, null, null);
+		bottomLayer.setBackground(new Background(backimage));
+		this.getChildren().add(bottomLayer);
 	}
 	
-	public void addToMap(Node child, int column, int row) {
-		mapContainer.getChildren().add(child);
+	private void initStepOnLayer(ArrayList<Item> items) {
+		stepOnLayer = initLayer();
+		for(Item item : items) {
+			new ItemView(item,this);
+		}
+		this.getChildren().add(stepOnLayer);
+	}
+	
+	private void initInteractiveLayer(ArrayList<Monster> monsters) {
+		interactiveLayer = initLayer();
+		for(Monster monster : monsters) {
+			new MonsterView(monster, this);
+		}
+		this.getChildren().add(interactiveLayer);
+	}
+	
+	public void addToMap(MapComponentView child, int column, int row) {
+		bottomLayer.getChildren().add(child);
+		double x = column*cellSize();
+		double y = row*cellSize();
+		child.setTranslateX(x);
+		child.setTranslateY(y);
+	}
+	/*
+	public void remove(MapComponentView itemView) {
+		bottomLayer.getChildren().remove(itemView);
+	}*/
+	
+	public void addToMap(SkillView child, int column, int row) {
+		this.getChildren().add(child);
 		double x = column*cellSize();
 		double y = row*cellSize();
 		child.setTranslateX(x);
 		child.setTranslateY(y);
 	}
 	
-	public void updateWindowView(Observable o) {
-		if(o instanceof Player) {
-			int[] pos = o.getPosition();
-			if(canTranslateX(o) && !canTranslateY(o)) {
-				new ObjectTranslate(Duration.millis(300), mapContainer,
-						(5-pos[0])*cellSize(), "x");
-			}
-			else if(!canTranslateX(o) && canTranslateY(o)) {
-				new ObjectTranslate(Duration.millis(300), mapContainer,
-						(5-pos[1])*cellSize(), "y");
-			}
-			else if(canTranslateX(o) && canTranslateY(o)) {
-				new ObjectTranslate(Duration.millis(300), mapContainer,
-						(5-pos[0])*cellSize(), (5-pos[1])*cellSize());
-			}
+	public void remove(SkillView itemView) {
+		this.getChildren().remove(itemView);
+	}
+	
+	public void addToMap(ItemView child, int column, int row) {
+		stepOnLayer.getChildren().add(child);
+		double x = column*cellSize();
+		double y = row*cellSize();
+		child.setTranslateX(x);
+		child.setTranslateY(y);
+	}
+	
+	public void remove(ItemView itemView) {
+		stepOnLayer.getChildren().remove(itemView);
+	}
+	
+	public void addToMap(MonsterView child, int column, int row) {
+		interactiveLayer.getChildren().add(child);
+		double x = column*cellSize();
+		double y = row*cellSize();
+		child.setTranslateX(x);
+		child.setTranslateY(y);
+	}
+	
+	public void remove(MonsterView itemView) {
+		interactiveLayer.getChildren().remove(itemView);
+	}
+	
+	public void addToMap(PlayerView child, int column, int row) {
+		interactiveLayer.getChildren().add(child);
+		/*double x = column*cellSize();
+		double y = row*cellSize();
+		child.setTranslateX(x);
+		child.setTranslateY(y);*/
+	}
+	
+	public void remove(PlayerView itemView) {
+		interactiveLayer.getChildren().remove(itemView);
+	}
+	
+	public void updateWindowView(Player player) {
+		int[] pos = player.getViewSettings().getPosition();
+		if(canTranslateX(player) && !canTranslateY(player)) {
+			new ObjectTranslate(Duration.millis(300), this,
+					(5-pos[0])*cellSize(), "x");
+		}
+		else if(!canTranslateX(player) && canTranslateY(player)) {
+			new ObjectTranslate(Duration.millis(300), this,
+					(5-pos[1])*cellSize(), "y");
+		}
+		else if(canTranslateX(player) && canTranslateY(player)) {
+			new ObjectTranslate(Duration.millis(300), this,
+					(5-pos[0])*cellSize(), (5-pos[1])*cellSize());
 		}
 	}
 	
-	public void centerOnTarget(Observable target) {
-		int[] pos = target.getPosition();
-		//System.out.println(canTranslateX(target));
-		//System.out.println(canTranslateY(target));
-		if(canTranslateX(target) && !canTranslateY(target)) {
+	public void centerOnTarget(Player player) {
+		int[] pos = player.getViewSettings().getPosition();
+		if(canTranslateX(player) && !canTranslateY(player)) {
 			System.out.println("ok");
 			double x = (5-pos[0])*cellSize();
-			mapContainer.setTranslateX(x);
+			this.setTranslateX(x);
 		}
-		else if(!canTranslateX(target) && canTranslateY(target)) {
+		else if(!canTranslateX(player) && canTranslateY(player)) {
 			System.out.println("ok");
 			double y = (5-pos[1])*cellSize();
-			mapContainer.setTranslateY(y);
+			this.setTranslateY(y);
 		}
-		else if(canTranslateX(target) && canTranslateY(target)) {
+		else if(canTranslateX(player) && canTranslateY(player)) {
 			System.out.println("ok");
 			double x = (5-pos[0])*cellSize();
 			double y = (5-pos[1])*cellSize();
-			mapContainer.setTranslateX(x);
-			mapContainer.setTranslateY(y);
+			this.setTranslateX(x);
+			this.setTranslateY(y);
 		}
 	}
 	
 	public double cellSize() {
-		//return this.getPrefHeight()/(double) mapModel.getSize();
 		return 55.0;
 	}
-	/*
-	public static MapView getMapView(Map mapModel) {
-		int i = 0;
-		MapView mapView = null;
-		while(mapView == null && i < rootList.size()) {
-			if(rootList.get(i).getMapModel() == mapModel)
-				mapView = rootList.get(i);
-		}
-		return mapView;
-	}*/
 	
-	private boolean canTranslateX(Observable o) {
-		int[] pos = o.getPosition();
-		double maxX = mapContainer.getPrefWidth();
-		//System.out.println(mapContainer.getPrefWidth());
+	private boolean canTranslateX(Player player) {
+		int[] pos = player.getViewSettings().getPosition();
+		double maxX = bottomLayer.getPrefWidth();
 		return (pos[0]*cellSize() >= 5*cellSize() &&
 				pos[0]*cellSize() <= maxX - 6*cellSize());
 	}
 	
-	private boolean canTranslateY(Observable o) {
-		int[] pos = o.getPosition();
-		double maxY = mapContainer.getPrefHeight();
+	private boolean canTranslateY(Player player) {
+		int[] pos = player.getViewSettings().getPosition();
+		double maxY = bottomLayer.getPrefHeight();
 		return (pos[1]*cellSize() >= 5*cellSize() &&
 				pos[1]*cellSize() <= maxY- 6*cellSize());
 	}
 	
 	public boolean isViewUpToDate() {
-		return observableView.isViewUpToDate();
+		return true;// mapComponentView.isViewUpToDate();
 	}
 
 }

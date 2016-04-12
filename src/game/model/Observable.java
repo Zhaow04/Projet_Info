@@ -1,7 +1,6 @@
 package game.model;
 
 
-import game.utilities.ImageSettings;
 import game.view.Observer;
 
 /**
@@ -10,34 +9,12 @@ import game.view.Observer;
  * @author ZhaoWen
  *
  */
-public interface Observable {
-	
-	/**
-	 * Gets the {@code ImageSettings} associated with the object.
-	 * 
-	 * @return {@code ImageSettings}
-	 * @see {@link ImageSettings}
-	 * 
-	 */
-	public ImageSettings getImageSettings();
-	
-	/**
-	 * Gets the position (x,y).
-	 * 
-	 * @return position
-	 */
-	public int[] getPosition();
-	
-	/**
-	 * Gets the map on which the viewable currently is.
-	 * 
-	 * @return current map
-	 */
-	public Map getCurrentMap();
+public interface Observable extends Viewable {
 	
 	void addObserver(Observer o);
 	
 	void notifyObservers();
 	
 	void notifyObservers(Object arg);
+	
 }
