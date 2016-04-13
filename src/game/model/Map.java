@@ -140,10 +140,8 @@ public class Map implements IMap {
 	private void createAllComponents() {
 		RedDragon a = new RedDragon();
 		addToMap(a,3,3);
-		new Thread(a).start();
 		GiantRat b = new GiantRat();
 		addToMap(b,7,3);
-		//new Thread(b).start();
 		addToMap(new SafeHouse(),7,7);
 		for (int i=0 ;i < getSize(); i++) {
 			addToMap(new Tree(),0,i);
@@ -155,6 +153,8 @@ public class Map implements IMap {
 		addToMap(new Bush(),8,8);
 		addToMap(new HpPotion(100), 2, 8);
 		addToMap(new HpPotion(100), 8, 2);
+		new Thread(a).start();
+		//new Thread(b).start();
 	}
 
 	/**

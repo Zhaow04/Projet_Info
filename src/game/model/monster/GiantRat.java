@@ -26,6 +26,7 @@ public class GiantRat extends Monster {
 	 */
 	public GiantRat(){
 		super(new ViewSettings("game/utilities/GiantRat.png", 0, 0, 80, 80, new int[2]));
+		setScope(2);
 	}
 	
 	//************************** Getters and Setters **************************

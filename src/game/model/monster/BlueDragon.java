@@ -26,6 +26,7 @@ public class BlueDragon extends Monster {
 	 */
 	public BlueDragon() {
 		super(new ViewSettings("game/utilities/Dragon.png", 0, 0, 96, 96, new int[2]));
+		setScope(2);
 	}
 	
 	//************************** Getters and Setters **************************

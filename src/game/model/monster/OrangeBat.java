@@ -25,6 +25,7 @@ public class OrangeBat extends Monster {
 	 */
 	public OrangeBat(){
 		super(new ViewSettings("game/model/batman.png", 0, 0, 100, 100, new int[2]));
+		setScope(2);
 	}
 	
 	//************************** Getters and Setters **************************

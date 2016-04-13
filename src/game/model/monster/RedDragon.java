@@ -26,6 +26,7 @@ public class RedDragon extends Monster {
 	 */
 	public RedDragon(){
 		super(new ViewSettings("game/utilities/RedDragon.png", 0, 0, 96, 96, new int[2]));
+		setScope(2);
 	}
 	
 	//************************** Getters and Setters **************************

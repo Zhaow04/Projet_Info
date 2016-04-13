@@ -6,12 +6,14 @@ import java.util.TimerTask;
 
 import game.model.LivingBeing;
 import game.model.Observable;
+import game.model.Player;
 import game.model.component.SkillTarget;
 import game.model.component.ViewSettings;
+import game.utilities.Vector2D;
 import game.view.Observer;
 import javafx.application.Platform;
 import game.model.component.Movable;
-import game.model.component.MoveInSquare;
+import game.model.component.BasicMonsterMove;
 import game.model.component.SkillUser;
 import game.model.component.Stats;
 
@@ -29,6 +31,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	
 	private Stats stats;
 	private int killxp;
+	private int scope;
 	
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
@@ -41,9 +44,9 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	 * @see {@link LivingBeing#LivingBeing(Map)}
 	 */
 	public Monster(ViewSettings viewSettings) {
-		super(viewSettings, new MoveInSquare());
+		super(viewSettings, new BasicMonsterMove());
 		setStats(new Stats(400));
-		setKillXp(0);
+		setKillXp(0); // pourquoi 0 et pourquoi ici ? vaut mieu =x dans les differents monstres directement
 	}
 	
 	//************************** Getters and Setters **************************
@@ -75,7 +78,27 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		this.killxp = killxp;
 	}
 	
+	/**
+	 * Gets the scope of the monster (the range of its vision).
+	 * 
+	 * @return scope
+	 */
+	public int getScope() {
+		return scope;
+	}
+	
+	/**
+	 * Sets the the scope of the monster (the range of its vision).
+	 * 
+	 * @param scope
+	 */
+	protected void setScope(int scope) {
+		this.scope = scope;
+	}
+	
 	//******************************** Methods ********************************
+	
+	
 	
 	@Override
 	public void run() {
@@ -85,9 +108,20 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 			t.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					getMovement().autoMove(m);
+					if (isPlayerInView() && !isPlayerNearby()){
+						//System.out.println("In View !");
+						getMovement().TrackPlayer(m);
+					}
+					else if (isPlayerNearby()){
+						getMovement().FaceThePlayer(m);
+						//System.out.println("je dois attaquer");
+					}
+					else {
+						getMovement().MoveInX(m);
+
+					}
 				}
-			}, 0,2000);
+			}, 5000,2000);
 			/*System.out.println(Platform.isFxApplicationThread());
 			try {
 				Thread.sleep(2000);
@@ -108,37 +142,54 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	 * 
 	 * @return player in view or not
 	 */
-	/*protected boolean isPlayerInView() {
-		Viewable[][] entityOnMap = getCurrentMap().getViewableMatrix();
-		int x = getPosition()[0];
-		int y = getPosition()[1];
-		Vector2D directionFacing = getDirectionFacing();
+	protected boolean isPlayerInView() {
+		Player player = getCurrentMap().getPlayer();
+		int x = this.getX();
+		int y = this.getY();
+		Vector2D directionFacing = this.getDirectionFacing();
 		boolean playerInView = false;
 		
 		if(directionFacing.getIntX() == 0) {
-			for(int i = 0; i <= 1; i++) {
-				for(int j = -1; j <= 1; j++) {
+			for(int i = 0; i <= scope; i++) {
+				for(int j = -2; j <= 2; j++) {
 					int row = y + i*directionFacing.getIntY();
 					int column = x + j;
-					if (entityOnMap[row][column] instanceof Player)
+					if (column==player.getX() && row==player.getY())
 						playerInView = true;
 				}
 			}
 		}
 		
 		else {
-			for(int i = -1; i <= 1; i++) {
-				for(int j = 0; j <= 1; j++) {
+			for(int i = -2; i <= 2; i++) {
+				for(int j = 0; j <= scope; j++) {
 					int row = y + i;
 					int column = x + j*directionFacing.getIntX();
-					if (entityOnMap[row][column] instanceof Player)
+					if (column==player.getX() && row==player.getY())
 						playerInView = true;
 				}
 			}
 		}
 		return playerInView;
-	}*/
+	}
 	
+	public boolean isPlayerNearby(){
+		Player player=this.getCurrentMap().getPlayer();
+		int x0 = this.getX();
+		int y0 = this.getY();
+		int x1 = x0 + 1;
+		int y1 = y0 + 1;
+		int x_1 = x0 - 1;
+		int y_1 = y0 - 1;
+		boolean isPlayerNearby = false;
+		if (   x0==player.getX()&& (y1==player.getY() || y_1==player.getY() )
+				  || (y0==player.getY()&& (x1==player.getX() || x_1==player.getX()))  ){
+			isPlayerNearby = true;
+		}
+		return isPlayerNearby;
+	}
+	
+
 	@Override
 	public void useSkill(int skillNumber) {
 		
