@@ -69,10 +69,10 @@ public class BasicMove implements Movement {
 
 	@Override
 	public void move(Movable m, int dx, int dy) {
-		if(canMove(m, dx, dy)) {
 		IMap map = m.getCurrentMap();
-			m.setDirectionFacing(dx, dy);
-			m.notifyObservers("changedDirection");
+		m.setDirectionFacing(dx, dy);
+		m.notifyObservers("changedDirection");
+		if(canMove(m, dx, dy)) {
 			setOldX(m.getX()); setOldY(m.getY());
 			setNewX(m.getX() + dx); setNewY(m.getY() + dy);
 			m.setPosition(m.getX() + dx, m.getY() + dy);
