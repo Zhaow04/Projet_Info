@@ -158,10 +158,10 @@ public class MapView extends Group {
 	
 	public void addToMap(PlayerView child, int column, int row) {
 		interactiveLayer.getChildren().add(child);
-		/*double x = column*cellSize();
+		double x = column*cellSize();
 		double y = row*cellSize();
 		child.setTranslateX(x);
-		child.setTranslateY(y);*/
+		child.setTranslateY(y);
 	}
 	
 	public void remove(PlayerView itemView) {

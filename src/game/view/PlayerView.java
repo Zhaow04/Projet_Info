@@ -2,9 +2,12 @@ package game.view;
 
 import game.model.Observable;
 import game.model.Player;
+import game.model.component.ISkill;
+import game.model.component.Skill;
 import game.model.component.ViewSettings;
 import game.utilities.MovementAnimation;
 import game.utilities.ViewUtils;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -14,6 +17,7 @@ public class PlayerView extends StackPane implements Observer {
 	private Player player;
 	private MapView mapView;
 	private ImageView imageView;
+	private MovementAnimation movementAnimation;
 	
 	public PlayerView(Player player, MapView mapView) {
 		super();
@@ -21,11 +25,13 @@ public class PlayerView extends StackPane implements Observer {
 		setPlayer(player);
 		player.addObserver(this);
 		setMapView(mapView);
-		ViewSettings imageSettings = player.getViewSettings();
-		ImageView imageView = ViewUtils.initImageView(imageSettings, mapView.cellSize()*0.8);
+		ViewSettings viewSettings = player.getViewSettings();
+		ImageView imageView = ViewUtils.initImageView(viewSettings, mapView.cellSize()*0.8);
 		setImageView(imageView);
 		this.getChildren().add(imageView);
-		mapView.addToMap(this, imageSettings.getX(), imageSettings.getY());
+		mapView.addToMap(this, viewSettings.getX(), viewSettings.getY());
+		movementAnimation = new MovementAnimation(300, this, getImageView(), viewSettings,
+				getMapView().cellSize());
 	}
 	
 	private Player getPlayer() {
@@ -55,21 +61,29 @@ public class PlayerView extends StackPane implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg == "moved") {
-			updatePosition();
-			mapView.updateWindowView(getPlayer());
+			Platform.runLater(() -> {
+				updatePosition();
+				mapView.updateWindowView(getPlayer());
+			});
 		}
 		else if(arg == "changedDirection") {
 			ViewSettings viewSettings = getPlayer().getViewSettings();
-			getImageView().setViewport(new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
-					viewSettings.getWidth(), viewSettings.getHeight()));
+			Platform.runLater(() -> getImageView().setViewport(
+					new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
+					viewSettings.getWidth(), viewSettings.getHeight())));
+		}
+		else if(arg instanceof Skill) {
+			int index = getPlayer().getSkillNumber(arg);
+			ISkill skill = getPlayer().getSkill(index);
+			Platform.runLater(() -> new SkillView(skill, getMapView()));
 		}
 		else if(arg == "dead")
-			removeView();
+			Platform.runLater(() -> removeView());
 	}
 	
 	private void updatePosition() {
-		ViewSettings imageSettings = getPlayer().getViewSettings();
-		new MovementAnimation(300, this, getImageView(), imageSettings, getMapView().cellSize());
+		ViewSettings viewSettings = getPlayer().getViewSettings();
+		movementAnimation.updateAndPlay(viewSettings);
 	}
 	
 	private void removeView() {

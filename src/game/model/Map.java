@@ -62,7 +62,7 @@ public class Map implements IMap {
 		this.grid = grid;
 	}
 	
-	private void setGrid(int id, int x, int y) {
+	private synchronized void setGrid(int id, int x, int y) {
 		this.grid[y][x] = id;
 	}
 	
@@ -140,7 +140,7 @@ public class Map implements IMap {
 	private void createAllComponents() {
 		RedDragon a = new RedDragon();
 		addToMap(a,3,3);
-		new Thread(a).start();
+		//new Thread(a).start();
 		GiantRat b = new GiantRat();
 		addToMap(b,7,3);
 		//new Thread(b).start();
@@ -162,24 +162,24 @@ public class Map implements IMap {
 	 * 
 	 * @param o
 	 */
-	private void addToMap(MapComponent compo, int x, int y) {
+	private synchronized void addToMap(MapComponent compo, int x, int y) {
 		setGrid(mapCompoID, x, y);
 		getMapCompos().add(compo);
 		compo.addToMap(this, x, y);
 	}
 	
-	private void addToMap(Monster monster, int x, int y){
+	private synchronized void addToMap(Monster monster, int x, int y){
 		setGrid(damageableID, x, y);
 		getMonsters().add(monster);
 		monster.addToMap(this, x, y);
 	}
 	
-	public void addToMap(Item item, int x, int y) {
+	public synchronized void addToMap(Item item, int x, int y) {
 		getItems().add(item);
 		item.addToMap(this, x, y);
 	}
 	
-	public void addToMap(Player player, int x, int y) {
+	public synchronized void addToMap(Player player, int x, int y) {
 		setGrid(damageableID, x, y);
 		setPlayer(player);
 		player.addToMap(this, x, y);
@@ -205,7 +205,7 @@ public class Map implements IMap {
 	 * @param row
 	 * @see {@link Observable}
 	 */
-	private void removeFromMap(SkillTarget skillTarget) {
+	private synchronized void removeFromMap(SkillTarget skillTarget) {
 		setNoCollision(skillTarget.getX(), skillTarget.getY());
 		getMonsters().remove(skillTarget);
 	}
@@ -252,7 +252,7 @@ public class Map implements IMap {
 	 * @param column
 	 * @param row
 	 */
-	private void setNoCollision(int column, int row){
+	private synchronized void setNoCollision(int column, int row){
 		getGrid()[row][column] = 0;
 	}
 	
@@ -278,7 +278,7 @@ public class Map implements IMap {
 	 * @param row
 	 * @return {@code AbstractItem} at (x,y)
 	 */
-	public IItem getAndRemoveItem(int x, int y) {
+	public synchronized IItem getAndRemoveItem(int x, int y) {
 		IItem item = null;
 		if(isItemAt(x, y)) {
 			item = getItem(x, y);

@@ -1,5 +1,9 @@
 package game.model;
 
+import java.util.ArrayList;
+
+import game.model.monster.Monster;
+
 /**
  * Implements {@code Model}. <br/>
  * A class that serves to create a model of the game.
@@ -40,6 +44,13 @@ public class GameModel implements Model {
 	@Override
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public void startThreads() {
+		ArrayList<Monster> monsters = getMap().getMonsters();
+		for(Monster m : monsters) {
+			new Thread(m).start();
+		}
 	}
 	
 }

@@ -20,7 +20,7 @@ public class Stats {
 		setHp(baseHp);
 		setXp(0);
 		setLevel(1);
-		updateMaxHp();
+		setMaxHp(baseHp);
 		updateXpToLevelUp();
 	}
 
@@ -60,6 +60,10 @@ public class Stats {
 		return maxHp;
 	}
 
+	private void setMaxHp(int maxHp) {
+		this.maxHp = maxHp;
+	}
+
 	private void updateMaxHp() {
 		this.maxHp = getBaseHp() + getLevel()*200;
 	}
@@ -72,21 +76,20 @@ public class Stats {
 		this.xpToLevelUp = getLevel() + getXp()/(getLevel()*getLevel()*50);
 	}
 
-	public void addHp(int hp) {
+	public synchronized void addHp(int hp) {
 		setHp(getHp() + hp);
 		System.out.println(getHp());
 	}
 	
-	public void loseHp(int hp) {
+	public synchronized void loseHp(int hp) {
 		addHp(-hp);
-		System.out.println(getHp());
 	}
 	
 	private void addXp(int xp) {
 		setXp(getXp() + xp);
 	}
 	
-	public void gainXp(int xp) {
+	public synchronized void gainXp(int xp) {
 		if(xp < 0) {
 			addXp(xp);
 			if(canLevelUp())

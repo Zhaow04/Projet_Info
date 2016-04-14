@@ -104,6 +104,10 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 	public ISkill getSkill(int skillNumber) {
 		return getSkillList().get(skillNumber);
 	}
+	
+	public int getSkillNumber(Object skill) {
+		return getSkillList().indexOf(skill);
+	}
 
 	@Override
 	public void useSkill(int skillNumber) {

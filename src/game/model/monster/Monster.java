@@ -1,15 +1,12 @@
 package game.model.monster;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import game.model.LivingBeing;
 import game.model.Observable;
 import game.model.component.SkillTarget;
 import game.model.component.ViewSettings;
 import game.view.Observer;
-import javafx.application.Platform;
 import game.model.component.Movable;
 import game.model.component.MoveInSquare;
 import game.model.component.SkillUser;
@@ -27,6 +24,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	
 	//****************************** Attributes ******************************
 	
+	private int state;
 	private Stats stats;
 	private int killxp;
 	
@@ -42,6 +40,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	 */
 	public Monster(ViewSettings viewSettings) {
 		super(viewSettings, new MoveInSquare());
+		state = 1;
 		setStats(new Stats(400));
 		setKillXp(0);
 	}
@@ -79,28 +78,15 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	
 	@Override
 	public void run() {
-		//while(true) {
+		while(state != 0) {
 			Movable m = this;
-			Timer t = new Timer();
-			t.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					getMovement().autoMove(m);
-				}
-			}, 0,2000);
-			/*System.out.println(Platform.isFxApplicationThread());
+			getMovement().autoMove(m);
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			/*final long startTime = System.currentTimeMillis();
-			while(true) {
-				if(System.currentTimeMillis() - startTime > 2000) {
-					break;
-				}
-			}*/
-		//}
+		}
 	}
 	
 	/**
@@ -147,6 +133,11 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
+		if(getStats().getHp() <= 0) {
+			state = 0;
+			notifyObservers("dead");
+			getCurrentMap().notifyDead(this);
+		}
 	}
 	/*
 	@Override

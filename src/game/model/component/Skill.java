@@ -37,7 +37,7 @@ public abstract class Skill implements ISkill {
 	 * 
 	 * @return damage dealt
 	 */
-	protected int getDamage() {
+	public int getDamage() {
 		return damage;
 	}
 
@@ -79,6 +79,10 @@ public abstract class Skill implements ISkill {
 		getViewSettings().setPosition(x, y);
 	}
 	
+	protected void setStartPos(int startX, int startY) {
+		getViewSettings().setStartPos(startX, startY);
+	}
+	
 	@Override
 	public ViewSettings getViewSettings() {
 		return viewSettings;
@@ -91,5 +95,5 @@ public abstract class Skill implements ISkill {
 	//******************************** Methods ********************************
 	
 	public abstract void use(SkillUser user);
-	
+
 }

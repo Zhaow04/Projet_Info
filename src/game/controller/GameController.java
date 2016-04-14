@@ -9,9 +9,10 @@ import game.view.GameView;
 import game.view.HUDController;
 import game.view.MapView;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class GameController implements EventHandler<KeyEvent> {
+public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	//****************************** Attributes ******************************
 
@@ -23,7 +24,7 @@ public class GameController implements EventHandler<KeyEvent> {
 	
 	private HUDController hudController;
 
-	private ArrayList<String> keyList = new ArrayList<String>();
+	private ArrayList<KeyCode> keyList = new ArrayList<KeyCode>();
 
 	//****************************** Constructor ******************************
 
@@ -32,6 +33,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		setView(view);
 		setMapView(view.mapView);
 		setPlayer(model.getPlayer());
+		new Thread(this).start();
 	}
 
 	//************************** Getters and Setters **************************
@@ -76,7 +78,7 @@ public class GameController implements EventHandler<KeyEvent> {
 		this.hudController = hudController;
 	}
 	
-	public ArrayList<String> getKeyList() {
+	public ArrayList<KeyCode> getKeyList() {
 		return keyList;
 	}
 
@@ -84,48 +86,59 @@ public class GameController implements EventHandler<KeyEvent> {
 	
 	@Override
 	public void handle(KeyEvent event) {
-		addKey(event.getCode().toString().toUpperCase());
-		useFirstKey();
+		addKey(event.getCode());
 	}
 
-	public void addKey(String key) {
-		if(getKeyList().size() <= 2) {
-			if(key.matches("UP|DOWN|LEFT|RIGHT")) {
+	@Override
+	public void run() {
+		while(true) {
+			useFirstKey();
+		}
+	}
+
+	public synchronized void addKey(KeyCode key) {
+		if(getKeyList().size() < 2) {
+			if(key.isArrowKey() || key.isDigitKey()) {
 				getKeyList().add(key);
-			}
-			else if(key.equals("DIGIT1")) {
-				getKeyList().add(key);
+				notify();
 			}	
 		}
 	}
 
-	private void useFirstKey() {
+	private synchronized void useFirstKey() {
 		if(!getKeyList().isEmpty()) {
-			String key = getKeyList().get(0);
+			KeyCode key = getKeyList().get(0);
 			useKey(key);
 			getKeyList().remove(0);
 		}
+		else {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	public void useKey(String key) {
-		if(key.matches("UP|DOWN|LEFT|RIGHT")) {
-			Vector2D direction = convertKeyToDirection(key);
+	public void useKey(KeyCode key) {
+		if(key.isArrowKey()) {
+			Vector2D direction = convertKeyToDirection(key.getName());
 			getPlayer().move(direction.getIntX(), direction.getIntY());
 		}
-		else if(key.equals("DIGIT1")) {
-			attack(key);
+		else if(key.isDigitKey()) {
+			attack(Integer.parseInt(key.getName()));
 		}
 	}
 	
 	private Vector2D convertKeyToDirection(String key) {
 		Vector2D c;
-		if(key.equals("UP")) {
+		if(key.equals("Up")) {
 			c = new Vector2D(0,-1);
 		}
-		else if(key.equals("LEFT")) {
+		else if(key.equals("Left")) {
 			c = new Vector2D(-1,0);
 		}
-		else if(key.equals("DOWN")) {
+		else if(key.equals("Down")) {
 			c = new Vector2D(0,1);
 		}
 		else {
@@ -134,14 +147,9 @@ public class GameController implements EventHandler<KeyEvent> {
 		return c;
 	}
 
-	public void attack(String str) {   
-		if(str.equals("DIGIT1")) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack
-			/*ISkill skill = player.getSkill(0);
-			skill.preUse(player);
-			if(skill.usable()) {
-				new SkillView(skill, mapView);
-			}
-			player.useSkill(0);*/
+	public void attack(int i) {   
+		if(i == 1) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
+			getPlayer().useSkill(i-1);
 		}
 	}
 
