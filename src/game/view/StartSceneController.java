@@ -60,6 +60,7 @@ public class StartSceneController {
 			int mapSize = Integer.parseInt(mapSizeField.getText());
 			GameModel model = new GameModel(mapSize);
 			new GameView(model, stage);
+			model.startThreads();
 		}
 	}
 

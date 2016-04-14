@@ -6,6 +6,8 @@ public interface ISkill {
 	
 	boolean usable();
 	
+	int getDamage();
+	
 	void use(SkillUser user);
 	
 	/**

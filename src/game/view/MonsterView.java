@@ -5,15 +5,19 @@ import game.model.component.ViewSettings;
 import game.model.monster.Monster;
 import game.utilities.MovementAnimation;
 import game.utilities.ViewUtils;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 public class MonsterView extends StackPane implements Observer {
 	
 	private Monster monster;
 	private ImageView imageView;
 	private MapView mapView;
+	private MovementAnimation movementAnimation;
 	
 	public MonsterView(Monster monster, MapView mapView) {
 		super();
@@ -26,6 +30,8 @@ public class MonsterView extends StackPane implements Observer {
 		setImageView(imageView);
 		this.getChildren().add(imageView);
 		mapView.addToMap(this, viewSettings.getX(), viewSettings.getY());
+		movementAnimation = new MovementAnimation(300, this, getImageView(), viewSettings,
+				getMapView().cellSize());
 	}
 
 	private Monster getMonster() {
@@ -55,26 +61,30 @@ public class MonsterView extends StackPane implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg == "moved"){
-			updatePosition();
+			Platform.runLater(() -> updatePosition());
 		}
 		else if(arg == "changedDirection") {
 			ViewSettings viewSettings = getMonster().getViewSettings();
-			getImageView().setViewport(new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
-					viewSettings.getWidth(), viewSettings.getHeight()));
+			Platform.runLater(() -> getImageView().setViewport(
+					new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
+					viewSettings.getWidth(), viewSettings.getHeight())));
 		}
 		else if(arg == "dead") {
-			removeView();
+			Platform.runLater(() -> removeView());
 		}
 
 	}
 
 	private void updatePosition() {
-		ViewSettings imageSettings = getMonster().getViewSettings();
-		new MovementAnimation(300, this, getImageView(), imageSettings, getMapView().cellSize());
+		ViewSettings viewSettings = getMonster().getViewSettings();
+		movementAnimation.updateAndPlay(viewSettings);
 	}
 
 	private void removeView() {
-		getMapView().remove(this);
+		MonsterView v = this;
+		PauseTransition pt = new PauseTransition(Duration.millis(500));
+		pt.setOnFinished((event) -> getMapView().remove(v));
+		pt.play();
 	}
 
 }

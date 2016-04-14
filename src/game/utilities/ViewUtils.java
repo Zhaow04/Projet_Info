@@ -37,12 +37,14 @@ public abstract class ViewUtils {
 		double offsetY = viewSettings.getOffsetY();
 		double width = viewSettings.getWidth();
 		double height = viewSettings.getHeight();
+		double spanX = viewSettings.getSpanX();
+		double spanY = viewSettings.getSpanY();
 		
 		Image image = new Image(imageURL);
 		ImageView imageContainer = new ImageView(image);
 		imageContainer.setViewport(new Rectangle2D(offsetX,offsetY,width,height));
-		imageContainer.setFitWidth(size);
-		imageContainer.setFitHeight(size);
+		imageContainer.setFitWidth(size*spanX);
+		imageContainer.setFitHeight(size*spanY);
 		imageContainer.setPreserveRatio(true);
 		return imageContainer;
 	}

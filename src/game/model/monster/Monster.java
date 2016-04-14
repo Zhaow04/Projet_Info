@@ -1,8 +1,6 @@
 package game.model.monster;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import game.model.LivingBeing;
 import game.model.Observable;
@@ -11,7 +9,6 @@ import game.model.component.SkillTarget;
 import game.model.component.ViewSettings;
 import game.utilities.Vector2D;
 import game.view.Observer;
-import javafx.application.Platform;
 import game.model.component.Movable;
 import game.model.component.BasicMonsterMove;
 import game.model.component.SkillUser;
@@ -29,8 +26,8 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	
 	//****************************** Attributes ******************************
 	
+	private int state;
 	private Stats stats;
-	private int killxp;
 	private int scope;
 	
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
@@ -45,8 +42,8 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	 */
 	public Monster(ViewSettings viewSettings) {
 		super(viewSettings, new BasicMonsterMove());
+		state = 1;
 		setStats(new Stats(400));
-		setKillXp(0); // pourquoi 0 et pourquoi ici ? vaut mieu =x dans les differents monstres directement
 	}
 	
 	//************************** Getters and Setters **************************
@@ -58,24 +55,6 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 
 	private void setStats(Stats stats) {
 		this.stats = stats;
-	}
-	
-	/**
-	 * Gets the Xp gained by the player when the monster is killed.
-	 * 
-	 * @return killxp
-	 */
-	public int getKillXp() {
-		return killxp;
-	}
-	
-	/**
-	 * Sets the Xp gained by the player when the monster is killed.
-	 * 
-	 * @param killxp
-	 */
-	private void setKillXp(int killxp) {
-		this.killxp = killxp;
 	}
 	
 	/**
@@ -98,43 +77,27 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	
 	//******************************** Methods ********************************
 	
-	
-	
 	@Override
 	public void run() {
-		//while(true) {
+		while(state != 0) {
 			Movable m = this;
-			Timer t = new Timer();
-			t.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					if (isPlayerInView() && !isPlayerNearby()){
-						//System.out.println("In View !");
-						getMovement().TrackPlayer(m);
-					}
-					else if (isPlayerNearby()){
-						getMovement().FaceThePlayer(m);
-						//System.out.println("je dois attaquer");
-					}
-					else {
-						getMovement().MoveInX(m);
-
-					}
-				}
-			}, 5000,2000);
-			/*System.out.println(Platform.isFxApplicationThread());
+			if (isPlayerInView() && !isPlayerNearby()){
+				//System.out.println("In View !");
+				getMovement().trackPlayer(m);
+			}
+			else if (isPlayerNearby()){
+				getMovement().faceThePlayer(m);
+				//System.out.println("je dois attaquer");
+			}
+			else {
+				getMovement().move(m);
+			}
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			/*final long startTime = System.currentTimeMillis();
-			while(true) {
-				if(System.currentTimeMillis() - startTime > 2000) {
-					break;
-				}
-			}*/
-		//}
+		}
 	}
 	
 	/**
@@ -198,6 +161,11 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
+		if(getStats().getHp() <= 0) {
+			state = 0;
+			notifyObservers("dead");
+			getCurrentMap().notifyDead(this);
+		}
 	}
 	/*
 	@Override

@@ -13,10 +13,10 @@ public class SpriteAnimation extends Transition {
     private final ImageView imageView;
     private final int count;
     private final int columns;
-    private final int offsetX;
-    private final int offsetY;
-    private final int width;
-    private final int height;
+    private int offsetX;
+    private int offsetY;
+    private int width;
+    private int height;
 
     private int lastIndex;
 
@@ -62,26 +62,24 @@ public class SpriteAnimation extends Transition {
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
         setCycleCount(1);
-        //System.out.println(offsetY);
-        //System.out.println("ok2");
         this.play();
         
     }
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
-        //System.out.println(index);
         if (index != lastIndex) {
             final int x = (index % columns) * width  + offsetX;
             final int y = 0*(index / columns) * height + offsetY;
-            //System.out.println(x);
             imageView.setViewport(new Rectangle2D(x, y, width, height));
             lastIndex = index;
         }
     }
-    /*
-	@Override
-	public void run() {
-		this.play();
-	}*/
+    
+    public void update(ViewSettings viewSettings) {
+    	this.offsetX   = (int) viewSettings.getOffsetX();
+        this.offsetY   = (int) viewSettings.getOffsetY();
+        this.width     = (int) viewSettings.getWidth();
+        this.height    = (int) viewSettings.getHeight();
+    }
 }

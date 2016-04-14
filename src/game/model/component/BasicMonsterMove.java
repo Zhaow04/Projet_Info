@@ -33,12 +33,12 @@ public class BasicMonsterMove extends BasicMove {
 	 * 
 	 */
 	@Override
-	public void MoveInX (Movable m) {
+	public void move(Movable m) {
 		if(getBaseX() == -1 && getBaseY() == -1) {
 			setBaseX(m.getX()); setBaseY(m.getY());
 		}
 		if(m.getY() == getBaseY() && m.getX() == getBaseX())
-			MoveRandomly (m);
+			moveRandomly (m);
 		else if(m.getY() == getBaseY() + 1 && m.getX() == getBaseX())
 			super.move(m,0,-1);
 		else if(m.getY() == getBaseY() - 1 && m.getX() == getBaseX())
@@ -50,7 +50,7 @@ public class BasicMonsterMove extends BasicMove {
 
 	}
 	
-	public void TrackPlayer(Movable m){
+	public void trackPlayer(Movable m){
 		
 		Player player=m.getCurrentMap().getPlayer();
 		
@@ -80,7 +80,7 @@ public class BasicMonsterMove extends BasicMove {
 		
 		else {
 			//System.out.println("random move");
-			MoveRandomly(m);
+			moveRandomly(m);
 		}
 		
 		setBaseX(m.getX());
@@ -103,7 +103,7 @@ public class BasicMonsterMove extends BasicMove {
 			super.move(m,-1,0);
 	}*/
 	
-	public void MoveRandomly (Movable m) {
+	private void moveRandomly (Movable m) {
 		int[] AllDirections[]={{0,1},{1,0},{0,-1},{-1,0}};
 		ArrayList<int[]> PossibleDirections = new ArrayList<int[]>();
 		for (int[] direction : AllDirections){
@@ -118,7 +118,7 @@ public class BasicMonsterMove extends BasicMove {
 	}
 	
 	@Override
-	public void FaceThePlayer(Movable m){
+	public void faceThePlayer(Movable m){
 		Player player=m.getCurrentMap().getPlayer();
 			m.setDirectionFacing(player.getX()-m.getX(), player.getY()-m.getY());
 			m.notifyObservers("changedDirection");

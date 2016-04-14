@@ -153,8 +153,6 @@ public class Map implements IMap {
 		addToMap(new Bush(),8,8);
 		addToMap(new HpPotion(100), 2, 8);
 		addToMap(new HpPotion(100), 8, 2);
-		new Thread(a).start();
-		//new Thread(b).start();
 	}
 
 	/**

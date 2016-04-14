@@ -15,4 +15,6 @@ public interface SkillUser {
 	
 	void useSkill(int skilNumber);
 	
+	void notifyObservers(Object arg);
+	
 }

@@ -4,9 +4,9 @@ public interface Movement {
 	
 	public void move(Movable m, int dx, int dy);
 		
-	public void MoveInX (Movable m);
+	public void move(Movable m);
 	
-	public void FaceThePlayer(Movable m);
+	public void faceThePlayer(Movable m);
 	
 	public Movable getMovable();
 	
@@ -18,8 +18,6 @@ public interface Movement {
 
 	public int getNewY();
 
-	public void MoveRandomly(Movable m);
-
-	public void TrackPlayer(Movable m);
+	public void trackPlayer(Movable m);
 	
 }

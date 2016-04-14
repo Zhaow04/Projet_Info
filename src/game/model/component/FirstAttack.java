@@ -23,10 +23,7 @@ public class FirstAttack extends DirectAttack {
 	}
 	
 	public void preUse(SkillUser user) {
-		IMap map = user.getCurrentMap();
-		Vector2D direction = user.getDirectionFacing();
-		Vector2D targetPos = direction.plus(user.getX(), user.getY());
-		setTarget(map.getTargetAt(targetPos.getIntX(), targetPos.getIntY()));
+		
 	}
 	
 	public boolean usable() {
@@ -35,9 +32,15 @@ public class FirstAttack extends DirectAttack {
 	
 	@Override
 	public void use(SkillUser user) {
+		IMap map = user.getCurrentMap();
+		Vector2D direction = user.getDirectionFacing();
+		Vector2D targetPos = direction.plus(user.getX(), user.getY());
+		setTarget(map.getTargetAt(targetPos.getIntX(), targetPos.getIntY()));
 		if(usable()) {
-			Stats targetStats = getTarget().getStats();
-			targetStats.loseHp(getDamage());
+			setStartPos(getTarget().getX(), getTarget().getY());
+			setPosition(getTarget().getX(), getTarget().getY());
+			user.notifyObservers(this);
+			getTarget().loseHp(getDamage());
 		}
 	}
 

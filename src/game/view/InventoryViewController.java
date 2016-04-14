@@ -34,7 +34,7 @@ public class InventoryViewController implements Observer {
 		
 	}
 
-	public void addItemView(ItemView itemView) {
+	public synchronized void addItemView(ItemView itemView) {
 		Item item = itemView.getItem();
 		int index = player.getInventory().getItemNumber(item);
 		StackPane itemContainer = (StackPane) inventoryContainer.getChildren().get(index);
@@ -49,7 +49,7 @@ public class InventoryViewController implements Observer {
 		//itemView.setPreserveRatio(true);
 	}
 	
-	public void removeItemView(int index) {
+	public synchronized void removeItemView(int index) {
 		
 	}
 }

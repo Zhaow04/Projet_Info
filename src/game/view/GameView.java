@@ -1,11 +1,13 @@
 package game.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import game.Main;
 import game.controller.GameController;
 import game.model.GameModel;
 import game.model.Player;
+import game.model.monster.Monster;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

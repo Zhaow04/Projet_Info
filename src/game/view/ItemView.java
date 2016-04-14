@@ -5,6 +5,7 @@ import game.model.component.ViewSettings;
 import game.model.item.Item;
 import game.utilities.ViewUtils;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -66,7 +67,7 @@ public class ItemView extends StackPane implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		transferItemView();
+		Platform.runLater(() -> transferItemView());
 	}
 
 	private void transferItemView() {

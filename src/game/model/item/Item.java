@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import game.model.MapComponent;
 import game.model.Observable;
 import game.model.Player;
-import game.model.component.Inventory;
 import game.model.component.ViewSettings;
 import game.view.Observer;
 

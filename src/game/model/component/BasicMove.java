@@ -1,10 +1,6 @@
 package game.model.component;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import game.model.IMap;
-import game.model.Player;
 import game.utilities.Vector2D;
 
 public class BasicMove implements Movement {
@@ -84,28 +80,20 @@ public class BasicMove implements Movement {
 			m.notifyObservers("moved");
 		}
 	}
-	
-	
-
 
 	@Override
-	public void MoveInX(Movable m) {
+	public void move(Movable m) {
 		
 	}
-
+	
 	@Override
-	public void MoveRandomly(Movable m) {
-		
-	}
-
-	@Override
-	public void TrackPlayer(Movable m) {
+	public void trackPlayer(Movable m) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void FaceThePlayer(Movable m) {
+	public void faceThePlayer(Movable m) {
 		// TODO Auto-generated method stub
 		
 	}
