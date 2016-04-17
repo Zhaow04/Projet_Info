@@ -1,6 +1,6 @@
 package game.model;
 
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 
 /**
  * A class implements {@code Viewable} when it needs an image to be displayed on screen.

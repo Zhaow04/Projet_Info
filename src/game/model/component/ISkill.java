@@ -1,6 +1,8 @@
 package game.model.component;
 
-public interface ISkill {
+import game.utilities.ViewSettings;
+
+public interface ISkill {				
 	
 	void preUse(SkillUser user);
 	

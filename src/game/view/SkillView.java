@@ -1,8 +1,8 @@
 package game.view;
 
 import game.model.component.ISkill;
-import game.model.component.ViewSettings;
 import game.utilities.MovementAnimation;
+import game.utilities.ViewSettings;
 import game.utilities.ViewUtils;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;

@@ -1,6 +1,6 @@
 package game.model;
 
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 
 public abstract class MapComponent {
 	

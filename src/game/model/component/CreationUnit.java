@@ -101,16 +101,16 @@ public class CreationUnit {
 	private static void addMonster(int i,  Map map, int x, int y) {
 		switch (i) {
 		case 0:
-			map.addToMap(new BlueDragon(),x,y);
+			map.addToMap(new BlueDragon(1),x,y);
 			break;
 		case 1:
-			map.addToMap(new RedDragon(),x,y);
+			map.addToMap(new RedDragon(1),x,y);
 			break;
 		case 2:
-			map.addToMap(new GiantRat(),x,y);
+			map.addToMap(new GiantRat(1),x,y);
 			break;
 		case 3:
-			map.addToMap(new OrangeBat(),x,y);
+			map.addToMap(new OrangeBat(1),x,y);
 			break;
 		}
 	}

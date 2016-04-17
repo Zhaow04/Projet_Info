@@ -2,6 +2,7 @@ package game.model.component;
 
 import game.model.IMap;
 import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 
 public class Fire extends Aoe {
 	

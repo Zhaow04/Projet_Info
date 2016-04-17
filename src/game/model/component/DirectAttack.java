@@ -1,5 +1,10 @@
 package game.model.component;
 
+import game.model.IMap;
+import game.model.Player;
+import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
+
 /**
  * Extends from {@code Skill}. <br/>
  * Abstract class that serves as a super class for all the direct attacks (range 1).
@@ -10,7 +15,6 @@ package game.model.component;
  */
 public abstract class DirectAttack extends Skill {
 	
-	private SkillTarget target;
 	
 	//****************************** Constructor ******************************
 	
@@ -21,12 +25,27 @@ public abstract class DirectAttack extends Skill {
 		super(damage, 1, viewSettings);
 	}
 
-	protected SkillTarget getTarget() {
-		return target;
-	}
+	
+	
+	
+	@Override
+	public void use(SkillUser user) {
+		IMap map = user.getCurrentMap();
+		Vector2D direction = user.getDirectionFacing();
+		Vector2D targetPos = direction.plus(user.getX(), user.getY());
+		setTarget(map.getTargetAt(targetPos.getIntX(), targetPos.getIntY()));
+		if(usable()) {
+			setStartPos(getTarget().getX(), getTarget().getY());
+			setPosition(getTarget().getX(), getTarget().getY());
+			user.notifyObservers(this);
+			getTarget().loseHp(getDamage());
+			if (user instanceof Player && getTarget().getStats().getHp()<=0){
+				gainKillXp(user);
+				//System.out.println(user.getStats().getXp());
+				//System.out.println(user.getStats().getLevel());
+			}
 
-	protected void setTarget(SkillTarget target) {
-		this.target = target;
+		}
 	}
 	
 }

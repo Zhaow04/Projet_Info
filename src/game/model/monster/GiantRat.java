@@ -1,6 +1,7 @@
 package game.model.monster;
 
-import game.model.component.ViewSettings;
+import game.model.component.Stats;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code Monster} <br/>
@@ -24,9 +25,10 @@ public class GiantRat extends Monster {
 	 * @param y
 	 * @see {@link Monster#Monster(Map)}
 	 */
-	public GiantRat(){
+	public GiantRat(int level){
 		super(new ViewSettings("game/utilities/GiantRat.png", 0, 0, 80, 80, new int[2]));
 		setScope(2);
+		setStats(new Stats(400, 50, level));
 	}
 	
 	//************************** Getters and Setters **************************

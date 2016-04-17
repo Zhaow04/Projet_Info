@@ -1,6 +1,6 @@
 package game.model.mapcomponent;
 
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 
 public class Rock extends Obstacle{
 

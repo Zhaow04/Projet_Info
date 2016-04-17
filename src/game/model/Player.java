@@ -11,8 +11,8 @@ import game.model.component.Skill;
 import game.model.component.SkillTarget;
 import game.model.component.SkillUser;
 import game.model.component.Stats;
-import game.model.component.ViewSettings;
 import game.model.item.IItem;
+import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**

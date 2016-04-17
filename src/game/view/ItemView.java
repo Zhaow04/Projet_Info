@@ -1,8 +1,8 @@
 package game.view;
 
 import game.model.Observable;
-import game.model.component.ViewSettings;
 import game.model.item.Item;
+import game.utilities.ViewSettings;
 import game.utilities.ViewUtils;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;

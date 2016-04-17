@@ -1,7 +1,7 @@
 package game.view;
 
 import game.model.MapComponent;
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 import game.utilities.ViewUtils;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;

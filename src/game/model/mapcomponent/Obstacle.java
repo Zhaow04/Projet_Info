@@ -1,7 +1,7 @@
 package game.model.mapcomponent;
 
 import game.model.MapComponent;
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 
 /**
  * Abstract class that serves as a super class to all the obstacles.

@@ -1,9 +1,11 @@
 package game.view;
 
 import game.model.Observable;
-import game.model.component.ViewSettings;
+import game.model.component.ISkill;
+import game.model.component.Skill;
 import game.model.monster.Monster;
 import game.utilities.MovementAnimation;
+import game.utilities.ViewSettings;
 import game.utilities.ViewUtils;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -68,6 +70,10 @@ public class MonsterView extends StackPane implements Observer {
 			Platform.runLater(() -> getImageView().setViewport(
 					new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
 					viewSettings.getWidth(), viewSettings.getHeight())));
+		}
+		else if(arg instanceof ISkill) {
+			ISkill skill = (ISkill) arg;
+			Platform.runLater(() -> new SkillView(skill, getMapView()));
 		}
 		else if(arg == "dead") {
 			Platform.runLater(() -> removeView());

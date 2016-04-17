@@ -1,6 +1,6 @@
 package game.model.item;
 
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code AbstractItem}. <br/>

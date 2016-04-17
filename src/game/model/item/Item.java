@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import game.model.MapComponent;
 import game.model.Observable;
 import game.model.Player;
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**

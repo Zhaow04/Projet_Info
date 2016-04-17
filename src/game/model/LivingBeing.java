@@ -2,8 +2,8 @@ package game.model;
 
 import game.model.component.Movable;
 import game.model.component.Movement;
-import game.model.component.ViewSettings;
 import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code ViewSettings}. <br/>

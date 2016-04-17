@@ -1,7 +1,6 @@
 package game.utilities;
 
 import game.model.Observable;
-import game.model.component.ViewSettings;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
