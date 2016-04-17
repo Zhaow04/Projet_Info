@@ -64,11 +64,4 @@ public class TrackPlayer extends BasicMove {
 			}
 	}
 	
-	@Override
-	public void faceThePlayer(Movable m){
-		Player player=m.getCurrentMap().getPlayer();
-			m.setDirectionFacing(player.getX()-m.getX(), player.getY()-m.getY());
-			m.notifyObservers("changedDirection");
-	}
-	
 }

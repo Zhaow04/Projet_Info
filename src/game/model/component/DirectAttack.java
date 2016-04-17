@@ -41,8 +41,8 @@ public abstract class DirectAttack extends Skill {
 			getTarget().loseHp(getDamage());
 			if (user instanceof Player && getTarget().getStats().getHp()<=0){
 				gainKillXp(user);
-				//System.out.println(user.getStats().getXp());
-				//System.out.println(user.getStats().getLevel());
+				System.out.println(user.getStats().getXp());
+				System.out.println(user.getStats().getLevel());
 			}
 
 		}

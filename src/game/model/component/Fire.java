@@ -1,6 +1,7 @@
 package game.model.component;
 
 import game.model.IMap;
+import game.model.Player;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
 
@@ -59,8 +60,14 @@ public class Fire extends Aoe {
 			user.notifyObservers(this);
 			for(int i = -(getRadius()-2); i <= getRadius()-2; i++) {
 				for(int j = -(getRadius()-2); j <= getRadius()-2; j++) {
-					if(map.isTargetAt(targetX + j, targetY + i))
+					if(map.isTargetAt(targetX + j, targetY + i)){
 						map.getTargetAt(targetX + j, targetY + i).loseHp(getDamage());
+						if (user instanceof Player && getTarget().getStats().getHp()<=0){
+							gainKillXp(user);
+							System.out.println(user.getStats().getXp());
+							System.out.println(user.getStats().getLevel());
+						}
+					}
 				}
 			}
 			setTarget(null);

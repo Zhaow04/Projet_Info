@@ -11,10 +11,13 @@ import game.utilities.ViewSettings;
 import game.view.Observer;
 import game.model.component.Movable;
 import game.model.component.BasicMonsterAttack;
-import game.model.component.BasicMonsterMove;
+import game.model.component.FaceThePlayer;
+import game.model.component.MoveInX;
+import game.model.component.Movement;
 import game.model.component.ISkill;
 import game.model.component.SkillUser;
 import game.model.component.Stats;
+import game.model.component.TrackPlayer;
 
 /**
  * Extends from {@code LivingBeing} <br/>
@@ -32,6 +35,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	private Stats stats;
 	private int scope;
 	private ISkill skill;
+	private Movement basicMovement;
 	
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
@@ -44,7 +48,8 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	 * @see {@link LivingBeing#LivingBeing(Map)}
 	 */
 	public Monster(ViewSettings viewSettings) {
-		super(viewSettings, new BasicMonsterMove());
+		super(viewSettings, new MoveInX());
+		this.basicMovement= getMovement();
 		state = 1;
 		setSkill(new BasicMonsterAttack());
 	}
@@ -93,13 +98,18 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		while(state != 0) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
-				getMovement().trackPlayer(m);
+				setMovement(new TrackPlayer());
+				getMovement().move(m);
+				basicMovement.setBaseX(this.getX());
+				basicMovement.setBaseY(this.getY());
 			}
 			else if (isPlayerNearby()){
-				getMovement().faceThePlayer(m);
+				setMovement(new FaceThePlayer());
+				getMovement().move(m);
 				getSkill().use(this);
 			}
 			else {
+				setMovement(basicMovement);
 				getMovement().move(m);
 			}
 			try {

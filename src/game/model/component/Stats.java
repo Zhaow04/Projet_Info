@@ -130,11 +130,11 @@ public class Stats {
 	private void levelUp() {
 		setLevel(getLevel() + 1);
 		updateMaxHp();
-		//int extraXp = getXpToLevelUp() - getXp();
-		//resetXp();
+		int extraXp = getXpToLevelUp() - getXp();
+		resetXp();
 		updateXpToLevelUp();
-		//if(extraXp > 0)
-			//gainXp(extraXp);
+		if(extraXp > 0)
+			gainXp(extraXp);
 	}
 
 }

@@ -85,21 +85,17 @@ public class BasicMove implements Movement {
 	public void move(Movable m) {
 		
 	}
-	
+
 	@Override
-	public void trackPlayer(Movable m) {
+	public void setBaseX(int baseX) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void faceThePlayer(Movable m) {
+	public void setBaseY(int baseY) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	
-	
-	
-	
 }

@@ -67,7 +67,7 @@ public abstract class LivingBeing extends MapComponent implements Movable {
 		return movement;
 	}
 
-	private void setMovement(Movement movement) {
+	protected void setMovement(Movement movement) {
 		this.movement = movement;
 	}
 	

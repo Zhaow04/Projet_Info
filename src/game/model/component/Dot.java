@@ -14,7 +14,7 @@ public abstract class Dot extends Skill {
 	
 	//****************************** Attributes ******************************
 	
-	private int dot;
+	private int damage;
 	
 	//****************************** Constructor ******************************
 	
@@ -34,7 +34,7 @@ public abstract class Dot extends Skill {
 	 * @return damage dealt over time
 	 */
 	public int getDot() {
-		return dot;
+		return damage;
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public abstract class Dot extends Skill {
 	 * @param dot
 	 */
 	private void setDot(int dot) {
-		this.dot = dot;
+		this.damage = dot;
 	}
 	
 }
