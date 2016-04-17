@@ -24,7 +24,7 @@ public class OrangeBat extends Monster {
 	 * @see {@link Monster#Monster(Map)}
 	 */
 	public OrangeBat(){
-		super(new ViewSettings("game/model/batman.png", 0, 0, 100, 100, new int[2]));
+		super(new ViewSettings("game/utilities/batman.png", 0, 0, 80, 80, new int[2]));
 		setScope(2);
 	}
 	

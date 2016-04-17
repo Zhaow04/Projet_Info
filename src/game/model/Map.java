@@ -3,6 +3,7 @@ package game.model;
 import java.util.ArrayList;
 
 import game.model.component.SkillTarget;
+import game.model.component.CreationUnit;
 import game.model.component.Movement;
 import game.model.component.ViewSettings;
 import game.model.item.HpPotion;
@@ -138,7 +139,8 @@ public class Map implements IMap {
 	}
 	
 	private void createAllComponents() {
-		RedDragon a = new RedDragon();
+		CreationUnit.createMap(this.getSize(), this);
+		/*RedDragon a = new RedDragon();
 		addToMap(a,3,3);
 		GiantRat b = new GiantRat();
 		addToMap(b,7,3);
@@ -152,7 +154,7 @@ public class Map implements IMap {
 		addToMap(new Tree(),6,5);
 		addToMap(new Bush(),8,8);
 		addToMap(new HpPotion(100), 2, 8);
-		addToMap(new HpPotion(100), 8, 2);
+		addToMap(new HpPotion(100), 8, 2);*/
 	}
 
 	/**
@@ -160,13 +162,13 @@ public class Map implements IMap {
 	 * 
 	 * @param o
 	 */
-	private void addToMap(MapComponent compo, int x, int y) {
+	public void addToMap(MapComponent compo, int x, int y) {
 		setGrid(mapCompoID, x, y);
 		getMapCompos().add(compo);
 		compo.addToMap(this, x, y);
 	}
 	
-	private void addToMap(Monster monster, int x, int y){
+	public void addToMap(Monster monster, int x, int y){
 		setGrid(damageableID, x, y);
 		getMonsters().add(monster);
 		monster.addToMap(this, x, y);
