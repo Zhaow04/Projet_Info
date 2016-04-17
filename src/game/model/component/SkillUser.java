@@ -17,4 +17,6 @@ public interface SkillUser {
 	
 	void notifyObservers(Object arg);
 	
+	Stats getStats();
+	
 }

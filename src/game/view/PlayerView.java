@@ -4,8 +4,8 @@ import game.model.Observable;
 import game.model.Player;
 import game.model.component.ISkill;
 import game.model.component.Skill;
-import game.model.component.ViewSettings;
 import game.utilities.MovementAnimation;
+import game.utilities.ViewSettings;
 import game.utilities.ViewUtils;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -72,9 +72,9 @@ public class PlayerView extends StackPane implements Observer {
 					new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
 					viewSettings.getWidth(), viewSettings.getHeight())));
 		}
-		else if(arg instanceof Skill) {
-			int index = getPlayer().getSkillNumber(arg);
-			ISkill skill = getPlayer().getSkill(index);
+		else if(arg instanceof ISkill) {
+			//int index = getPlayer().getSkillNumber(arg);
+			ISkill skill = (ISkill) arg ;
 			Platform.runLater(() -> new SkillView(skill, getMapView()));
 		}
 		else if(arg == "dead")

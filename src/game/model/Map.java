@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import game.model.component.SkillTarget;
 import game.model.component.Movement;
-import game.model.component.ViewSettings;
 import game.model.item.HpPotion;
 import game.model.item.IItem;
 import game.model.item.Item;
@@ -14,6 +13,7 @@ import game.model.mapcomponent.Tree;
 import game.model.monster.GiantRat;
 import game.model.monster.Monster;
 import game.model.monster.RedDragon;
+import game.utilities.ViewSettings;
 
 /**
  * Map of the game. It knows whether or not a position
@@ -138,9 +138,9 @@ public class Map implements IMap {
 	}
 	
 	private void createAllComponents() {
-		RedDragon a = new RedDragon();
+		RedDragon a = new RedDragon(2);
 		addToMap(a,3,3);
-		GiantRat b = new GiantRat();
+		GiantRat b = new GiantRat(1);
 		addToMap(b,7,3);
 		addToMap(new SafeHouse(),7,7);
 		for (int i=0 ;i < getSize(); i++) {
@@ -217,10 +217,15 @@ public class Map implements IMap {
 	 */
 	public SkillTarget getTargetAt(int x, int y) {
 		SkillTarget skillTarget = null;
-		for(SkillTarget d : getMonsters()) {
-			if(d.getX() == x && d.getY() == y) {
-				skillTarget = d;
-				break;
+		if (getPlayer().getX()== x && getPlayer().getY() == y){
+			skillTarget = getPlayer();
+		}
+		else {
+			for(SkillTarget d : getMonsters()) {
+					if(d.getX() == x && d.getY() == y) {
+							skillTarget = d;
+							break;
+					}
 			}
 		}
 		return skillTarget;

@@ -61,7 +61,6 @@ public class BasicMonsterMove extends BasicMove {
 					|| (Math.abs(player.getY()-m.getY()) < Math.abs(player.getX()-m.getX())
 					&& !(canMove(m, (int) (Math.signum(player.getX()-m.getX())),0)))  )    ){
 			
-			//System.out.println("je dois bouger en y");
 			super.move(m, 0,  (int) (Math.signum(player.getY()-m.getY())));			
 
 		}
@@ -73,13 +72,11 @@ public class BasicMonsterMove extends BasicMove {
 						|| (Math.abs(player.getX()-m.getX()) <= Math.abs(player.getY()-m.getY())
 					&& !(canMove(m, 0, (int) (Math.signum(player.getY()-m.getY()))))) )   ) {
 			
-			//System.out.println("je dois bouger en x");
 			super.move(m, (int) (Math.signum(player.getX()-m.getX())), 0);
 
 		}
 		
 		else {
-			//System.out.println("random move");
 			moveRandomly(m);
 		}
 		

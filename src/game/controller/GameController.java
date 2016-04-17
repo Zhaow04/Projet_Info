@@ -33,7 +33,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 		setView(view);
 		setMapView(view.mapView);
 		setPlayer(model.getPlayer());
-		new Thread(this).start();
+		new Thread(this).start();   
 	}
 
 	//************************** Getters and Setters **************************

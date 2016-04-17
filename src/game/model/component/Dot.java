@@ -1,5 +1,7 @@
 package game.model.component;
 
+import game.utilities.ViewSettings;
+
 /**
  * Extends from {@code Skill}. <br/>
  * Abstract class that serves as a super class for all the damage over time attacks.

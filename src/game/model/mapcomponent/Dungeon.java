@@ -1,7 +1,7 @@
 package game.model.mapcomponent;
 
 import game.model.MapComponent;
-import game.model.component.ViewSettings;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code ViewSettings} <br/>

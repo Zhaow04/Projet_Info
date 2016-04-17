@@ -1,6 +1,7 @@
 package game.model.component;
 
 import game.model.item.Item;
+import game.utilities.ViewSettings;
 
 /**
  * Implements {@code Item}. <br/>
@@ -16,7 +17,8 @@ public abstract class Skill implements ISkill {
 	
 	private int damage;
 	private int range;
-	
+	private SkillTarget target;
+
 	private ViewSettings viewSettings;
 	
 	//****************************** Constructor ******************************
@@ -67,6 +69,15 @@ public abstract class Skill implements ISkill {
 		this.range = range;
 	}
 	
+	protected SkillTarget getTarget() {
+		return target;
+	}
+
+	protected void setTarget(SkillTarget target) {
+		this.target = target;
+	}
+	
+	
 	protected int getX() {
 		return getViewSettings().getX();
 	}
@@ -94,6 +105,15 @@ public abstract class Skill implements ISkill {
 	
 	//******************************** Methods ********************************
 	
-	public abstract void use(SkillUser user);
+	//public abstract void use(SkillUser user);
+	
+	protected void gainKillXp(SkillUser user){
+		int killXp = getTarget().getStats().getKillXp();
+		user.getStats().gainXp(killXp);
+	}
+	
+	public boolean usable() {
+		return getTarget() != null;
+	}
 
 }

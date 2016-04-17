@@ -6,11 +6,13 @@ import game.model.LivingBeing;
 import game.model.Observable;
 import game.model.Player;
 import game.model.component.SkillTarget;
-import game.model.component.ViewSettings;
 import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 import game.view.Observer;
 import game.model.component.Movable;
+import game.model.component.BasicMonsterAttack;
 import game.model.component.BasicMonsterMove;
+import game.model.component.ISkill;
 import game.model.component.SkillUser;
 import game.model.component.Stats;
 
@@ -29,6 +31,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	private int state;
 	private Stats stats;
 	private int scope;
+	private ISkill skill;
 	
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
@@ -43,7 +46,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	public Monster(ViewSettings viewSettings) {
 		super(viewSettings, new BasicMonsterMove());
 		state = 1;
-		setStats(new Stats(400));
+		setSkill(new BasicMonsterAttack());
 	}
 	
 	//************************** Getters and Setters **************************
@@ -53,7 +56,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		return stats;
 	}
 
-	private void setStats(Stats stats) {
+	protected void setStats(Stats stats) {
 		this.stats = stats;
 	}
 	
@@ -75,6 +78,14 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		this.scope = scope;
 	}
 	
+	protected ISkill getSkill() {
+		return this.skill ;
+	}
+	
+	protected void setSkill(ISkill skill) {
+		this.skill = skill;
+	}
+	
 	//******************************** Methods ********************************
 	
 	@Override
@@ -82,12 +93,11 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		while(state != 0) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
-				//System.out.println("In View !");
 				getMovement().trackPlayer(m);
 			}
 			else if (isPlayerNearby()){
 				getMovement().faceThePlayer(m);
-				//System.out.println("je dois attaquer");
+				getSkill().use(this);
 			}
 			else {
 				getMovement().move(m);
