@@ -2,8 +2,8 @@ package game.model;
 
 import game.model.component.Movable;
 import game.model.component.Movement;
-import game.model.component.ViewSettings;
 import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code ViewSettings}. <br/>
@@ -67,7 +67,7 @@ public abstract class LivingBeing extends MapComponent implements Movable {
 		return movement;
 	}
 
-	private void setMovement(Movement movement) {
+	protected void setMovement(Movement movement) {
 		this.movement = movement;
 	}
 	

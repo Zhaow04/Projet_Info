@@ -69,10 +69,10 @@ public class BasicMove implements Movement {
 
 	@Override
 	public void move(Movable m, int dx, int dy) {
-		IMap map = m.getCurrentMap();
 		m.setDirectionFacing(dx, dy);
 		m.notifyObservers("changedDirection");
 		if(canMove(m, dx, dy)) {
+		IMap map = m.getCurrentMap();
 			setOldX(m.getX()); setOldY(m.getY());
 			setNewX(m.getX() + dx); setNewY(m.getY() + dy);
 			m.setPosition(m.getX() + dx, m.getY() + dy);
@@ -85,21 +85,17 @@ public class BasicMove implements Movement {
 	public void move(Movable m) {
 		
 	}
-	
+
 	@Override
-	public void trackPlayer(Movable m) {
+	public void setBaseX(int baseX) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void faceThePlayer(Movable m) {
+	public void setBaseY(int baseY) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	
-	
-	
-	
 }

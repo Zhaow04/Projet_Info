@@ -6,6 +6,7 @@ public class Stats {
 	private int hp;
 	private int xp;
 	private int level;
+	private int killXp;
 	
 	/**
 	 * Defines the maximum of Hp a player can have (depending on his level).
@@ -22,6 +23,14 @@ public class Stats {
 		setLevel(1);
 		setMaxHp(baseHp);
 		updateXpToLevelUp();
+	}
+	
+	public Stats(int baseHp, int killxp, int level) {
+		setBaseHp(baseHp);
+		updateMaxHp();
+		setHp(maxHp);
+		setLevel(level);
+		setKillXp(killxp);
 	}
 
 	public int getBaseHp() {
@@ -40,12 +49,20 @@ public class Stats {
 		this.hp = hp;
 	}
 
-	private int getXp() {
+	public int getXp() {
 		return xp;
 	}
 
 	private void setXp(int xp) {
 		this.xp = xp;
+	}
+	
+	public int getKillXp() {
+		return killXp;
+	}
+
+	private void setKillXp(int killxp) {
+		this.killXp = killxp;
 	}
 
 	public int getLevel() {
@@ -65,7 +82,7 @@ public class Stats {
 	}
 
 	private void updateMaxHp() {
-		this.maxHp = getBaseHp() + getLevel()*200;
+		this.maxHp = getBaseHp() + getLevel()*100;
 	}
 
 	private int getXpToLevelUp() {
@@ -73,7 +90,7 @@ public class Stats {
 	}
 
 	private void updateXpToLevelUp() {
-		this.xpToLevelUp = getLevel() + getXp()/(getLevel()*getLevel()*50);
+		this.xpToLevelUp = (getLevel()*getLevel()*50);
 	}
 
 	public synchronized void addHp(int hp) {
@@ -86,11 +103,11 @@ public class Stats {
 	}
 	
 	private void addXp(int xp) {
-		setXp(getXp() + xp);
+		setXp(this.getXp() + xp);
 	}
 	
 	public synchronized void gainXp(int xp) {
-		if(xp < 0) {
+		if(xp >= 0) {
 			addXp(xp);
 			if(canLevelUp())
 				levelUp();

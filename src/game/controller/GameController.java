@@ -33,7 +33,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 		setView(view);
 		setMapView(view.mapView);
 		setPlayer(model.getPlayer());
-		new Thread(this).start();
+		new Thread(this).start();   
 	}
 
 	//************************** Getters and Setters **************************
@@ -148,7 +148,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	}
 
 	public void attack(int i) {   
-		if(i == 1) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
+		if(i <= 2) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
 			getPlayer().useSkill(i-1);
 		}
 	}

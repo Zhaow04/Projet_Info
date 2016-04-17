@@ -6,13 +6,18 @@ import game.model.LivingBeing;
 import game.model.Observable;
 import game.model.Player;
 import game.model.component.SkillTarget;
-import game.model.component.ViewSettings;
 import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 import game.view.Observer;
 import game.model.component.Movable;
-import game.model.component.BasicMonsterMove;
+import game.model.component.BasicMonsterAttack;
+import game.model.component.FaceThePlayer;
+import game.model.component.MoveInX;
+import game.model.component.Movement;
+import game.model.component.ISkill;
 import game.model.component.SkillUser;
 import game.model.component.Stats;
+import game.model.component.TrackPlayer;
 
 /**
  * Extends from {@code LivingBeing} <br/>
@@ -29,6 +34,8 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	private int state;
 	private Stats stats;
 	private int scope;
+	private ISkill skill;
+	private Movement basicMovement;
 	
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
@@ -41,9 +48,10 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	 * @see {@link LivingBeing#LivingBeing(Map)}
 	 */
 	public Monster(ViewSettings viewSettings) {
-		super(viewSettings, new BasicMonsterMove());
+		super(viewSettings, new MoveInX());
+		this.basicMovement= getMovement();
 		state = 1;
-		setStats(new Stats(400));
+		setSkill(new BasicMonsterAttack());
 	}
 	
 	//************************** Getters and Setters **************************
@@ -53,7 +61,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		return stats;
 	}
 
-	private void setStats(Stats stats) {
+	protected void setStats(Stats stats) {
 		this.stats = stats;
 	}
 	
@@ -75,6 +83,14 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		this.scope = scope;
 	}
 	
+	protected ISkill getSkill() {
+		return this.skill ;
+	}
+	
+	protected void setSkill(ISkill skill) {
+		this.skill = skill;
+	}
+	
 	//******************************** Methods ********************************
 	
 	@Override
@@ -82,14 +98,18 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		while(state != 0) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
-				//System.out.println("In View !");
-				getMovement().trackPlayer(m);
+				setMovement(new TrackPlayer());
+				getMovement().move(m);
+				basicMovement.setBaseX(this.getX());
+				basicMovement.setBaseY(this.getY());
 			}
 			else if (isPlayerNearby()){
-				getMovement().faceThePlayer(m);
-				//System.out.println("je dois attaquer");
+				setMovement(new FaceThePlayer());
+				getMovement().move(m);
+				getSkill().use(this);
 			}
 			else {
+				setMovement(basicMovement);
 				getMovement().move(m);
 			}
 			try {

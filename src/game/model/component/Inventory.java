@@ -6,6 +6,7 @@ import game.model.Observable;
 import game.model.Player;
 import game.model.item.IItem;
 import game.model.item.Item;
+import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**

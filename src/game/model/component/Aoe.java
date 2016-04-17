@@ -1,5 +1,7 @@
 package game.model.component;
 
+import game.utilities.ViewSettings;
+
 /**
  * Extends from {@code Skill}. <br/>
  * Abstract class that serves as a super class for all the area attacks.
@@ -13,6 +15,8 @@ public abstract class Aoe extends Skill {
 	//****************************** Attributes ******************************
 	
 	private int radius;
+	private SkillTarget target;
+	private int userX, userY;
 	
 	//****************************** Constructor ******************************
 	
@@ -42,6 +46,30 @@ public abstract class Aoe extends Skill {
 	 */
 	private void setRadius(int radius) {
 		this.radius = radius;
+	}
+	
+	protected SkillTarget getTarget() {
+		return target;
+	}
+
+	public void setTarget(SkillTarget target) {
+		this.target = target;
+	}
+
+	protected int getUserX() {
+		return userX;
+	}
+
+	protected void setUserX(int userX) {
+		this.userX = userX;
+	}
+
+	protected int getUserY() {
+		return userY;
+	}
+
+	protected void setUserY(int userY) {
+		this.userY = userY;
 	}
 	
 }

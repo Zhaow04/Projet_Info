@@ -1,6 +1,5 @@
 package game.utilities;
 
-import game.model.component.ViewSettings;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;

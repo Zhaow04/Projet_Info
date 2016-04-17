@@ -1,7 +1,9 @@
 package game.model.component;
 
 import game.model.IMap;
+import game.model.Player;
 import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code DirectAttack}. <br/>
@@ -26,24 +28,6 @@ public class FirstAttack extends DirectAttack {
 		
 	}
 	
-	public boolean usable() {
-		return getTarget() != null;
-	}
-	
-	@Override
-	public void use(SkillUser user) {
-		IMap map = user.getCurrentMap();
-		Vector2D direction = user.getDirectionFacing();
-		Vector2D targetPos = direction.plus(user.getX(), user.getY());
-		setTarget(map.getTargetAt(targetPos.getIntX(), targetPos.getIntY()));
-		if(usable()) {
-			setStartPos(getTarget().getX(), getTarget().getY());
-			setPosition(getTarget().getX(), getTarget().getY());
-			user.notifyObservers(this);
-			getTarget().loseHp(getDamage());
-		}
-	}
-
 	@Override
 	public void notifyAnimationEnd() {
 		// TODO Auto-generated method stub

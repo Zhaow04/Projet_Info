@@ -1,5 +1,7 @@
 package game.model.component;
 
+import game.utilities.ViewSettings;
+
 /**
  * Extends from {@code Skill}. <br/>
  * Abstract class that serves as a super class for all the damage over time attacks.
@@ -12,7 +14,7 @@ public abstract class Dot extends Skill {
 	
 	//****************************** Attributes ******************************
 	
-	private int dot;
+	private int damage;
 	
 	//****************************** Constructor ******************************
 	
@@ -32,7 +34,7 @@ public abstract class Dot extends Skill {
 	 * @return damage dealt over time
 	 */
 	public int getDot() {
-		return dot;
+		return damage;
 	}
 	
 	/**
@@ -41,7 +43,7 @@ public abstract class Dot extends Skill {
 	 * @param dot
 	 */
 	private void setDot(int dot) {
-		this.dot = dot;
+		this.damage = dot;
 	}
 	
 }

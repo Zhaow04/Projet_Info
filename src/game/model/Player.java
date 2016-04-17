@@ -3,6 +3,7 @@ package game.model;
 import java.util.ArrayList;
 
 import game.model.component.BasicMove;
+import game.model.component.Fire;
 import game.model.component.FirstAttack;
 import game.model.component.ISkill;
 import game.model.component.Inventory;
@@ -10,11 +11,9 @@ import game.model.component.Skill;
 import game.model.component.SkillTarget;
 import game.model.component.SkillUser;
 import game.model.component.Stats;
-import game.model.component.ViewSettings;
 import game.model.item.IItem;
-import game.model.monster.Monster;
+import game.utilities.ViewSettings;
 import game.view.Observer;
-import javafx.application.Platform;
 
 /**
  * Extends from {@code LivingBeing} <br/>
@@ -50,8 +49,8 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 		super(new ViewSettings("game/utilities/blackmage_m.png", 0, 0, 32, 48, new int[2]), new BasicMove());
 		setStats(new Stats(1500));
 		setInventory(new Inventory(this));
-		FirstAttack firstAttack = new FirstAttack();
-		addSkill(firstAttack);
+		addSkill(new FirstAttack());
+		addSkill(new Fire());
 	}
 	
 	//************************** Getters and Setters **************************
