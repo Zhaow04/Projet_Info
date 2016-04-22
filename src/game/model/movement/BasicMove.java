@@ -1,4 +1,4 @@
-package game.model.component;
+package game.model.movement;
 
 import game.model.IMap;
 import game.utilities.Vector2D;

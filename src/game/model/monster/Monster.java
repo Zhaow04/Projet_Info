@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import game.model.LivingBeing;
 import game.model.Observable;
 import game.model.Player;
-import game.model.component.SkillTarget;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
 import game.view.Observer;
-import game.model.component.Movable;
-import game.model.component.BasicMonsterAttack;
-import game.model.component.FaceThePlayer;
-import game.model.component.MoveInX;
-import game.model.component.Movement;
-import game.model.component.ISkill;
-import game.model.component.SkillUser;
 import game.model.component.Stats;
-import game.model.component.TrackPlayer;
+import game.model.movement.FaceThePlayer;
+import game.model.movement.Movable;
+import game.model.movement.MoveInX;
+import game.model.movement.Movement;
+import game.model.movement.TrackPlayer;
+import game.model.skill.BasicMonsterAttack;
+import game.model.skill.ISkill;
+import game.model.skill.SkillTarget;
+import game.model.skill.SkillUser;
 
 /**
  * Extends from {@code LivingBeing} <br/>

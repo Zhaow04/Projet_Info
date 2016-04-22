@@ -1,4 +1,4 @@
-package game.model.component;
+package game.model.skill;
 
 import game.model.item.Item;
 import game.utilities.ViewSettings;

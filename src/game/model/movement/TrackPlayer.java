@@ -1,4 +1,4 @@
-package game.model.component;
+package game.model.movement;
 
 import java.util.ArrayList;
 import java.util.Random;

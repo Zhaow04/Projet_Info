@@ -1,21 +1,20 @@
 package game.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import game.Main;
 import game.controller.GameController;
 import game.model.GameModel;
 import game.model.Player;
-import game.model.monster.Monster;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class GameView extends AnchorPane {
 
@@ -27,42 +26,58 @@ public class GameView extends AnchorPane {
 	private PlayerView playerView;
 	private InventoryViewController inventoryViewController;
 
-	private final Stage mainStage;
+	private Stage mainStage;
 	private Scene mainScene;
 
 	//****************************** Constructor ******************************
-
+	
+	/**
+	 * Creates the view of the game. Shows the start menu.
+	 * 
+	 * @param stage
+	 */
+	public GameView(Stage stage) {
+		super();
+		this.setPrefSize(100, 100);
+		setMainStage(stage);
+		stage.setTitle("RPG");
+		startMenu(this);
+	}
+	
+	/**
+	 * Creates the view of the game.
+	 * 
+	 * @param model
+	 * @param stage
+	 */
 	public GameView(GameModel model, Stage stage) {
 		super();
 		this.setPrefSize(100, 100);
 		setModel(model);
-		this.mainStage = stage;
-		mainScene = stage.getScene();
+		setMainStage(stage);
 		
 		GameController gameController = new GameController(model, this);
 		setGameController(gameController);
-		MapView mapView = new MapView(model.getMap(), this, getGameController());
-		mapView.setOnKeyPressed(gameController);
-		setMapView(mapView);
-		this.getChildren().add(mapView);
-		initPlayerViewAndHUD(model.getPlayer(), mapView, gameController);
-		//mapView.toBack();
-		
-		mainScene.setRoot(this);
-		mapView.requestFocus();
-
-		mainStage.minHeightProperty().bind(this.widthProperty());
-		mainStage.minWidthProperty().bind(this.heightProperty());
-		mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				Platform.exit();
-				System.exit(0);
-			}
-		});
+		init();
 	}
 
 	//************************** Getters and Setters **************************
+	
+	public Stage getMainStage() {
+		return mainStage;
+	}
+
+	private void setMainStage(Stage mainStage) {
+		this.mainStage = mainStage;
+	}
+
+	private Scene getMainScene() {
+		return mainScene;
+	}
+
+	private void setMainScene(Scene mainScene) {
+		this.mainScene = mainScene;
+	}
 	
 	public GameModel getModel() {
 		return model;
@@ -104,6 +119,93 @@ public class GameView extends AnchorPane {
 		this.inventoryViewController = inventoryViewController;
 	}
 	
+	/**
+	 * Shows the start menu.
+	 * 
+	 * @param gameView
+	 */
+	private void startMenu(GameView gameView) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("view/StartScene.fxml"));
+			AnchorPane startRoot = (AnchorPane) loader.load();
+			StartSceneController startSceneController = (StartSceneController) loader.getController();
+			
+			startSceneController.gameView = this;
+			Scene primaryScene = new Scene(startRoot);
+			getMainStage().setScene(primaryScene);
+			getMainStage().show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newGame(int mapSize) {
+		setModel(new GameModel(mapSize));
+		GameController gameController = new GameController(getModel(), this);
+		setGameController(gameController);
+		initView();
+		getModel().startThreads();
+	}
+	
+	private void initView() {
+		mainScene = mainStage.getScene();
+		
+		MapView mapView = new MapView(model.getMap(), this, getGameController());
+		mapView.setOnKeyPressed(gameController);
+		setMapView(mapView);
+		test();
+		initPlayerViewAndHUD(model.getPlayer(), mapView, gameController);
+		
+		mainScene.setRoot(this);
+		mapView.requestFocus();
+		
+		//getMainStage().setWidth(940);
+		//getMainStage().setHeight(640);
+		mainStage.minHeightProperty().bind(this.widthProperty());
+		mainStage.minWidthProperty().bind(this.heightProperty());
+		mainStage.setOnCloseRequest((value) -> {
+			Platform.exit();
+			System.exit(0);
+		});
+	}
+	
+	private void init() {
+		mainScene = mainStage.getScene();
+		MapView mapView = new MapView(model.getMap(), this, getGameController());
+		mapView.setOnKeyPressed(gameController);
+		setMapView(mapView);
+		test();
+		initPlayerViewAndHUD(model.getPlayer(), mapView, gameController);
+		mainScene.setRoot(this);
+
+		mainStage.minHeightProperty().bind(this.widthProperty());
+		mainStage.minWidthProperty().bind(this.heightProperty());
+		mainStage.setOnCloseRequest((value) -> {
+			Platform.exit();
+			System.exit(0);
+		});
+		mapView.requestFocus();
+	}
+	
+	private void test() {
+		BorderPane b = new BorderPane();
+		//mapView.setClip(new Rectangle(605,500));
+		//mapView.getClip().translateXProperty().bind(mapView.translateXProperty().multiply(-1));
+		//mapView.getClip().translateYProperty().bind(mapView.translateYProperty().multiply(-1));
+		b.setCenter(mapView);
+		/*try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("view/GameView.fxml"));
+			BorderPane gameView = (BorderPane) loader.load();
+			
+			b.setBottom(gameView);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		this.getChildren().add(b);
+	}
+	
 	private void initPlayerViewAndHUD(Player player, MapView mapView, GameController gameController) {
 		PlayerView playerView = new PlayerView(getModel().getPlayer(), mapView);
 		setPlayerView(playerView);
@@ -132,5 +234,7 @@ public class GameView extends AnchorPane {
 	public boolean isViewUpToDate() {
 		return mapView.isViewUpToDate();
 	}
+	
+	
 
 }

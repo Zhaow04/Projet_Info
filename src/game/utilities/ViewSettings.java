@@ -15,6 +15,7 @@ public class ViewSettings {
 	
 	private String imageURL;
 	private double offsetX, offsetY, width, height;
+	private int count, columns;
 	private int spanX = 1, spanY = 1; // Number of cells in x and y the image should take on the map
 	// MapInfos (x,y) of the image on the map. By default use the map component's position.
 	private int[] position; // End position for a skill
@@ -30,9 +31,6 @@ public class ViewSettings {
 		setHeight(image.getHeight());
 	}
 	
-	/**
-	 * 
-	 */
 	public ViewSettings(String imageURL, int offsetX, int offsetY, int width, int height, int[] position) {
 		setImageURL(imageURL);
 		setOffsetX(offsetX);
@@ -42,9 +40,24 @@ public class ViewSettings {
 		setPosition(position);
 	}
 	
-	public ViewSettings(String imageURL, int offsetX, int offsetY, int width, int height, int[] position,
-			int spanX, int spanY) {
-		this(imageURL,offsetX,offsetY,width,height, position);
+	/**
+	 * 
+	 */
+	public ViewSettings(String imageURL, int offsetX, int offsetY, int width, int height,
+			int count, int columns, int[] position) {
+		setImageURL(imageURL);
+		setOffsetX(offsetX);
+		setOffsetY(offsetY);
+		setWidth(width);
+		setHeight(height);
+		setCount(count);
+		setColumns(columns);
+		setPosition(position);
+	}
+	
+	public ViewSettings(String imageURL, int offsetX, int offsetY, int width, int height,
+			int count, int columns, int[] position, int spanX, int spanY) {
+		this(imageURL,offsetX,offsetY,width,height, count, columns, position);
 		setSpanX(spanX);
 		setSpanY(spanY);
 	}
@@ -141,6 +154,22 @@ public class ViewSettings {
 		this.height = height;
 	}
 	
+	public int getCount() {
+		return count;
+	}
+
+	private void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getColumns() {
+		return columns;
+	}
+
+	private void setColumns(int columns) {
+		this.columns = columns;
+	}
+
 	public int getSpanX() {
 		return spanX;
 	}

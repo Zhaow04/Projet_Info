@@ -1,9 +1,6 @@
-package game.model.component;
+package game.model.skill;
 
-import game.model.IMap;
-import game.model.Player;
-import game.utilities.Vector2D;
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 /**
  * Extends from {@code DirectAttack}. <br/>
@@ -21,7 +18,7 @@ public class FirstAttack extends DirectAttack {
 	 * Creates the first attack that deals 100 damage.
 	 */
 	public FirstAttack() {
-		super(100, new ViewSettings("game/utilities/LightningAnim.png", 0, 0, 700, 700, new int[2]));
+		super(100, ImageDB.getLightningView());
 	}
 	
 }

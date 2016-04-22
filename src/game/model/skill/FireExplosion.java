@@ -1,14 +1,15 @@
-package game.model.component;
+package game.model.skill;
 
 import game.model.IMap;
 import game.model.Player;
+import game.utilities.ImageDB;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
 
 public class FireExplosion extends Aoe {
 	
 	public FireExplosion() {
-		super(100, 3, new ViewSettings("game/utilities/fire_001.png", 0, 0, 192, 192, new int[2],3, 3), 3);
+		super(100, 3, ImageDB.getFireView(), 3);
 	}
 
 	

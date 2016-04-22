@@ -1,7 +1,8 @@
 package game.model.monster;
 
+import game.model.Map;
 import game.model.component.Stats;
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 /**
  * Extends from {@code Monster} <br/>
@@ -25,10 +26,10 @@ public class RedDragon extends Monster {
 	 * @param y
 	 * @see {@link Monster#Monster(Map)}
 	 */
-	public RedDragon(int level){
-		super(new ViewSettings("game/utilities/RedDragon.png", 0, 0, 96, 96, new int[2]));
+	public RedDragon(){
+		super(ImageDB.getRedDragonView());
 		setScope(2);
-		setStats(new Stats(450, 100, level));
+		setStats(new Stats(450, 100));
 	}
 	
 	//************************** Getters and Setters **************************

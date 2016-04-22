@@ -1,6 +1,7 @@
-package game.model.component;
+package game.model.skill;
 
 import game.model.IMap;
+import game.utilities.ImageDB;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
 import java.util.Timer;
@@ -10,7 +11,7 @@ public class Poison extends Dot {
 
 	
 	public Poison() {
-		super(40, 3, new ViewSettings("game/utilities/poison.png", 0, 0, 50, 50, new int[2]), 2000, 5);
+		super(40, 3, ImageDB.getPoisonView(), 2000, 5);
 	}
 
 	

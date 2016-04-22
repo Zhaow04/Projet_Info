@@ -1,6 +1,6 @@
-package game.model.component;
+package game.model.skill;
 
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 public class BasicMonsterAttack extends DirectAttack {
 	
@@ -10,7 +10,7 @@ public class BasicMonsterAttack extends DirectAttack {
 	 * Creates the first attack that deals 100 damage.
 	 */
 	public BasicMonsterAttack() {
-		super(50, new ViewSettings("game/utilities/redattack.png", 0, 0, 144, 100, new int[2]));
+		super(50, ImageDB.getBasicMonsterAttackView());
 	}
 		
 }

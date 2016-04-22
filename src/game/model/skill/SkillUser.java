@@ -1,6 +1,7 @@
-package game.model.component;
+package game.model.skill;
 
 import game.model.IMap;
+import game.model.component.Stats;
 import game.utilities.Vector2D;
 
 public interface SkillUser {

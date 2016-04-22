@@ -2,18 +2,19 @@ package game.model;
 
 import java.util.ArrayList;
 
-import game.model.component.BasicMove;
-import game.model.component.Poison;
-import game.model.component.FireExplosion;
-import game.model.component.FirstAttack;
-import game.model.component.ISkill;
+import game.model.component.HpRegen;
 import game.model.component.Inventory;
-import game.model.component.Skill;
-import game.model.component.SkillTarget;
-import game.model.component.SkillUser;
 import game.model.component.Stats;
 import game.model.item.IItem;
-import game.utilities.ViewSettings;
+import game.model.movement.BasicMove;
+import game.model.skill.FireExplosion;
+import game.model.skill.FirstAttack;
+import game.model.skill.ISkill;
+import game.model.skill.Poison;
+import game.model.skill.Skill;
+import game.model.skill.SkillTarget;
+import game.model.skill.SkillUser;
+import game.utilities.ImageDB;
 import game.view.Observer;
 
 /**
@@ -47,12 +48,13 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 	 * @see {@link LivingBeing#LivingBeing(Map)}
 	 */
 	public Player(){
-		super(new ViewSettings("game/utilities/blackmage_m.png", 0, 0, 32, 48, new int[2]), new BasicMove());
+		super(ImageDB.getPlayerView(), new BasicMove());
 		setStats(new Stats(1500));
 		setInventory(new Inventory(this));
 		addSkill(new FirstAttack());
 		addSkill(new FireExplosion());
 		addSkill(new Poison());
+		new HpRegen(this);
 	}
 	
 	//************************** Getters and Setters **************************

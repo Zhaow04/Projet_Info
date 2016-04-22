@@ -5,7 +5,7 @@ public class Stats {
 	private int baseHp;
 	private int hp;
 	private int xp;
-	private int level;
+	private static int level;
 	private int killXp;
 	
 	/**
@@ -25,11 +25,10 @@ public class Stats {
 		updateXpToLevelUp();
 	}
 	
-	public Stats(int baseHp, int killxp, int level) {
+	public Stats(int baseHp, int killxp) {
 		setBaseHp(baseHp);
 		updateMaxHp();
 		setHp(maxHp);
-		setLevel(level);
 		setKillXp(killxp);
 	}
 
@@ -94,8 +93,15 @@ public class Stats {
 	}
 
 	public synchronized void addHp(int hp) {
-		setHp(getHp() + hp);
-		System.out.println(getHp());
+		if((hp > 0 && getHp() != getMaxHp()) || (hp < 0 && getHp() != 0)) {
+			if(getHp() + hp <= 0)
+				setHp(0);
+			else if(getHp() + hp >= getMaxHp())
+				setHp(getMaxHp());
+			else
+				setHp(getHp() + hp);
+			System.out.println(getHp());
+		}
 	}
 	
 	public synchronized void loseHp(int hp) {

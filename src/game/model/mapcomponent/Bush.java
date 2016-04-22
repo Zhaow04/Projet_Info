@@ -1,6 +1,6 @@
 package game.model.mapcomponent;
 
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 /**
  * Extends from {@code Obstacle} <br/>
@@ -26,7 +26,7 @@ public class Bush extends Obstacle {
 	 * @see {@link Obstacle#Obstacle(Map)}
 	 */
 	public Bush() {
-		super(new ViewSettings("game/utilities/treecomp.PNG", 290, 130, 90, 90, new int[2]));
+		super(ImageDB.getBushView());
 	}
 
 	//************************** Getters and Setters **************************

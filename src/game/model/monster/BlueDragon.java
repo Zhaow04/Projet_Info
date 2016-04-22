@@ -1,7 +1,8 @@
 package game.model.monster;
 
+import game.model.Map;
 import game.model.component.Stats;
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 /**
  * Extends from {@code Monster} <br/>
@@ -25,25 +26,10 @@ public class BlueDragon extends Monster {
 	 * @param y
 	 * @see {@link Monster#Monster(Map)}
 	 */
-	public BlueDragon(int level) {
-		super(new ViewSettings("game/utilities/Dragon.png", 0, 0, 96, 96, new int[2]));
+	public BlueDragon() {
+		super(ImageDB.getBlueDragonView());
 		setScope(2);
-		setStats(new Stats(400, 100,level));
+		setStats(new Stats(400, 100));
 		}
 
-	
-	
-	//************************** Getters and Setters **************************
-	
-
-	//******************************** Methods ********************************
-	
-	/**
-	 * Defines the maximum of Hp this living being can have (depending on his level).
-	 * 
-	 * return maxHp
-	 */
-	/*private int maxHp(){
-		return 300 + getLevel()*100;  
-	}*/
 }

@@ -1,7 +1,8 @@
 package game.model.monster;
 
+import game.model.Map;
 import game.model.component.Stats;
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 /**
  * Extends from {@code Monster} <br/>
@@ -24,10 +25,10 @@ public class OrangeBat extends Monster {
 	 * @param y
 	 * @see {@link Monster#Monster(Map)}
 	 */
-	public OrangeBat(int level){
-		super(new ViewSettings("game/utilities/batman.png", 0, 0, 80, 80, new int[2]));
+	public OrangeBat(){
+		super(ImageDB.getOrangeBatView());
 		setScope(2);
-		setStats(new Stats(400, 50, level));
+		setStats(new Stats(400, 50));
 	}
 	
 	//************************** Getters and Setters **************************

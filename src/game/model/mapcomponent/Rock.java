@@ -1,6 +1,7 @@
 package game.model.mapcomponent;
 
-import game.utilities.ViewSettings;
+import game.model.Map;
+import game.utilities.ImageDB;
 
 public class Rock extends Obstacle{
 
@@ -18,7 +19,7 @@ public class Rock extends Obstacle{
 	 * @see {@link Obstacle#Obstacle(Map)}
 	 */
 	public Rock(){
-		super(new ViewSettings("game/utilities/forest.png", 0, 0, 60, 60, new int[2]));
+		super(ImageDB.getRockView());
 	}
 
 	//************************** Getters and Setters **************************

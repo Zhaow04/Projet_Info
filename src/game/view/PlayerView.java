@@ -2,8 +2,8 @@ package game.view;
 
 import game.model.Observable;
 import game.model.Player;
-import game.model.component.ISkill;
-import game.model.component.Skill;
+import game.model.skill.ISkill;
+import game.model.skill.Skill;
 import game.utilities.MovementAnimation;
 import game.utilities.ViewSettings;
 import game.utilities.ViewUtils;
