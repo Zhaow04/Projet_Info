@@ -18,7 +18,10 @@ public class SkillView extends StackPane {
 		this.getChildren().addAll(imageView);
 		SkillView container = this;
 		mapView.addToMap(container, viewSettings.getStartX(), viewSettings.getStartY());
-		MovementAnimation ma = new MovementAnimation(300, container, imageView, viewSettings,
+		int t = 300;
+		if(viewSettings.getCount() > 6)
+			t = 600;
+		MovementAnimation ma = new MovementAnimation(t, container, imageView, viewSettings,
 				mapView.cellSize());
 		ma.addOnFinished((action) -> mapView.remove(container));
 		Platform.runLater(() -> ma.play());

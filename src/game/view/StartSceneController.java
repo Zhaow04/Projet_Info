@@ -13,6 +13,7 @@ public class StartSceneController {
 	
 	private Stage stage;
 	private Scene mainScene;
+	public GameView gameView;
 	
 	@FXML
 	private BorderPane startMenu;
@@ -26,26 +27,48 @@ public class StartSceneController {
 	@FXML
 	private TextField mapSizeField;
 	
+	/**
+	 * Void constructor.
+	 */
 	public StartSceneController() {
 
 	}
 
+	/**
+	 * Gets the stage.
+	 * @return stage
+	 */
 	public Stage getStage() {
 		return stage;
 	}
 
+	/**
+	 * Sets the stage.
+	 * @param stage
+	 */
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
 
+	/**
+	 * Gets the main scene.
+	 * @return main scene
+	 */
 	public Scene getMainScene() {
 		return mainScene;
 	}
 
+	/**
+	 * Sets the main scene.
+	 * @param mainScene
+	 */
 	public void setMainScene(Scene mainScene) {
 		this.mainScene = mainScene;
 	}
 	
+	/**
+	 * Displays the configuration menu.
+	 */
 	@FXML
 	private void newGame() {
 		startMenu.setVisible(false);
@@ -54,16 +77,24 @@ public class StartSceneController {
 		//stage.setScene(mainScene);
 	}
 	
+	/**
+	 * Handles the map size input. Creates a model with the map size input and the associated view.
+	 */
 	@FXML
 	private void handleMapSizeInput() {
 		if(isMapSizeInputValid()) {
 			int mapSize = Integer.parseInt(mapSizeField.getText());
-			GameModel model = new GameModel(mapSize);
-			new GameView(model, stage);
-			model.startThreads();
+			//GameModel model = new GameModel(mapSize);
+			gameView.newGame(mapSize);
+			//new GameView(model, stage);
+			//model.startThreads();
 		}
 	}
 
+	/**
+	 * Returns whether or not the size input is valid, i.e. positive and less than 100.
+	 * @return size input valid or not
+	 */
 	private boolean isMapSizeInputValid() {
 		boolean isValid = false;
 		int mapSize;

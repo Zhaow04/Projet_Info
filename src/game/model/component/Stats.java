@@ -94,8 +94,15 @@ public class Stats {
 	}
 
 	public synchronized void addHp(int hp) {
-		setHp(getHp() + hp);
-		System.out.println(getHp());
+		if((hp > 0 && getHp() != getMaxHp()) || (hp < 0 && getHp() != 0)) {
+			if(getHp() + hp <= 0)
+				setHp(0);
+			else if(getHp() + hp >= getMaxHp())
+				setHp(getMaxHp());
+			else
+				setHp(getHp() + hp);
+			System.out.println(getHp());
+		}
 	}
 	
 	public synchronized void loseHp(int hp) {

@@ -21,8 +21,8 @@ public class SpriteAnimation extends Transition {
 
     public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, int millis) {
         this.imageView = imageView;
-        this.count     = 5;
-        this.columns   = 4;
+        this.count     = viewSettings.getCount();
+        this.columns   = viewSettings.getColumns();
         this.offsetX   = (int) viewSettings.getOffsetX();
         this.offsetY   = (int) viewSettings.getOffsetY();
         this.width     = (int) viewSettings.getWidth();
@@ -30,6 +30,8 @@ public class SpriteAnimation extends Transition {
         setCycleDuration(Duration.millis(millis));
         setInterpolator(Interpolator.LINEAR);
         setCycleCount(1);
+        this.setOnFinished((value) -> imageView.setViewport((
+        		new Rectangle2D(offsetX, offsetY, width, height))));
     }
     
     public SpriteAnimation(Observable o, ImageView imageView, Duration duration,
@@ -69,7 +71,7 @@ public class SpriteAnimation extends Transition {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
         if (index != lastIndex) {
             final int x = (index % columns) * width  + offsetX;
-            final int y = 0*(index / columns) * height + offsetY;
+            final int y = (index / columns) * height + offsetY;
             imageView.setViewport(new Rectangle2D(x, y, width, height));
             lastIndex = index;
         }

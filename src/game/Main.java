@@ -1,16 +1,11 @@
 package game;
 
-import java.io.IOException;
-
-import game.view.StartSceneController;
+import game.view.GameView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	public static Stage stage;
+
 	//************************ main and start methods ************************
 	
 	public static void main(String[] args){
@@ -20,8 +15,9 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage){
-		stage = primaryStage;
+	public void start(Stage primaryStage) {
+		new GameView(primaryStage);
+		/*
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/StartScene.fxml"));

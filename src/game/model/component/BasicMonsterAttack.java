@@ -1,6 +1,6 @@
 package game.model.component;
 
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 public class BasicMonsterAttack extends DirectAttack {
 	
@@ -12,7 +12,7 @@ public class BasicMonsterAttack extends DirectAttack {
 	public BasicMonsterAttack() {
 		//super(50, new ViewSettings("game/utilities/LightningAnim.png", 0, 0, 700, 700, new int[2]));
 		//super(50, new ViewSettings("game/utilities/purpleattack.png", 0, 342, 96, 114, new int[2]));
-		super(50, new ViewSettings("game/utilities/redattack.png", 0, 0, 144, 100, new int[2]));
+		super(50, ImageDB.getBasicMonsterAttackView());
 	}
 	
 	

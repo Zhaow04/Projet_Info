@@ -1,7 +1,7 @@
 package game.model.item;
 
 import game.model.Player;
-import game.utilities.ViewSettings;
+import game.utilities.ImageDB;
 
 /**
  * Extends from {@code Potion}. <br/>
@@ -20,7 +20,7 @@ public class HpPotion extends Potion {
 	 * @param value
 	 */
 	public HpPotion(int value) {
-		super(new ViewSettings("game/utilities/HpPotion.png", 10, 5, 45, 55, new int[2]),value);
+		super(ImageDB.getHpPotionView(),value);
 	}
 	
 	//******************************** Methods ********************************
