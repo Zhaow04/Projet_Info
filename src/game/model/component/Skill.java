@@ -112,8 +112,6 @@ public abstract class Skill implements ISkill {
 		user.getStats().gainXp(killXp);
 	}
 	
-	public boolean usable() {
-		return getTarget() != null;
-	}
+	
 
 }

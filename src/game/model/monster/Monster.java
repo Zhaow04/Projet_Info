@@ -173,10 +173,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	}
 	
 
-	@Override
-	public void useSkill(int skillNumber) {
-		
-	}
+	
 
 	@Override
 	public void loseHp(int hp) {
@@ -187,16 +184,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 			getCurrentMap().notifyDead(this);
 		}
 	}
-	/*
-	@Override
-	public void subjectToSkill(ISkill skill) {
-		getStats().subjectToSkill(skill);
-		if(getStats().getHp() <= 0) {
-			notifyObservers("dead");
-			getCurrentMap().notifyRemovedFromMap(this);
-		}
-		notifyObserversNewView(skill);
-	}*/
+	
 
 	@Override
 	public void notifyObservers(Object arg) {
@@ -214,5 +202,9 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	public void notifyObservers() {
 		notifyObservers(null);
 	}
-
+	
+	@Override
+	public void useSkill(int skillNumber){
+		
+	}
 }

@@ -30,6 +30,8 @@ public class BlueDragon extends Monster {
 		setScope(2);
 		setStats(new Stats(400, 100,level));
 		}
+
+	
 	
 	//************************** Getters and Setters **************************
 	

@@ -3,7 +3,8 @@ package game.model;
 import java.util.ArrayList;
 
 import game.model.component.BasicMove;
-import game.model.component.Fire;
+import game.model.component.Poison;
+import game.model.component.FireExplosion;
 import game.model.component.FirstAttack;
 import game.model.component.ISkill;
 import game.model.component.Inventory;
@@ -50,7 +51,8 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 		setStats(new Stats(1500));
 		setInventory(new Inventory(this));
 		addSkill(new FirstAttack());
-		addSkill(new Fire());
+		addSkill(new FireExplosion());
+		addSkill(new Poison());
 	}
 	
 	//************************** Getters and Setters **************************

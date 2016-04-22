@@ -73,7 +73,7 @@ public class PlayerView extends StackPane implements Observer {
 					viewSettings.getWidth(), viewSettings.getHeight())));
 		}
 		else if(arg instanceof ISkill) {
-			//int index = getPlayer().getSkillNumber(arg);
+			System.out.println((ISkill)arg);
 			ISkill skill = (ISkill) arg ;
 			Platform.runLater(() -> new SkillView(skill, getMapView()));
 		}

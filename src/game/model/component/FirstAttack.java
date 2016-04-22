@@ -24,14 +24,4 @@ public class FirstAttack extends DirectAttack {
 		super(100, new ViewSettings("game/utilities/LightningAnim.png", 0, 0, 700, 700, new int[2]));
 	}
 	
-	public void preUse(SkillUser user) {
-		
-	}
-	
-	@Override
-	public void notifyAnimationEnd() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

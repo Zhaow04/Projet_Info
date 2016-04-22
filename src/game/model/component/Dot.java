@@ -14,36 +14,57 @@ public abstract class Dot extends Skill {
 	
 	//****************************** Attributes ******************************
 	
-	private int damage;
+	private int lapse;
+	private int count;
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates an damage over time attack. Currently void.
+	 * Creates an damage over time attack.
 	 */
-	public Dot(int damage, int range, ViewSettings viewSettings, int dot){
+	public Dot(int damage, int range, ViewSettings viewSettings, int lapse, int count){
 		super(damage, range, viewSettings);
-		setDot(dot);
+		setLapse(lapse);
+		setCount(count);
 	}
 	
 	//************************** Getters and Setters **************************
 	
 	/**
-	 * Gets the damage dealt over time.
+	 * Gets the lapse between two damages.
 	 * 
 	 * @return damage dealt over time
 	 */
-	public int getDot() {
-		return damage;
+	public int getLapse() {
+		return lapse;
 	}
 	
 	/**
-	 * Sets the damage dealt over time.
+	 * Sets the lapse between two damages.
 	 * 
 	 * @param dot
 	 */
-	private void setDot(int dot) {
-		this.damage = dot;
+	private void setLapse(int dt) {
+		this.lapse = dt;
+	}
+	
+	
+
+	/**
+	 * Gets the total number of periodic damages.
+	 * 
+	 * @return damage dealt over time
+	 */
+	public int getCount() {
+		return count;
+	}
+	
+	/**
+	 * Sets the total number of periodic damages.
+	 * 
+	 */
+	protected void setCount(int t) {
+		this.count = t;
 	}
 	
 }

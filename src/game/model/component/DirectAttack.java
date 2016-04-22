@@ -25,7 +25,10 @@ public abstract class DirectAttack extends Skill {
 		super(damage, 1, viewSettings);
 	}
 
-	
+	@Override
+	public boolean usable(SkillUser user) {
+		return getTarget() != null;
+	}
 	
 	
 	@Override
@@ -34,7 +37,7 @@ public abstract class DirectAttack extends Skill {
 		Vector2D direction = user.getDirectionFacing();
 		Vector2D targetPos = direction.plus(user.getX(), user.getY());
 		setTarget(map.getTargetAt(targetPos.getIntX(), targetPos.getIntY()));
-		if(usable()) {
+		if(usable(user)) {
 			setStartPos(getTarget().getX(), getTarget().getY());
 			setPosition(getTarget().getX(), getTarget().getY());
 			user.notifyObservers(this);

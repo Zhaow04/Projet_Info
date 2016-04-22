@@ -5,41 +5,16 @@ import game.model.Player;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
 
-public class Fire extends Aoe {
+public class FireExplosion extends Aoe {
 	
-	public Fire() {
+	public FireExplosion() {
 		super(100, 3, new ViewSettings("game/utilities/fire_001.png", 0, 0, 192, 192, new int[2],3, 3), 3);
 	}
 
+	
 	@Override
-	public void preUse(SkillUser user) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean usable() {
-		boolean inRange = false;
-		SkillTarget target = getTarget();
-		if(Math.abs(getUserX() - target.getX()) <= getRange() &&
-				Math.abs(getUserY() - target.getY()) <= getRange())
-			inRange = true;
-		return inRange; 
-	}
-
-	@Override
-	public void notifyAnimationEnd() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void use(SkillUser user) {
-		/*if(getTarget() == null) {
-			setUserX(user.getX());
-			setUserY(user.getY());
-			notifyObservers("selectTarget");
-		}*/
+	public boolean usable(SkillUser user) {
+		setTarget(null);
 		IMap map = user.getCurrentMap();
 		Vector2D direction = user.getDirectionFacing();
 		Vector2D targetPos = new Vector2D(user.getX(), user.getY());
@@ -52,7 +27,14 @@ public class Fire extends Aoe {
 			}
 			a++;
 		}
-		if(getTarget() != null) {
+		return (getTarget()!=null); 
+	}
+
+	
+	@Override
+	public void use(SkillUser user) {
+		if(usable(user)) {
+			IMap map = user.getCurrentMap();
 			int targetX = getTarget().getX();
 			int targetY = getTarget().getY();
 			setStartPos(getTarget().getX()-1, getTarget().getY()-1);
@@ -70,7 +52,7 @@ public class Fire extends Aoe {
 					}
 				}
 			}
-			setTarget(null);
+			//setTarget(null);
 		}
 	}
 	
