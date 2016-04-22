@@ -19,34 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="game.model.Obstacle" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Obstacle.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="103" y="1594"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="game.model.Monster" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Monster.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1497" y="1336"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="5" language="java" name="game.model.Movable" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Movable.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="917" y="456"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="6" language="java" name="game.model.Player" project="ProjetInfoBA2" 
+  <class id="3" language="java" name="game.model.Player" project="ProjetInfoBA2" 
     file="/ProjetInfoBA2/src/game/model/Player.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="747" y="1470"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -55,17 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="game.model.AbstractSkill" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/AbstractSkill.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1036" y="1799"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="8" language="java" name="game.model.component.DirectAttack" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/component/DirectAttack.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="game.model.skill.DirectAttack" project="ProjetInfoBA2" 
+    file="/ProjetInfoBA2/src/game/model/skill/DirectAttack.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="819" y="2076"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -73,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="game.model.component.Aoe" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/component/Aoe.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="game.model.skill.Aoe" project="ProjetInfoBA2" 
+    file="/ProjetInfoBA2/src/game/model/skill/Aoe.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1067" y="2111"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,155 +46,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="game.model.Inventory" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Inventory.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="599" y="1786"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="11" language="java" name="game.model.AbstractItem" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/AbstractItem.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="593" y="2145"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="12" language="java" name="game.model.Item" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Item.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="822" y="1792"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="13" language="java" name="game.model.Potion" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Potion.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="590" y="2445"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="14" language="java" name="game.model.HpPotion" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/HpPotion.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="583" y="2675"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="15" language="java" name="game.model.Bush" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Bush.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="85" y="1894"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="16" language="java" name="game.model.Rock" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Rock.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-144" y="1898"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="17" language="java" name="game.model.SafeHouse" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/SafeHouse.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="420" y="857"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="18" language="java" name="game.model.Tree" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Tree.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="83" width="115" x="242" y="1864"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="19" language="java" name="game.model.Dungeon" project="ProjetInfoBA2" 
-    file="/ProjetInfoBA2/src/game/model/Dungeon.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="-245" y="807"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <association id="20">    
-    <end type="SOURCE" refId="1" navigable="true"/>    
-    <end type="TARGET" refId="19" navigable="false">      
-      <attribute id="21" name="currentMap">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="22" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <generalization id="23">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="24">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
-  <realization id="25">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="12"/>  
-  </realization>  
-  <generalization id="26">    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="11"/>  
-  </generalization>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="4"/>    
+  <generalization id="6">    
+    <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="29">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="30">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="31" name="inventory">        
-        <position height="0" width="0" x="-156" y="155"/>      
-      </attribute>      
-      <multiplicity id="32" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-156" y="155"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <generalization id="34">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="3"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

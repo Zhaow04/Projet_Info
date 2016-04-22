@@ -1,6 +1,7 @@
 package game.model.mapcomponent;
 
 import game.model.MapComponent;
+import game.utilities.ImageDB;
 import game.utilities.ViewSettings;
 
 public class SafeHouse extends MapComponent {
@@ -17,7 +18,7 @@ public class SafeHouse extends MapComponent {
 	 * @see {@link ViewSettings}
 	 */
 	public SafeHouse () {
-		super(new ViewSettings("game/utilities/safehouse.png", 250, 180, 170, 170, new int[2]));
+		super(ImageDB.getSafeHouseView());
 	}
 
 	//************************** Getters and Setters **************************

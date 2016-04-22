@@ -1,4 +1,6 @@
-package game.model.component;
+package game.model.skill;
+
+import game.model.component.Stats;
 
 public interface SkillTarget {
 	

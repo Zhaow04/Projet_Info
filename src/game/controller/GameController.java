@@ -148,7 +148,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	}
 
 	public void attack(int i) {   
-		if(i <= 2) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
+		if(i <= 3) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
 			getPlayer().useSkill(i-1);
 		}
 	}

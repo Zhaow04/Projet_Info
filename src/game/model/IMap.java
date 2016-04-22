@@ -1,9 +1,9 @@
 package game.model;
 
-import game.model.component.SkillTarget;
-import game.model.component.Movement;
 import game.model.item.IItem;
 import game.model.item.Item;
+import game.model.movement.Movement;
+import game.model.skill.SkillTarget;
 import game.utilities.ViewSettings;
 
 public interface IMap {

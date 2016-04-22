@@ -1,12 +1,11 @@
-package game.model.component;
+package game.model.skill;
 
 import game.utilities.ViewSettings;
 
 public interface ISkill {				
 	
-	void preUse(SkillUser user);
 	
-	boolean usable();
+	boolean usable(SkillUser user);
 	
 	int getDamage();
 	
@@ -21,6 +20,5 @@ public interface ISkill {
 	 */
 	public ViewSettings getViewSettings();
 	
-	void notifyAnimationEnd();
 	
 }

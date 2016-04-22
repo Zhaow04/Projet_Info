@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import game.controller.GameController;
 import game.model.Map;
 import game.model.MapComponent;
+import game.model.Observable;
 import game.model.Player;
 import game.model.item.Item;
 import game.model.monster.Monster;
 import game.utilities.ObjectTranslate;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
@@ -23,10 +26,11 @@ import javafx.util.Duration;
  * @author ZhaoWen
  *
  */
-public class MapView extends Group {
+public class MapView extends Group implements Observer {
 	
 	//****************************** Attributes ******************************
 	
+	private Group allLayers;
 	private AnchorPane bottomLayer;
 	private AnchorPane stepOnLayer;
 	private AnchorPane interactiveLayer;
@@ -39,8 +43,8 @@ public class MapView extends Group {
 	
 	public MapView(Map mapModel, GameView gameView, GameController gameController) {
 		super();
-		
 		setMapModel(mapModel);
+		mapModel.addObserver(this);
 		setGameView(gameView);
 		
 		//this.setPrefSize(mapModel.getSize()*cellSize(), mapModel.getSize()*cellSize());
@@ -48,6 +52,10 @@ public class MapView extends Group {
 		initBottomLayer(mapModel.getMapCompos());
 		initStepOnLayer(mapModel.getItems());
 		initInteractiveLayer(mapModel.getMonsters());
+		//allLayers = new Group(bottomLayer,stepOnLayer,interactiveLayer);
+		//Rectangle clip = new Rectangle(940, 540);
+		//allLayers.setClip(clip);
+		this.getChildren().addAll(bottomLayer,stepOnLayer,interactiveLayer);
 	}
 	
 	//************************** Getters and Setters **************************
@@ -74,13 +82,25 @@ public class MapView extends Group {
 	
 	//******************************** Methods ********************************
 	
+	@Override
+	public void update(Observable o, Object arg) {
+		if(arg == "addMonsters") {
+			for(Monster monster : getMapModel().getMonsters()) {
+				Platform.runLater(() -> {
+					new MonsterView(monster, this);
+					new Thread(monster).start();
+				});
+			}
+		}
+	}
+	
 	private AnchorPane initLayer() {
 		AnchorPane layer = new AnchorPane();
 		int mapSize = mapModel.getSize();
 		layer.setPrefSize(cellSize()*mapSize, cellSize()*mapSize);
 		return layer;
 	}
-	
+
 	private void initBottomLayer(ArrayList<MapComponent> mapComponents){
 		bottomLayer = initLayer();
 		for(MapComponent o : mapComponents) {
@@ -89,7 +109,6 @@ public class MapView extends Group {
 		Image image = new Image(mapModel.getViewSettings().getImageURL());
 		BackgroundImage backimage = new BackgroundImage(image, null, null, null, null);
 		bottomLayer.setBackground(new Background(backimage));
-		this.getChildren().add(bottomLayer);
 	}
 	
 	private void initStepOnLayer(ArrayList<Item> items) {
@@ -97,7 +116,6 @@ public class MapView extends Group {
 		for(Item item : items) {
 			new ItemView(item,this);
 		}
-		this.getChildren().add(stepOnLayer);
 	}
 	
 	private void initInteractiveLayer(ArrayList<Monster> monsters) {
@@ -105,7 +123,6 @@ public class MapView extends Group {
 		for(Monster monster : monsters) {
 			new MonsterView(monster, this);
 		}
-		this.getChildren().add(interactiveLayer);
 	}
 	
 	public void addToMap(MapComponentView child, int column, int row) {

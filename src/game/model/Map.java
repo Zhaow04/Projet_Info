@@ -3,12 +3,13 @@ package game.model;
 import java.util.ArrayList;
 
 import game.model.component.CreationUnit;
-import game.model.component.Movement;
-import game.model.component.SkillTarget;
 import game.model.item.IItem;
 import game.model.item.Item;
 import game.model.monster.Monster;
+import game.model.movement.Movement;
+import game.model.skill.SkillTarget;
 import game.utilities.ViewSettings;
+import game.view.Observer;
 
 /**
  * Map of the game. It knows whether or not a position
@@ -18,7 +19,7 @@ import game.utilities.ViewSettings;
  * @see {@link ViewSettings}
  *
  */
-public class Map implements IMap {
+public class Map implements IMap, Observable {
 	
 	//****************************** Attributes ******************************
 	
@@ -33,6 +34,7 @@ public class Map implements IMap {
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
 	private ViewSettings viewSettings = new ViewSettings("game/utilities/plains.png");
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	//****************************** Constructor ******************************
 	
@@ -134,21 +136,6 @@ public class Map implements IMap {
 	
 	private void createAllComponents() {
 		CreationUnit.createMap(this.getSize(), this);
-		/*RedDragon a = new RedDragon();
-		addToMap(a,3,3);
-		GiantRat b = new GiantRat();
-		addToMap(b,7,3);
-		addToMap(new SafeHouse(),7,7);
-		for (int i=0 ;i < getSize(); i++) {
-			addToMap(new Tree(),0,i);
-			addToMap(new Tree(),i,0);
-			addToMap(new Tree(),getSize()-1,i);
-			addToMap(new Tree(),i,getSize()-1);
-		}
-		addToMap(new Tree(),6,5);
-		addToMap(new Bush(),8,8);
-		addToMap(new HpPotion(100), 2, 8);
-		addToMap(new HpPotion(100), 8, 2);*/
 	}
 
 	/**
@@ -157,26 +144,34 @@ public class Map implements IMap {
 	 * @param o
 	 */
 	public void addToMap(MapComponent compo, int x, int y) {
-		setGrid(mapCompoID, x, y);
-		getMapCompos().add(compo);
-		compo.addToMap(this, x, y);
+		if(getGrid()[y][x] == 0) {
+			setGrid(mapCompoID, x, y);
+			getMapCompos().add(compo);
+			compo.addToMap(this, x, y);
+		}
 	}
 	
-	public void addToMap(Monster monster, int x, int y){
-		setGrid(damageableID, x, y);
-		getMonsters().add(monster);
-		monster.addToMap(this, x, y);
+	public void addToMap(Monster monster, int x, int y) {
+		if(getGrid()[y][x] == 0) {
+			setGrid(damageableID, x, y);
+			getMonsters().add(monster);
+			monster.addToMap(this, x, y);
+		}
 	}
 	
 	public void addToMap(Item item, int x, int y) {
-		getItems().add(item);
-		item.addToMap(this, x, y);
+		if(getGrid()[y][x] == 0) {
+			getItems().add(item);
+			item.addToMap(this, x, y);
+		}
 	}
 	
 	public void addToMap(Player player, int x, int y) {
-		setGrid(damageableID, x, y);
-		setPlayer(player);
-		player.addToMap(this, x, y);
+		if(getGrid()[y][x] == 0) {
+			setGrid(damageableID, x, y);
+			setPlayer(player);
+			player.addToMap(this, x, y);
+		}
 	}
 
 	/**
@@ -300,6 +295,40 @@ public class Map implements IMap {
 	@Override
 	public void notifyDead(SkillTarget target) {
 		removeFromMap(target);
-	}	
+		if(getMonsters().isEmpty()) {
+			CreationUnit.addMonsters(this);
+			notifyObservers("addMonsters");
+		}
+	}
+	
+	public void startThreads() {
+		ArrayList<Monster> monsters = getMonsters();
+		for(Monster m : monsters) {
+			new Thread(m).start();
+		}
+	}
+	
+	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		notifyObservers(null);
+	}
+	
+	@Override
+	public void notifyObservers(Object arg) {
+		for(Observer o : observers) {
+			o.update(this, arg);
+		}
+	}
+
+	@Override
+	public void addToMap(IMap map, int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

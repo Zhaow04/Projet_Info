@@ -1,6 +1,7 @@
 package game.model.mapcomponent;
 
-import game.utilities.ViewSettings;
+import game.model.Map;
+import game.utilities.ImageDB;
 
 public class Tree extends Obstacle{
 
@@ -18,7 +19,7 @@ public class Tree extends Obstacle{
 	 * @see {@link Obstacle#Obstacle(Map)}
 	 */
 	public Tree () {
-		super(new ViewSettings("game/utilities/treecomp.PNG", 0, 65, 63, 63, new int[2]));
+		super(ImageDB.getTreeView());
 	}
 
 	//************************** Getters and Setters **************************

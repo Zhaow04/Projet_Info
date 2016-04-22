@@ -1,4 +1,4 @@
-package game.model.component;
+package game.model.skill;
 
 import game.model.item.Item;
 import game.utilities.ViewSettings;
@@ -112,8 +112,6 @@ public abstract class Skill implements ISkill {
 		user.getStats().gainXp(killXp);
 	}
 	
-	public boolean usable() {
-		return getTarget() != null;
-	}
+	
 
 }
