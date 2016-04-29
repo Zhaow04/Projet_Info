@@ -31,5 +31,7 @@ public interface IMap {
 	void notifyMovement(Movement m);
 	
 	void notifyDead(SkillTarget target);
+	
+	boolean isActive();
 
 }

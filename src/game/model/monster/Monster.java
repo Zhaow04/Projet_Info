@@ -95,7 +95,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	
 	@Override
 	public void run() {
-		while(state != 0) {
+		while(state != 0 && getCurrentMap().isActive()) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
 				setMovement(new TrackPlayer());
@@ -115,7 +115,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}

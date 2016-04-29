@@ -1,8 +1,6 @@
 package game.model;
 
-import java.util.ArrayList;
-
-import game.model.monster.Monster;
+import game.utilities.ThreadPool;
 
 /**
  * Implements {@code Model}. <br/>
@@ -13,6 +11,10 @@ import game.model.monster.Monster;
 public class GameModel implements Model {
 	
 	//****************************** Attributes ******************************
+	
+	private static boolean running;
+	
+	private ThreadPool threadPool;
 	
 	private Map map;
 	private Player player;
@@ -25,30 +27,36 @@ public class GameModel implements Model {
 	 * @param mapSize
 	 */
 	public GameModel(int mapSize) {
+		running = false;
+		threadPool = new ThreadPool();
 		map = new Map(mapSize);
-		
 		player = new Player();
 		map.addToMap(player, 5, 5);
 	}
 	
 	//************************** Getters and Setters **************************
 	
+	public static boolean isRunning() {
+		return running;
+	}
+	
 	@Override
 	public Map getMap() {
 		return map;
 	}
-	
+
 	@Override
 	public Player getPlayer() {
 		return player;
 	}
-
 	
-	public void startThreads() {
-		ArrayList<Monster> monsters = getMap().getMonsters();
-		for(Monster m : monsters) {
-			new Thread(m).start();
-		}
+	public void start() {
+		running = true;
+		map.startThreads();
+	}
+	
+	public void stop() {
+		running = false;
 	}
 	
 }

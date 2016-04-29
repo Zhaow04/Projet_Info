@@ -84,7 +84,7 @@ public class Stats {
 		this.maxHp = getBaseHp() + getLevel()*100;
 	}
 
-	private int getXpToLevelUp() {
+	public int getXpToLevelUp() {
 		return xpToLevelUp;
 	}
 

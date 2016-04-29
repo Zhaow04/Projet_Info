@@ -16,6 +16,8 @@ import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
 import game.utilities.ImageDB;
 import game.view.Observer;
+import javafx.application.Platform;
+import javafx.util.Duration;
 
 /**
  * Extends from {@code LivingBeing} <br/>
@@ -33,6 +35,7 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 	//private int regenMana;
 	//private int stamina;
 	//private int regenStamina;
+	private boolean alive;
 	private Stats stats;
 	private Inventory inventory;
 	private ArrayList<ISkill> skillList = new ArrayList<ISkill>();
@@ -55,9 +58,14 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 		addSkill(new FireExplosion());
 		addSkill(new Poison());
 		new HpRegen(this);
+		alive = true;
 	}
 	
 	//************************** Getters and Setters **************************
+	
+	public boolean isAlive() {
+		return alive;
+	}
 	
 	@Override
 	public Stats getStats() {
@@ -182,11 +190,21 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 	
 	public void addHp(int hp) {
 		getStats().addHp(hp);
+		notifyObservers();
 	}
 
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
+		if(getStats().getHp() <= 0) {
+			alive = false;
+			Map m = (Map) getCurrentMap();
+			m.stopThreads();
+			notifyObservers("dead");
+			m.notifyDead(this);
+		}
+		else
+			notifyObservers();
 	}
 
 	@Override

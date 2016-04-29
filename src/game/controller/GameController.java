@@ -7,7 +7,6 @@ import game.model.Player;
 import game.utilities.Vector2D;
 import game.view.GameView;
 import game.view.HUDController;
-import game.view.MapView;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -18,57 +17,29 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	private GameModel model;
 	private GameView view;
-	private MapView mapView;
 	
 	private Player player;
 	
 	private HUDController hudController;
 
 	private ArrayList<KeyCode> keyList = new ArrayList<KeyCode>();
+	
+	private Thread t;
 
 	//****************************** Constructor ******************************
 
+	public GameController() {
+		
+	}
+	
 	public GameController(GameModel model, GameView view) {
-		setModel(model);
-		setView(view);
-		setMapView(view.mapView);
-		setPlayer(model.getPlayer());
-		new Thread(this).start();   
+		this.model = model;
+		this.view = view;
+		this.player = model.getPlayer();
+		new Thread(this).start();
 	}
 
 	//************************** Getters and Setters **************************
-	
-	private GameModel getModel() {
-		return model;
-	}
-
-	private void setModel(GameModel model) {
-		this.model = model;
-	}
-
-	private GameView getView() {
-		return view;
-	}
-
-	private void setView(GameView view) {
-		this.view = view;
-	}
-
-	private MapView getMapView() {
-		return mapView;
-	}
-
-	private void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
-	private Player getPlayer() {
-		return player;
-	}
-
-	private void setPlayer(Player player) {
-		this.player = player;
-	}
 	
 	public HUDController getHudController() {
 		return hudController;
@@ -93,6 +64,16 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	public void run() {
 		while(true) {
 			useFirstKey();
+		}
+	}
+	
+	public void init(GameModel model, GameView view) {
+		this.model = model;
+		this.view = view;
+		this.player = model.getPlayer();
+		if(t == null) {
+			t = new Thread(this);
+			t.start();
 		}
 	}
 
@@ -123,7 +104,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	public void useKey(KeyCode key) {
 		if(key.isArrowKey()) {
 			Vector2D direction = convertKeyToDirection(key.getName());
-			getPlayer().move(direction.getIntX(), direction.getIntY());
+			player.move(direction.getIntX(), direction.getIntY());
 		}
 		else if(key.isDigitKey()) {
 			attack(Integer.parseInt(key.getName()));
@@ -149,7 +130,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	public void attack(int i) {   
 		if(i <= 3) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
-			getPlayer().useSkill(i-1);
+			player.useSkill(i-1);
 		}
 	}
 

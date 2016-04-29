@@ -17,30 +17,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		new GameView(primaryStage);
-		
-		
-		/*
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/StartScene.fxml"));
-			AnchorPane startRoot = (AnchorPane) loader.load();
-			StartSceneController startSceneController = (StartSceneController) loader.getController();
-			
-			startSceneController.setStage(primaryStage);
-			Scene primaryScene = new Scene(startRoot);
-			primaryStage.setTitle("RPG");
-			primaryStage.setScene(primaryScene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		/*GameModel model = new GameModel();
-		Controller controller = new Controller();
-		GameView view = new GameView(model,controller);
-		primaryStage.setTitle("RPG");
-		primaryStage.setScene(view.getStartScene());
-		primaryStage.show();*/
 	}
 
 }

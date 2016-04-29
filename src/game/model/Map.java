@@ -8,6 +8,7 @@ import game.model.item.Item;
 import game.model.monster.Monster;
 import game.model.movement.Movement;
 import game.model.skill.SkillTarget;
+import game.utilities.ThreadPool;
 import game.utilities.ViewSettings;
 import game.view.Observer;
 
@@ -33,6 +34,8 @@ public class Map implements IMap, Observable {
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
+	private ThreadPool threadPool;
+	private boolean active = false;
 	private ViewSettings viewSettings = new ViewSettings("game/utilities/plains.png");
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
@@ -47,6 +50,7 @@ public class Map implements IMap, Observable {
 	public Map(int size) {
 		initGrid(size);
 		createAllComponents();
+		threadPool = new ThreadPool();
 	}
 	
 	//************************** Getters and Setters **************************
@@ -135,7 +139,7 @@ public class Map implements IMap, Observable {
 	}
 	
 	private void createAllComponents() {
-		CreationUnit.createMap(this.getSize(), this);
+		CreationUnit.createMap(getSize(), this);
 	}
 
 	/**
@@ -301,10 +305,32 @@ public class Map implements IMap, Observable {
 		}
 	}
 	
+	public void notifyDead(Player player) {
+		setNoCollision(player.getX(), player.getY());
+		active = false;
+		//this.player = null;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void run() {
+		active = true;
+		startThreads();
+	}
+	
 	public void startThreads() {
 		ArrayList<Monster> monsters = getMonsters();
 		for(Monster m : monsters) {
-			new Thread(m).start();
+			threadPool.execute(m);
+		}
+	}
+	
+	public void stopThreads() {
+		//threadPool.stopAll();
+		ArrayList<Monster> monsters = getMonsters();
+		for(Monster m : monsters) {
 		}
 	}
 	

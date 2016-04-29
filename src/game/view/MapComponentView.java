@@ -6,33 +6,33 @@ import game.utilities.ViewUtils;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Extends from {@code StackPane} <br/>
+ * View of a {@code MapComponent}.
+ * 
+ * @author ZhaoWen
+ *
+ */
 public class MapComponentView extends StackPane {
 	
 	//****************************** Attributes ******************************
 	
 	//****************************** Constructor ******************************
-	/*
-	public MapComponentView(Viewable v,MapView mapView, Map mapModel) {
-		this.mapView = mapView;
-		
-		this.setPrefWidth(mapView.cellSize());
-		this.setPrefHeight(mapView.cellSize());
-		//this.viewableMatrix = mapModel.getViewableMatrix();
-		//this.itemList = mapModel.getItemList();
-		
-		initMapComponentView(v);
-		
-		//observableList = mapModel.getObservableList();
-	}
-	*/
-	public MapComponentView(MapComponent mapComponent, MapView mapView) {
-		this.setPrefWidth(mapView.cellSize());
-		this.setPrefHeight(mapView.cellSize());
+	
+	/**
+	 * Creates the view of a {@code MapComponent}.
+	 * @param mapComponent
+	 * @param cellSize
+	 * @see {@link MapComponent}
+	 */
+	public MapComponentView(MapComponent mapComponent, double cellSize) {
+		super();
+		this.setPrefSize(cellSize, cellSize);
 		ViewSettings viewSettings = mapComponent.getViewSettings();
-		ImageView imageContainer =
-				ViewUtils.initImageView(viewSettings,mapView.cellSize()*0.8);
+		ImageView imageContainer = ViewUtils.initImageView(viewSettings,cellSize*0.8);
 		this.getChildren().add(imageContainer);
-		mapView.addToMap(this, viewSettings.getX(), viewSettings.getY());
+		this.setTranslateX(viewSettings.getX()*cellSize);
+		this.setTranslateY(viewSettings.getY()*cellSize);
 	}
 	
 	//************************** Getters and Setters **************************
@@ -66,11 +66,6 @@ public class MapComponentView extends StackPane {
 		else if(o instanceof AbstractItem) {
 			transferContainer(o, (int) arg);
 		}
-	}
-	
-	@Override
-	public void update(Observable o, Viewable v) {
-		
 	}
 
 	@Override

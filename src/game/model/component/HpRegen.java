@@ -5,7 +5,7 @@ import java.util.TimerTask;
 
 import game.model.Player;
 
-public class HpRegen{
+public class HpRegen {
 	
 	public HpRegen(Player player) {
 		Timer t = new Timer();
@@ -13,7 +13,10 @@ public class HpRegen{
 			
 			@Override
 			public void run() {
-				player.addHp(10);
+				if(player.isAlive())
+					player.addHp(10);
+				else
+					t.cancel();
 			}
 		};
 		t.scheduleAtFixedRate(tt, 0, 10000);
