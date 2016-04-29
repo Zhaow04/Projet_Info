@@ -1,6 +1,5 @@
 package game.view;
 
-import game.model.Observable;
 import game.model.Player;
 import game.model.item.Item;
 import game.view.component.ItemMenu;
@@ -9,31 +8,38 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
-public class InventoryViewController implements Observer {
+/**
+ * Controller class for the inventory window. Allows the user the use or throw items.
+ * 
+ * @author ZhaoWen
+ *
+ */
+public class InventoryViewController {
 	
 	private Player player;
 	
 	@FXML
 	private TilePane inventoryContainer; // Contains StackPanes, 1 StackPane = 1 item slot
 	
+	/**
+	 * Void constructor.
+	 */
 	public InventoryViewController() {
 		
 	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
-		//player.addObserver(this);
-	}
 	
-	@Override
-	public void update(Observable o, Object arg) {
-		
+	/**
+	 * Connects the inventory window with the player.
+	 * @param player
+	 */
+	public void init(Player player) {
+		this.player = player;
 	}
 
+	/**
+	 * Adds a {@code ItemView} to the inventory window and allows the user to use or throw the item.
+	 * @param itemView
+	 */
 	public synchronized void addItemView(ItemView itemView) {
 		Item item = itemView.getItem();
 		int index = player.getInventory().getItemNumber(item);
@@ -49,7 +55,4 @@ public class InventoryViewController implements Observer {
 		//itemView.setPreserveRatio(true);
 	}
 	
-	public synchronized void removeItemView(int index) {
-		
-	}
 }

@@ -10,8 +10,26 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Extends from {@code MenuButton}. <br/>
+ * Transparent {@link MenuButton} to be added on top of a {@link ItemView} to allow the user to use or throw the
+ * {@code Item}.
+ * 
+ * @author ZhaoWen
+ * @see {@link MenuButton}
+ * @see {@link game.model.item.Item}
+ *
+ */
 public class ItemMenu extends MenuButton {
 	
+	/**
+	 * Creates an transparent {@link MenuButton} with two {@link MenuItem} that allow the following
+	 * actions on an {@code Item}: use or throw.
+	 * @param player
+	 * @param index
+	 * @param itemView
+	 * @see {@link game.model.item.Item}
+	 */
 	public ItemMenu(Player player, int index, ItemView itemView) {
 		super();
 		this.setPrefSize(50, 50);

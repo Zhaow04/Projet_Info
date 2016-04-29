@@ -1,12 +1,17 @@
 package game.utilities;
 
-import game.model.Observable;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/**
+ * Class that handles the animation of a sprite.
+ * 
+ * @author ZhaoWen
+ *
+ */
 public class SpriteAnimation extends Transition {
 
     private final ImageView imageView;
@@ -19,6 +24,12 @@ public class SpriteAnimation extends Transition {
 
     private int lastIndex;
 
+    /**
+     * Constructor of {@link SpriteAnimation}.
+     * @param viewSettings The {@code ViewSettings} which contains the information concerning the animation
+     * @param imageView The {@code ImageView} which will be animated
+     * @param millis The duration in milliseconds of the animation
+     */
     public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, int millis) {
         this.imageView = imageView;
         this.count     = viewSettings.getCount();
@@ -34,6 +45,7 @@ public class SpriteAnimation extends Transition {
         		new Rectangle2D(offsetX, offsetY, width, height))));
     }
     
+    /*
     public SpriteAnimation(Observable o, ImageView imageView, Duration duration,
     		int count, int columns) {
         this.imageView = imageView;
@@ -49,8 +61,8 @@ public class SpriteAnimation extends Transition {
         setCycleCount(1);
         this.play();
         
-    }
-    
+    }*/
+    /*
     public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, Duration duration,
     		int count, int columns) {
         this.imageView = imageView;
@@ -65,7 +77,7 @@ public class SpriteAnimation extends Transition {
         setCycleCount(1);
         this.play();
         
-    }
+    }*/
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
@@ -77,6 +89,10 @@ public class SpriteAnimation extends Transition {
         }
     }
     
+    /**
+     * Updates the x and y offsets, the width and the height of the {@code ImageView}'s viewport.
+     * @param viewSettings
+     */
     public void update(ViewSettings viewSettings) {
     	this.offsetX   = (int) viewSettings.getOffsetX();
         this.offsetY   = (int) viewSettings.getOffsetY();

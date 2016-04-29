@@ -76,6 +76,9 @@ public class GameView extends BorderPane implements Observer {
 	
 	//******************************** Methods ********************************
 
+	/**
+	 * Shows the start menu if the player is dead.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o instanceof Player && arg == "dead") {

@@ -49,6 +49,11 @@ public class MonsterView extends StackPane implements Observer {
 				mapView.cellSize());
 	}
 	
+	/**
+	 * Updates the view of the monster. This method is used to move the view to a designated position, to 
+	 * change the direction in which the monster is looking, to create a the view of a skill or to remove
+	 * the dead monster.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg == "moved"){

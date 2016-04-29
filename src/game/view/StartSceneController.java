@@ -35,6 +35,11 @@ public class StartSceneController {
 
 	}
 	
+	/**
+	 * Connects the {@code StartSceneController} to the specified {@code GameView} in order to call the
+	 * method {@link GameView#newGame} after the user enters a size for the map.
+	 * @param gameView
+	 */
 	public void init(GameView gameView) {
 		this.gameView = gameView;
 	}
@@ -48,6 +53,9 @@ public class StartSceneController {
 		configMenu.setVisible(true);
 	}
 	
+	/**
+	 * Resets the start menu.
+	 */
 	private void reset() {
 		mapSizeField.clear();
 		startMenu.setVisible(true);

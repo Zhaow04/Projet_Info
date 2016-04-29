@@ -21,7 +21,7 @@ import javafx.util.Duration;
 
 /**
  * Implements {@code Observer}. <br/>
- * Extends from {@code Group} <br/>
+ * Extends from {@code Group}. <br/>
  * View of the map. Only a portion of the map is visible on the screen.
  * 
  * @author ZhaoWen
@@ -74,7 +74,8 @@ public class MapView extends Group implements Observer {
 	//******************************** Methods ********************************
 	
 	/**
-	 * Adds multiple {@code MonsterView} to this {@code MapView}
+	 * Adds multiple {@code MonsterView} to this {@code MapView}. This method is to be used after all
+	 * the monsters present on the map have been defeated.
 	 */
 	@Override
 	public void update(Observable o, Object arg) {

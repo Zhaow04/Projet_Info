@@ -4,7 +4,8 @@ import javafx.scene.image.Image;
 
 /**
  * Class that serves for display. Stocks all the informations needed for display such as
- * the URL of the image, the x and y offsets, the width and the height of the wanted region.
+ * the URL of the image, the x and y offsets, the width and the height of the wanted region, how much
+ * the image should span in x and y.
  * 
  * @author ZhaoWen
  *
@@ -23,6 +24,10 @@ public class ViewSettings {
 	
 	//****************************** Constructor ******************************
 	
+	/**
+	 * 
+	 * @param imageURL
+	 */
 	public ViewSettings(String imageURL) {
 		setImageURL(imageURL);
 		setOffsetX(0); setOffsetY(0);

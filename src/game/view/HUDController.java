@@ -68,7 +68,7 @@ public class HUDController implements Observer {
 			e.printStackTrace();
 		}
 		
-		inventoryViewController.setPlayer(player);
+		inventoryViewController.init(player);
 		player.addObserver(this);
 		double d = ((double) player.getStats().getHp())/player.getStats().getMaxHp();
 		healthBar.setProgress(d);

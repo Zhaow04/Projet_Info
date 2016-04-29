@@ -34,62 +34,43 @@ public class PlayerView extends StackPane implements Observer {
 	public PlayerView(Player player, MapView mapView) {
 		super();
 		this.setPrefSize(mapView.cellSize(), mapView.cellSize());
-		setPlayer(player);
+		this.player = player;
 		player.addObserver(this);
-		setMapView(mapView);
+		this.mapView = mapView;
 		ViewSettings viewSettings = player.getViewSettings();
 		ImageView imageView = ViewUtils.initImageView(viewSettings, mapView.cellSize()*0.8);
-		setImageView(imageView);
+		this.imageView = imageView;
 		this.getChildren().add(imageView);
 		this.setTranslateX(viewSettings.getX()*mapView.cellSize());
 		this.setTranslateY(viewSettings.getY()*mapView.cellSize());
 		mapView.add(this);
 		movementAnimation = new MovementAnimation(300, this, imageView, viewSettings,
-				getMapView().cellSize());
+				mapView.cellSize());
 	}
 	
-	private Player getPlayer() {
-		return player;
-	}
-
-	private void setPlayer(Player player) {
-		this.player = player;
-	}
-
-	private MapView getMapView() {
-		return mapView;
-	}
-
-	private void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
-	private ImageView getImageView() {
-		return imageView;
-	}
-
-	private void setImageView(ImageView imageView) {
-		this.imageView = imageView;
-	}
-	
+	/**
+	 * Updates the view of the player. This method is used to move the view to a designated position, to 
+	 * change the direction in which the player is looking, to create a the view of a skill or to remove
+	 * the dead player.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg == "moved") {
 			Platform.runLater(() -> {
 				updatePosition();
-				mapView.updateWindowView(getPlayer());
+				mapView.updateWindowView(player);
 			});
 		}
 		else if(arg == "changedDirection") {
-			ViewSettings viewSettings = getPlayer().getViewSettings();
-			Platform.runLater(() -> getImageView().setViewport(
+			ViewSettings viewSettings = player.getViewSettings();
+			Platform.runLater(() -> imageView.setViewport(
 					new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
 					viewSettings.getWidth(), viewSettings.getHeight())));
 		}
 		else if(arg instanceof ISkill) {
 			System.out.println((ISkill) arg);
 			ISkill skill = (ISkill) arg ;
-			Platform.runLater(() -> new SkillView(skill, getMapView()));
+			Platform.runLater(() -> new SkillView(skill, mapView));
 		}
 		else if(arg == "dead")
 			Platform.runLater(() -> removeView());
@@ -100,7 +81,7 @@ public class PlayerView extends StackPane implements Observer {
 	 * @see {@link MovementAnimation}
 	 */
 	private void updatePosition() {
-		ViewSettings viewSettings = getPlayer().getViewSettings();
+		ViewSettings viewSettings = player.getViewSettings();
 		movementAnimation.updateAndPlay(viewSettings);
 	}
 	
@@ -108,7 +89,7 @@ public class PlayerView extends StackPane implements Observer {
 	 * Removes the view.
 	 */
 	private void removeView() {
-		getMapView().remove(this);
+		mapView.remove(this);
 	}
 	
 }
