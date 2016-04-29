@@ -1,18 +1,13 @@
-package game.model.component;
+package game.model;
+
 import java.util.ArrayList;
 
-import game.model.IMap;
-import game.model.Observable;
-import game.model.Player;
-import game.model.item.IItem;
 import game.model.item.Item;
-import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**
  * Inventory of the player.
  * 
- * @author ZhaoWen
  *
  */
 public class Inventory implements Observable {
@@ -20,7 +15,7 @@ public class Inventory implements Observable {
 	//****************************** Attributes ******************************
 	
 	private Player owner;
-	private ArrayList<IItem> listItem;
+	private ArrayList<Item> listItem;
 	
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
@@ -35,11 +30,18 @@ public class Inventory implements Observable {
 	}
 	
 	//************************** Getters and Setters **************************
-	
+	/**
+	 * Gets the owner of the inventory.
+	 * @return
+	 */
 	public Player getOwner() {
 		return owner;
 	}
 
+	/**
+	 * Sets the owner of the inventory.
+	 * @param owner
+	 */
 	private void setOwner(Player owner) {
 		this.owner = owner;
 	}
@@ -59,7 +61,7 @@ public class Inventory implements Observable {
 	 * @param space
 	 */
 	private void setSpace(int space) {
-		listItem = new ArrayList<IItem>(space);
+		listItem = new ArrayList<Item>(space);
 		for(int i = 0; i < space; i++) {
 			listItem.add(null);
 		}
@@ -84,31 +86,18 @@ public class Inventory implements Observable {
 		notifyObservers(null);
 	}
 	
-	@Override
-	public ViewSettings getViewSettings() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addToMap(IMap map, int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * Adds an item to the inventory.
 	 * 
 	 * @param item
 	 */
-	public void addItem(IItem item) {
+	public void addItem(Item item) {
 		for(int i = 0; i < getSpace(); i++) {
 			if(listItem.get(i) == null) {
 				listItem.set(i, item);
 				break;
 			}
 		}
-		//item.setInventory(this);
 	}
 	
 	/**
@@ -120,6 +109,10 @@ public class Inventory implements Observable {
 		listItem.remove(item);
 	}
 	
+	/**
+	 * Removes an item referenced by its index from the inventory.
+	 * @param index
+	 */
 	public void removeItem(int index) {
 		listItem.set(index, null);
 	}
@@ -133,6 +126,10 @@ public class Inventory implements Observable {
 		getItem(itemNumber).use(getOwner());
 	}
 	
+	/**
+	 * Removes an item referenced by its index from the inventory.
+	 * @param index
+	 */
 	public void throwItem(int index) {
 		removeItem(index);
 	}
@@ -143,11 +140,16 @@ public class Inventory implements Observable {
 	 * @param itemNumber
 	 * @return item
 	 */
-	public IItem getItem(int itemNumber){
+	public Item getItem(int itemNumber){
 		return listItem.get(itemNumber);
 	}
 	
-	public int getItemNumber(IItem item) {
+	/**
+	 * Gets the item number (index) of the given item.
+	 * @param item
+	 * @return itemNumber
+	 */
+	public int getItemNumber(Item item) {
 		return listItem.indexOf(item);
 	}
 

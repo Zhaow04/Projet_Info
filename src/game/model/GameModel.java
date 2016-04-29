@@ -1,21 +1,19 @@
 package game.model;
 
 import java.util.ArrayList;
-
 import game.model.monster.Monster;
 
 /**
- * Implements {@code Model}. <br/>
- * A class that serves to create a model of the game.
- * 
+ * A class that creates the model of the game.
  *
  */
-public class GameModel implements Model {
+public class GameModel  {
 	
 	//****************************** Attributes ******************************
 	
 	private Map map;
 	private Player player;
+	
 	
 	//****************************** Constructor ******************************
 	
@@ -25,25 +23,53 @@ public class GameModel implements Model {
 	 * @param mapSize
 	 */
 	public GameModel(int mapSize) {
-		map = new Map(mapSize);
-		
-		player = new Player();
+		setMap( new Map(mapSize));
+		setPlayer (new Player());
 		map.addToMap(player, 5, 5);
 	}
 	
 	//************************** Getters and Setters **************************
 	
-	@Override
+	/**
+	 * Gets the map.
+	 * 
+	 * @return map
+	 */
 	public Map getMap() {
 		return map;
 	}
 	
-	@Override
+	/**
+	 * Gets the player.
+	 * 
+	 * @return player
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Sets the map.
+	 * @param map
+	 */
+	private void setMap(Map map) {
+		this.map=map;
+	}
 	
+	/**
+	 * Sets the player.
+	 * @param player
+	 */
+	private void setPlayer(Player player) {
+		this.player=player;
+	}
+
+	
+	//******************************** Methods ********************************
+
+	/**
+	 * Starts the monsters threads.
+	 */
 	public void startThreads() {
 		ArrayList<Monster> monsters = getMap().getMonsters();
 		for(Monster m : monsters) {

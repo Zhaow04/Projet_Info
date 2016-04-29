@@ -3,19 +3,26 @@ package game.model.movement;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.model.Movable;
 import game.model.Player;
 
+/**
+ * Public class that represents a type of movement : tracking the player. <br/>
+ * Meant for the enemies. <br/>
+ * Extends {@code BasicMove}
+ * @see {@link BasicMove}
+ *
+ */
 public class TrackPlayer extends BasicMove {
 	
+	//****************************** Constructor ******************************
 
 	public TrackPlayer() {
 		super();
 	}
 	
-	
-	/**
-	 * 
-	 */
+	//******************************** Methods ********************************
+
 	@Override
 	public void move(Movable m) {
 		Player player=m.getCurrentMap().getPlayer();
@@ -48,8 +55,10 @@ public class TrackPlayer extends BasicMove {
 
 	}
 	
-	
-
+	/**
+	 * Makes the {@code Movable} m move randomly if possible.
+	 * @param m
+	 */
 	private void moveRandomly (Movable m) {
 		int[] AllDirections[]={{0,1},{1,0},{0,-1},{-1,0}};
 		ArrayList<int[]> PossibleDirections = new ArrayList<int[]>();

@@ -1,7 +1,6 @@
 package game.model.monster;
 
-import game.model.Map;
-import game.model.component.Stats;
+import game.model.Stats;
 import game.utilities.ImageDB;
 
 /**
@@ -13,36 +12,15 @@ import game.utilities.ImageDB;
  */
 public class OrangeBat extends Monster {
 	
-	//****************************** Attributes ******************************
-	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates an orange bat and sets the map on which it is and its position.
-	 * 
-	 * @param map
-	 * @param x
-	 * @param y
-	 * @see {@link Monster#Monster(Map)}
+	 * Creates an orange bat with 350HP and 75 killXp.
 	 */
 	public OrangeBat(){
 		super(ImageDB.getOrangeBatView());
 		setScope(2);
-		setStats(new Stats(400, 50));
+		setStats(new Stats(350, 75));
 	}
 	
-	//************************** Getters and Setters **************************
-	
-	
-
-	//******************************** Methods ********************************
-	
-	/**
-	 * Defines the maximum of Hp this living being can have (depending on his level).
-	 * 
-	 * return maxHp
-	 */
-	/*private int maxHp(){
-		return 300 + getLevel()*100;  
-	}*/
 }

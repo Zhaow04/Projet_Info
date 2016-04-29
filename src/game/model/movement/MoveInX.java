@@ -3,16 +3,36 @@ package game.model.movement;
 import java.util.ArrayList;
 import java.util.Random;
 
-import game.model.Player;
+import game.model.Movable;
 
+/**
+ * Public class that represents a type of movement : moving in X. <br/>
+ * Meant for the enemies. <br/>
+ * Extends {@code BasicMove}
+ * @see {@link BasicMove}
+ *
+ */
 public class MoveInX extends BasicMove {
 	
+	//****************************** Attributes ******************************
+
 	private int baseX=-1, baseY=-1;
 	
+	//****************************** Constructor ******************************
+
+	/**
+	 * Creates the move in X.
+	 */
 	public MoveInX() {
 		super();
 	}
-	
+
+	//************************** Getters and Setters **************************
+
+	/**
+	 * Gets the base X position.
+	 * @return baseX
+	 */
 	private int getBaseX() {
 		return baseX;
 	}
@@ -22,6 +42,10 @@ public class MoveInX extends BasicMove {
 		this.baseX = baseX;
 	}
 
+	/**
+	 * Gets the base Y position.
+	 * @return baseY
+	 */
 	private int getBaseY() {
 		return baseY;
 	}
@@ -31,9 +55,8 @@ public class MoveInX extends BasicMove {
 		this.baseY = baseY;
 	}
 
-	/**
-	 * 
-	 */
+	//******************************** Methods ********************************
+
 	@Override
 	public void move(Movable m) {
 		if(getBaseX() == -1 && getBaseY() == -1) {
@@ -52,6 +75,10 @@ public class MoveInX extends BasicMove {
 
 	}
 		
+	/**
+	 * Makes the {@code Movable} m move randomly if possible.
+	 * @param m
+	 */
 	private void moveRandomly (Movable m) {
 		int[] AllDirections[]={{0,1},{1,0},{0,-1},{-1,0}};
 		ArrayList<int[]> PossibleDirections = new ArrayList<int[]>();

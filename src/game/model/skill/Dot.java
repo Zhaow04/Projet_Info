@@ -6,7 +6,6 @@ import game.utilities.ViewSettings;
  * Extends from {@code Skill}. <br/>
  * Abstract class that serves as a super class for all the damage over time attacks.
  * 
- * @author ZhaoWen
  * @see {@link Skill}
  *
  */
@@ -20,7 +19,7 @@ public abstract class Dot extends Skill {
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates an damage over time attack.
+	 * Creates a damage over time attack.
 	 */
 	public Dot(int damage, int range, ViewSettings viewSettings, int lapse, int count){
 		super(damage, range, viewSettings);
@@ -33,7 +32,7 @@ public abstract class Dot extends Skill {
 	/**
 	 * Gets the lapse between two damages.
 	 * 
-	 * @return damage dealt over time
+	 * @return lapse
 	 */
 	public int getLapse() {
 		return lapse;
@@ -42,7 +41,7 @@ public abstract class Dot extends Skill {
 	/**
 	 * Sets the lapse between two damages.
 	 * 
-	 * @param dot
+	 * @param dt
 	 */
 	private void setLapse(int dt) {
 		this.lapse = dt;
@@ -53,7 +52,7 @@ public abstract class Dot extends Skill {
 	/**
 	 * Gets the total number of periodic damages.
 	 * 
-	 * @return damage dealt over time
+	 * @return count
 	 */
 	public int getCount() {
 		return count;
@@ -61,10 +60,10 @@ public abstract class Dot extends Skill {
 	
 	/**
 	 * Sets the total number of periodic damages.
-	 * 
+	 * @param count
 	 */
-	protected void setCount(int t) {
-		this.count = t;
+	protected void setCount(int count) {
+		this.count = count;
 	}
 	
 }

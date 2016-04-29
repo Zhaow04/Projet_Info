@@ -1,6 +1,6 @@
 package game.view;
 
-import game.model.skill.ISkill;
+import game.model.skill.Skill;
 import game.utilities.MovementAnimation;
 import game.utilities.ViewSettings;
 import game.utilities.ViewUtils;
@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 
 public class SkillView extends StackPane {
 	
-	public SkillView(ISkill skill, MapView mapView) {
+	public SkillView(Skill skill, MapView mapView) {
 		super();
 		ViewSettings viewSettings = skill.getViewSettings();
 		ImageView imageView = ViewUtils.initImageView(viewSettings,mapView.cellSize());

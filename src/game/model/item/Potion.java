@@ -3,11 +3,10 @@ package game.model.item;
 import game.utilities.ViewSettings;
 
 /**
- * Extends from {@code AbstractItem}. <br/>
+ * Extends from {@code Item}. <br/>
  * Abstract class that serves as a super class to all the potions.
  * 
- * @author ZhaoWen
- * @see {@link AbstractItem}
+ * @see {@link Item}
  * 
  */
 public abstract class Potion extends Item {
@@ -19,12 +18,12 @@ public abstract class Potion extends Item {
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a potion with a value of 200 and 3 uses.
+	 * Creates a potion with a value, usable 1 time.
 	 * 
 	 * @param value
 	 */
 	public Potion(ViewSettings viewSettings, int value) {
-		super(viewSettings, 3);
+		super(viewSettings, 1);
 		setValue(value);
 	}
 	

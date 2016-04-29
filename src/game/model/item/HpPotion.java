@@ -7,7 +7,6 @@ import game.utilities.ImageDB;
  * Extends from {@code Potion}. <br/>
  * Hp potion that heals the user.
  * 
- * @author ZhaoWen
  *
  */
 public class HpPotion extends Potion {
@@ -15,7 +14,7 @@ public class HpPotion extends Potion {
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a hp potion with a value defined by {@code value}. Sets the map on which it is.
+	 * Creates a hp potion with a value.
 	 * 
 	 * @param value
 	 */
@@ -25,15 +24,11 @@ public class HpPotion extends Potion {
 	
 	//******************************** Methods ********************************
 	
-	/**
-	 * Uses the object on the target.
-	 * 
-	 * @param player
-	 */
+	
 	@Override
 	public void use(Player player) {
 		useOnce();
-		player.addHp(getValue());
+		player.getStats().addHp(getValue());
 	}
 
 }

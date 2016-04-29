@@ -2,7 +2,6 @@ package game.view;
 
 import game.model.Observable;
 import game.model.Player;
-import game.model.skill.ISkill;
 import game.model.skill.Skill;
 import game.utilities.MovementAnimation;
 import game.utilities.ViewSettings;
@@ -72,9 +71,8 @@ public class PlayerView extends StackPane implements Observer {
 					new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
 					viewSettings.getWidth(), viewSettings.getHeight())));
 		}
-		else if(arg instanceof ISkill) {
-			System.out.println((ISkill)arg);
-			ISkill skill = (ISkill) arg ;
+		else if(arg instanceof Skill) {
+			Skill skill = (Skill) arg ;
 			Platform.runLater(() -> new SkillView(skill, getMapView()));
 		}
 		else if(arg == "dead")

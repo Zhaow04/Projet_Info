@@ -1,29 +1,21 @@
-package game.model.mapcomponent;
+package game.model.obstacle;
 
 import game.utilities.ImageDB;
 
 /**
  * Extends from {@code Obstacle} <br/>
- * Basic obstacle.
+ * Basic obstacle : bush.
  * 
- * @author ZhaoWen
  * @see {@link Obstacle}
  *
  */
 public class Bush extends Obstacle {
 
-	//****************************** Attributes ******************************
-	
-
 	//****************************** Constructor ******************************
 
 	/**
-	 * Creates a bush and sets the map on which it is and its position.
+	 * Creates a bush.
 	 * 
-	 * @param map
-	 * @param x
-	 * @param y
-	 * @see {@link Obstacle#Obstacle(Map)}
 	 */
 	public Bush() {
 		super(ImageDB.getBushView());

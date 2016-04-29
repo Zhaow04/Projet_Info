@@ -1,47 +1,43 @@
-package game.model.component;
+package game.utilities;
 
 import java.util.Random;
 
 import game.model.Map;
+import game.model.MapComponent;
 import game.model.item.HpPotion;
-import game.model.mapcomponent.Bush;
-import game.model.mapcomponent.Rock;
-import game.model.mapcomponent.SafeHouse;
-import game.model.mapcomponent.Tree;
 import game.model.monster.BlueDragon;
 import game.model.monster.GiantRat;
 import game.model.monster.OrangeBat;
 import game.model.monster.RedDragon;
+import game.model.obstacle.Bush;
+import game.model.obstacle.Rock;
+import game.model.obstacle.Tree;
 
+/**
+ 
+ * Public class that serves the purpose of creating all the map components of the game.
+ * 
+ * @see {@link MapComponent}
+ *
+ */
 public class CreationUnit {
-	/*
-	private static final int bushID = 1;
-	private static final int rockID = 2;
-	private static final int treeID = 3;
-	private static final int safehouseID = 4;
-	private static final int blueDragonID = 5;
-	private static final int redDragonID = 6;
-	private static final int giantRatID = 7;
-	private static final int orangeRatID = 8;
-	private static final int hpPotionID = 9;*/
 	
-	private Map map;
-	private Random rand = new Random();
-	
+	//****************************** Constructor ******************************
+	/**
+	 * Creates the creation unit. 
+	 * @param map
+	 */
 	public CreationUnit(Map map) {
-		setMap(map);
 	}
 	
-	private Map getMap() {
-		return map;
-	}
-
-	private void setMap(Map map) {
-		this.map = map;
-	}
+	//******************************** Methods ********************************
 	
+	/**
+	 * Creates all the components of the map.
+	 * @param size
+	 * @param map
+	 */
 	public static void createMap(int size, Map map) {
-		//int[][] grid = new int[size][size];
 		Random rand = new Random();
 		for(int i = 0; i < size; i++) {
 			addObstacle(2, map, i, 0);
@@ -60,14 +56,13 @@ public class CreationUnit {
 		}
 	}
 	
-	private void fillBlock(int[][] map, int row, int column) {
-		for(int i = -2; i <= 2; i++) {
-			for(int j = -2; j <= 2; j++) {
-				map[row+i][column+j] = rand.nextInt(4);
-			}
-		}
-	}
-	
+	/**
+	 * Adds an obstacle to the map depending on the int parameter given.	
+	 * @param int i
+	 * @param map
+	 * @param x
+	 * @param y
+	 */
 	private static void addObstacle(int i,  Map map, int x, int y) {
 		switch (i) {
 		case 0:
@@ -82,14 +77,10 @@ public class CreationUnit {
 		}
 	}
 	
-	private static void addSafeHouse(int i, Map map, int x, int y) {
-		switch (i) {
-		case 0:
-			map.addToMap(new SafeHouse(),x,y);
-			break;
-		}
-	}
-	
+	/**
+	 * Adds a number of monsters to the map depending on the map size.
+	 * @param map
+	 */
 	public static void addMonsters(Map map) {
 		Random rand = new Random();
 		for(int i = 1; i <= map.getSize()-7; i+=5) {
@@ -100,6 +91,13 @@ public class CreationUnit {
 		}
 	}
 	
+	/**
+	 * Adds a monster to the map depending on the int parameter given.
+	 * @param i
+	 * @param map
+	 * @param x
+	 * @param y
+	 */
 	private static void addMonster(int i,  Map map, int x, int y) {
 		switch (i) {
 		case 0:
@@ -117,6 +115,13 @@ public class CreationUnit {
 		}
 	}
 	
+	/**
+	 * Adds an item to the map depending on the int parameter given.
+	 * @param i
+	 * @param map
+	 * @param x
+	 * @param y
+	 */
 	private static void addItem(int i, Map map, int x, int y) {
 		switch (i) {
 		case 0:
@@ -125,34 +130,4 @@ public class CreationUnit {
 		}
 	}
 
-	
-	
-	/**
-	 * Adds {@code Viewable} to the map.
-	 * 
-	 * @param o
-	 */
-/*	private void addToMap(MapComponent compo, int x, int y) {
-		setGrid(mapCompoID, x, y);
-		getMapCompos().add(compo);
-		compo.addToMap(this, x, y);
-	}
-	
-	private void addToMap(Monster damageable, int x, int y){
-		setGrid(damageableID, x, y);
-		getMonsters().add(damageable);
-		damageable.addToMap(this, x, y);
-	}
-	
-	private void addToMap(Item item, int x, int y) {
-		getItems().add(item);
-		item.addToMap(this, x, y);
-	}
-	
-	public void addToMap(Player player, int x, int y) {
-		setGrid(damageableID, x, y);
-		setPlayer(player);
-		player.addToMap(this, x, y);
-	}
-	*/
 }

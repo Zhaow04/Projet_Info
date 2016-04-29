@@ -1,4 +1,4 @@
-package game.controller;
+	package game.controller;
 
 import java.util.ArrayList;
 
@@ -16,10 +16,6 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	//****************************** Attributes ******************************
 
-	private GameModel model;
-	private GameView view;
-	private MapView mapView;
-	
 	private Player player;
 	
 	private HUDController hudController;
@@ -28,56 +24,50 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	//****************************** Constructor ******************************
 
-	public GameController(GameModel model, GameView view) {
-		setModel(model);
-		setView(view);
-		setMapView(view.mapView);
+	public GameController(GameModel model) {
 		setPlayer(model.getPlayer());
 		new Thread(this).start();   
 	}
 
 	//************************** Getters and Setters **************************
 	
-	private GameModel getModel() {
-		return model;
-	}
 
-	private void setModel(GameModel model) {
-		this.model = model;
-	}
-
-	private GameView getView() {
-		return view;
-	}
-
-	private void setView(GameView view) {
-		this.view = view;
-	}
-
-	private MapView getMapView() {
-		return mapView;
-	}
-
-	private void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
+	/**
+	 * Gets the player.
+	 * @return player
+	 */
 	private Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Sets the player.
+	 * @param player
+	 */
 	private void setPlayer(Player player) {
 		this.player = player;
 	}
 	
+	/**
+	 * Gets the Heads Up Display (HUD) controller.
+	 * @return HUD controller
+	 */
 	public HUDController getHudController() {
 		return hudController;
 	}
 
+	/**
+	 * Sets the Heads Up Display (HUD) controller.
+	 * @param hudController
+	 */
 	public void setHudController(HUDController hudController) {
 		this.hudController = hudController;
 	}
 	
+	/**
+	 * Gets the list of the different keys.
+	 * @return keys' list
+	 */
 	public ArrayList<KeyCode> getKeyList() {
 		return keyList;
 	}
@@ -130,6 +120,11 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 		}
 	}
 	
+	/**
+	 * Converts the key (string) to a direction (Vector2D).
+	 * @param key
+	 * @return
+	 */
 	private Vector2D convertKeyToDirection(String key) {
 		Vector2D c;
 		if(key.equals("Up")) {
@@ -147,8 +142,12 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 		return c;
 	}
 
+	/**
+	 * Makes the player use his skill (i-1).
+	 * @param i
+	 */
 	public void attack(int i) {   
-		if(i <= 3) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
+		if(i <= 3) {	
 			getPlayer().useSkill(i-1);
 		}
 	}

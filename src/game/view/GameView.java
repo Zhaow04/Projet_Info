@@ -8,12 +8,10 @@ import game.model.GameModel;
 import game.model.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class GameView extends AnchorPane {
@@ -56,7 +54,7 @@ public class GameView extends AnchorPane {
 		setModel(model);
 		setMainStage(stage);
 		
-		GameController gameController = new GameController(model, this);
+		GameController gameController = new GameController(model);
 		setGameController(gameController);
 		init();
 	}
@@ -71,14 +69,6 @@ public class GameView extends AnchorPane {
 		this.mainStage = mainStage;
 	}
 
-	private Scene getMainScene() {
-		return mainScene;
-	}
-
-	private void setMainScene(Scene mainScene) {
-		this.mainScene = mainScene;
-	}
-	
 	public GameModel getModel() {
 		return model;
 	}
@@ -142,7 +132,7 @@ public class GameView extends AnchorPane {
 	
 	public void newGame(int mapSize) {
 		setModel(new GameModel(mapSize));
-		GameController gameController = new GameController(getModel(), this);
+		GameController gameController = new GameController(getModel());
 		setGameController(gameController);
 		initView();
 		getModel().startThreads();

@@ -33,7 +33,7 @@ public class SpriteAnimation extends Transition {
         this.setOnFinished((value) -> imageView.setViewport((
         		new Rectangle2D(offsetX, offsetY, width, height))));
     }
-    
+    /*
     public SpriteAnimation(Observable o, ImageView imageView, Duration duration,
     		int count, int columns) {
         this.imageView = imageView;
@@ -50,7 +50,7 @@ public class SpriteAnimation extends Transition {
         this.play();
         
     }
-    
+    */
     public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, Duration duration,
     		int count, int columns) {
         this.imageView = imageView;

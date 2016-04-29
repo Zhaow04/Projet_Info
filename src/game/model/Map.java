@@ -2,12 +2,13 @@ package game.model;
 
 import java.util.ArrayList;
 
-import game.model.component.CreationUnit;
-import game.model.item.IItem;
+//import game.model.item.IItem;
 import game.model.item.Item;
 import game.model.monster.Monster;
 import game.model.movement.Movement;
+import game.model.obstacle.Obstacle;
 import game.model.skill.SkillTarget;
+import game.utilities.CreationUnit;
 import game.utilities.ViewSettings;
 import game.view.Observer;
 
@@ -15,17 +16,15 @@ import game.view.Observer;
  * Map of the game. It knows whether or not a position
  * is occupied and which object is occupying it.
  * 
- * @author ZhaoWen
  * @see {@link ViewSettings}
  *
  */
-public class Map implements IMap, Observable {
+public class Map implements Observable {
 	
 	//****************************** Attributes ******************************
 	
 	private int[][] grid;
 	private final int mapCompoID = 1;
-	//private final int itemID = 1;
 	private final int damageableID = 2;
 	
 	private Player player;
@@ -33,8 +32,9 @@ public class Map implements IMap, Observable {
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
-	private ViewSettings viewSettings = new ViewSettings("game/utilities/plains.png");
+	private ViewSettings viewSettings = new ViewSettings("game/model/images/plains.png");
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	
 	
 	//****************************** Constructor ******************************
 	
@@ -51,80 +51,94 @@ public class Map implements IMap, Observable {
 	
 	//************************** Getters and Setters **************************
 	
+	/**
+	 * Gets the grid associated to the map (matrix with the same number of rows and columns).
+	 * @return grid
+	 */
 	private int[][] getGrid() {
 		return grid;
 	}
-	
+	/**
+	 * Sets the grid associated to the map (matrix with the same number of rows and columns).
+	 * @param grid
+	 */
 	private void setGrid(int[][] grid) {
 		this.grid = grid;
 	}
 	
+	/**
+	 * Sets the the ID of the element grid[y][x].
+	 * @param int id
+	 * @param x
+	 * @param y
+	 */
 	private void setGrid(int id, int x, int y) {
 		this.grid[y][x] = id;
 	}
 	
+	/**
+	 * Gets the player.
+	 * @return player
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 	
+	/**
+	 * Sets the player.
+	 * @param player
+	 */
 	private void setPlayer(Player player) {
 		this.player = player;
 	}
 	
+	/** 
+	 * Gets the map components' list.
+	 * @return list of map components
+	 */
 	public ArrayList<MapComponent> getMapCompos() {
 		return mapCompos;
 	}
 
+	/**
+	 * Gets the list of monsters living on the map.
+	 * @return list of monsters
+	 */
 	public ArrayList<Monster> getMonsters() {
 		return monsters;
 	}
 
+	/**
+	 * Gets the list of items available on the map.
+	 * @return list of items
+	 */
 	public ArrayList<Item> getItems() {
 		return items;
 	}
 
 	/**
 	 * Gets the size of the map (same number of rows and columns).
-	 * 
-	 * @return size of the map
-	 */
+	 * @return map size.
+	 */	
 	public int getSize(){
 		return getGrid().length;
 	}
 	
-	/*public ArrayList<Observable> getObservables() {
-		ArrayList<Observable> observableList = new ArrayList<Observable>();
-		for(int i = 0; i < dynamicLayer.length; i++) {
-			for(int j = 0; j < dynamicLayer.length; j++) {
-				if(dynamicLayer[i][j] != null) {
-					observableList.add(dynamicLayer[i][j]);
-				}
-				if(stepOnLayer[i][j] != null) {
-					observableList.add(stepOnLayer[i][j]);
-				}
-			}
-		}
-		return observableList;
-	}*/
-
 	/**
-	 * Sets the matrix of {@code LivingBeing} associated to the map. An instance of
-	 * {@code LivingBeing} present at the position (x,y) on the map will figure at the
-	 * same position in the matrix.
-	 * 
-	 * @param livingOnMap
-	 * @see {@link LivingBeing}
+	 * Gets the view settings of the map.
+	 * @return viewSettings
 	 */
-	/*private void setEntityMatrix(Observable[][] bottomLayer) {
-		this.entityMatrix = bottomLayer;
-	}*/
-	
-	//******************************** Methods ********************************
-
 	public ViewSettings getViewSettings() {
 		return viewSettings;
 	}
 	
+	
+	//******************************** Methods ********************************
+
+	/**
+	 * Initializes the grid: all the elements are set to 0.
+	 * @param size
+	 */
 	private void initGrid(int size) {
 		setGrid(new int[size][size]);
 		for(int i = 0; i < getGrid().length; i++){
@@ -134,23 +148,32 @@ public class Map implements IMap, Observable {
 		}
 	}
 	
+	/**
+	 * Creates all the components of the map.
+	 */
 	private void createAllComponents() {
 		CreationUnit.createMap(this.getSize(), this);
 	}
 
 	/**
-	 * Adds {@code Viewable} to the map.
-	 * 
-	 * @param o
+	 * Adds an obstacle to the map.
+	 * @param obstacle
+	 * @param x
+	 * @param y
 	 */
-	public void addToMap(MapComponent compo, int x, int y) {
+	public void addToMap(Obstacle compo, int x, int y) {
 		if(getGrid()[y][x] == 0) {
 			setGrid(mapCompoID, x, y);
 			getMapCompos().add(compo);
 			compo.addToMap(this, x, y);
 		}
 	}
-	
+	/**
+	 * Adds a monster to the map.
+	 * @param monster
+	 * @param x
+	 * @param y
+	 */
 	public void addToMap(Monster monster, int x, int y) {
 		if(getGrid()[y][x] == 0) {
 			setGrid(damageableID, x, y);
@@ -158,14 +181,24 @@ public class Map implements IMap, Observable {
 			monster.addToMap(this, x, y);
 		}
 	}
-	
+	/**
+	 * Adds an item to the map.
+	 * @param item
+	 * @param x
+	 * @param y
+	 */
 	public void addToMap(Item item, int x, int y) {
 		if(getGrid()[y][x] == 0) {
 			getItems().add(item);
 			item.addToMap(this, x, y);
 		}
 	}
-	
+	/**
+	 * Adds the player to the map.
+	 * @param player
+	 * @param x
+	 * @param y
+	 */
 	public void addToMap(Player player, int x, int y) {
 		if(getGrid()[y][x] == 0) {
 			setGrid(damageableID, x, y);
@@ -174,25 +207,11 @@ public class Map implements IMap, Observable {
 		}
 	}
 
-	/**
-	 * Removes the {@code Viewable} entity at the position (x = column, y = row).
-	 * 
-	 * @param column
-	 * @param row
-	 * @see {@link Viewable}
-	 */
-	/*public void removeFromMap(MapComponent c) {
-		int[] pos = c.getPosition();
-		setNoCollision(pos[0], pos[1]);
-		getMapCompos().remove(c);
-	}*/
 	
 	/**
-	 * Removes the {@code Observable} entity at the position (x = column, y = row).
+	 * Removes the {@code SkillTarget} from the map.
 	 * 
-	 * @param column
-	 * @param row
-	 * @see {@link Observable}
+	 * @param SkillTarget
 	 */
 	private void removeFromMap(SkillTarget skillTarget) {
 		setNoCollision(skillTarget.getX(), skillTarget.getY());
@@ -200,11 +219,10 @@ public class Map implements IMap, Observable {
 	}
 	
 	/**
-	 * Gets the {@code Viewable} entity at the position (x = column, y = row).
-	 * 
-	 * @param column
-	 * @param row
-	 * @return {@code Viewable} entity at (x,y)
+	 * Gets the skill target present at the position (x,y).
+	 * @param x
+	 * @param y
+	 * @return skillTarget
 	 */
 	public SkillTarget getTargetAt(int x, int y) {
 		SkillTarget skillTarget = null;
@@ -223,15 +241,15 @@ public class Map implements IMap, Observable {
 	}
 
 	/**
-	 * Gets the {@code AbstractItem} at the position (x = column, y = row).
+	 * Gets the {@code Item} at the position (x = column, y = row).
 	 * 
-	 * @param column
-	 * @param row
-	 * @return {@code AbstractItem} at (x,y)
+	 * @param x
+	 * @param y
+	 * @return {@code Item} at (x,y)
 	 */
-	private IItem getItem(int x, int y){
-		IItem item = null;
-		for(IItem i : getItems()) {
+	private Item getItem(int x, int y){
+		Item item = null;
+		for(Item i : getItems()) {
 			if(i.getX() == x && i.getY() == y) {
 				item = i;
 				break;
@@ -252,28 +270,33 @@ public class Map implements IMap, Observable {
 	
 	/**
 	 * Returns whether or not the position (x = column, y = row) is empty.
-	 * 
 	 * @param column
 	 * @param row
-	 * @return
+	 * @return boolean
 	 */
 	public boolean noCollision(int column, int row){
 		return getGrid()[row][column] < 1;
 	}
 	
+	/**
+	 * Returns whether or not an item is at (x,y).
+	 * @param x
+	 * @param y
+	 * @return boolean
+	 */
 	public boolean isItemAt(int x, int y) {
 		return getItem(x, y) != null;
 	}
 	
 	/**
-	 * Gets the {@code AbstractItem} at the position (x = column, y = row) and removes it from the map.
+	 * Gets the {@code Item} at the position (x = column, y = row), if there is, and removes it from the map.
 	 * 
 	 * @param column
 	 * @param row
-	 * @return {@code AbstractItem} at (x,y)
+	 * @return {@code Item} at (x,y)
 	 */
-	public IItem getAndRemoveItem(int x, int y) {
-		IItem item = null;
+	public Item getAndRemoveItem(int x, int y) {
+		Item item = null;
 		if(isItemAt(x, y)) {
 			item = getItem(x, y);
 			getItems().remove(item);
@@ -281,30 +304,35 @@ public class Map implements IMap, Observable {
 		return item;
 	}
 
-	@Override
+	/**
+	 * Returns whether or not a skill target is at (x,y).
+	 * @param x
+	 * @param y
+	 * @return boolean
+	 */
 	public boolean isTargetAt(int x, int y) {
 		return getTargetAt(x, y) != null;
 	}
 
+	/**
+	 * Makes the movement changes relative to the map (ID changes).
+	 * @param movement
+	 */
 	public void notifyMovement(Movement movement) {
 		setNoCollision(movement.getOldX(), movement.getOldY());
 		getGrid()[movement.getNewY()][movement.getNewX()] = damageableID;
 		setGrid(damageableID, movement.getNewX(), movement.getNewY());		
 	}
 
-	@Override
+	/**
+	 * Notifies the observer that the skill target given is dead,
+	 * @param skillTarget
+	 */
 	public void notifyDead(SkillTarget target) {
 		removeFromMap(target);
 		if(getMonsters().isEmpty()) {
 			CreationUnit.addMonsters(this);
 			notifyObservers("addMonsters");
-		}
-	}
-	
-	public void startThreads() {
-		ArrayList<Monster> monsters = getMonsters();
-		for(Monster m : monsters) {
-			new Thread(m).start();
 		}
 	}
 	
@@ -324,11 +352,4 @@ public class Map implements IMap, Observable {
 			o.update(this, arg);
 		}
 	}
-
-	@Override
-	public void addToMap(IMap map, int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

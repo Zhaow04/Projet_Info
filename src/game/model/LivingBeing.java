@@ -1,31 +1,37 @@
 package game.model;
 
-import game.model.movement.Movable;
+import java.util.ArrayList;
+
 import game.model.movement.Movement;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
+import game.view.Observer;
 
 /**
- * Extends from {@code ViewSettings}. <br/>
+ * Extends from {@code MapComponent}. <br/>
+ * Implements {@code Movable, Observable}. <br/>
  * Abstract class that serves as a super class for all the living beings of the game.
  * 
- * @author ZhaoWen
- * @see {@link ViewSettings}
+ * @see {@link MapComponent}
  *
  */
-public abstract class LivingBeing extends MapComponent implements Movable {
+public abstract class LivingBeing extends MapComponent implements Movable, Observable {
 	
 	//****************************** Attributes ******************************
 	
 	private Vector2D directionFacing = new Vector2D();
 	private Movement movement;
+	private Stats stats;
+	
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a living being and sets the map on which it is.
+	 * Creates a living being, sets its view settings and its movement.
 	 * 
-	 * @param map
+	 * @param ViewSettings
+	 * @param Movement
 	 */
 	public LivingBeing(ViewSettings viewSettings, Movement movement) {
 		super(viewSettings);
@@ -44,11 +50,7 @@ public abstract class LivingBeing extends MapComponent implements Movable {
 		return directionFacing;
 	}
 
-	/**
-	 * Sets the direction the living being is facing to.
-	 * 
-	 * @param directionFacing
-	 */
+	@Override
 	public void setDirectionFacing(int x, int y) {
 		directionFacing.setXY(x, y);
 		int i = 0;
@@ -63,59 +65,55 @@ public abstract class LivingBeing extends MapComponent implements Movable {
 		}
 	}
 
+	/**
+	 * Gets the movement of the living being.
+	 * @return movement
+	 */
 	public Movement getMovement() {
 		return movement;
 	}
 
 	/**
-	 * 
+	 * Sets the movement of the living being.
 	 * @param movement
 	 */
 	protected void setMovement(Movement movement) {
 		this.movement = movement;
 	}
 	
+	public Stats getStats() {
+		return stats;
+	}
+
+	protected void setStats(Stats stats) {
+		this.stats = stats;
+	}
+	
 	//******************************** Methods ********************************
 	
 	/**
-	 * Removes hp to the living being.
+	 * Makes the living being move if possible in the direction (dx,dy).
 	 * 
-	 * @param hp
+	 * @param direction (dx,dy)
 	 */
-	/*public void loseHp(int hp) {
-		if (getHp() >= 0) {
-			addHp(-hp);
-			System.out.println(getHp());
-		}
-		if(getHp() <= 0) {
-			int[] pos = getPosition();
-			emptyPosition(pos[0],pos[1]);
-			currentMap.removeMovable(this);
-			currentMap.removeObservableOnMap(pos[0],pos[1]);
-			//System.out.println(currentMap.getLivingOnMap()[pos[1]][pos[0]]);
-			System.out.println(this.toString() + " dead");
-			notifyObservers("dead");
-		}
-			
-	}*/
-
-	/**
-	 * Makes the living being move if possible.
-	 * 
-	 * @param direction
-	 */
-	
 	public void move(int dx, int dy) {
 		getMovement().move(this, dx, dy);
 	}
 	
-	/*
-	public void Kill() {
-		int[] pos = getPosition();
-		emptyPosition(pos[0],pos[1]);
-		getCurrentMap().removeFromMap(this);
-		//System.out.println(currentMap.getLivingOnMap()[pos[1]][pos[0]]);
-		System.out.println(this.toString() + " dead");
+	@Override
+	public void notifyObservers(Object arg) {
+		for(Observer o : observers) {
+			o.update(this, arg);
+		}
 	}
-*/
+
+	@Override
+	public void addObserver(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		notifyObservers(null);
+	}
 }

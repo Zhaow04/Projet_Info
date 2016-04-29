@@ -1,51 +1,42 @@
 package game.model.monster;
 
-import java.util.ArrayList;
-
 import game.model.LivingBeing;
-import game.model.Observable;
+import game.model.Movable;
 import game.model.Player;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
-import game.view.Observer;
-import game.model.component.Stats;
 import game.model.movement.FaceThePlayer;
-import game.model.movement.Movable;
 import game.model.movement.MoveInX;
 import game.model.movement.Movement;
 import game.model.movement.TrackPlayer;
 import game.model.skill.BasicMonsterAttack;
-import game.model.skill.ISkill;
+import game.model.skill.Skill;
 import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
 
 /**
  * Extends from {@code LivingBeing} <br/>
- * Abstract class that serves as a super class for all the different monsters.
+ * Abstract class that serves as a super class for all the different monsters.<br/>
+ * Implements {@code Runnable}
  * 
- * @author ZhaoWen
  * @see {@link LivingBeing}
  *
  */
-public abstract class Monster extends LivingBeing implements SkillTarget, SkillUser, Runnable, Observable {
+public abstract class Monster extends LivingBeing implements Runnable, SkillTarget, SkillUser {
 	
 	//****************************** Attributes ******************************
 	
 	private int state;
-	private Stats stats;
 	private int scope;
-	private ISkill skill;
+	private Skill skill;
 	private Movement basicMovement;
-	
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a monster and sets the map on which it is.
+	 * Creates a monster.
 	 * 
-	 * @param map
-	 * @see {@link LivingBeing#LivingBeing(Map)}
+	 * @param viewSettings
 	 */
 	public Monster(ViewSettings viewSettings) {
 		super(viewSettings, new MoveInX());
@@ -55,16 +46,7 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	}
 	
 	//************************** Getters and Setters **************************
-	
-	@Override
-	public Stats getStats() {
-		return stats;
-	}
-
-	protected void setStats(Stats stats) {
-		this.stats = stats;
-	}
-	
+		
 	/**
 	 * Gets the scope of the monster (the range of its vision).
 	 * 
@@ -83,11 +65,19 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		this.scope = scope;
 	}
 	
-	protected ISkill getSkill() {
+	/**
+	 * Gets the skill of the monster.
+	 * @return skill
+	 */
+	protected Skill getSkill() {
 		return this.skill ;
 	}
 	
-	protected void setSkill(ISkill skill) {
+	/**
+	 * Sets the skill of the monster.
+	 * @param skill
+	 */
+	protected void setSkill(Skill skill) {
 		this.skill = skill;
 	}
 	
@@ -121,9 +111,9 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 	}
 	
 	/**
-	 * Returns whether or not the player is in view.
+	 * Returns whether or not the player is in view (depending on the scope).
 	 * 
-	 * @return player in view or not
+	 * @return boolean
 	 */
 	protected boolean isPlayerInView() {
 		Player player = getCurrentMap().getPlayer();
@@ -156,6 +146,10 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		return playerInView;
 	}
 	
+	/**
+	 * Returns whether or not a Player is Nearby (right on the left/right/behind/facing).
+	 * @return boolean
+	 */
 	public boolean isPlayerNearby(){
 		Player player=this.getCurrentMap().getPlayer();
 		int x0 = this.getX();
@@ -172,9 +166,6 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		return isPlayerNearby;
 	}
 	
-
-	
-
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
@@ -185,26 +176,4 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		}
 	}
 	
-
-	@Override
-	public void notifyObservers(Object arg) {
-		for(Observer o : observers) {
-			o.update(this, arg);
-		}
-	}
-
-	@Override
-	public void addObserver(Observer o) {
-		observers.add(o);
-	}
-
-	@Override
-	public void notifyObservers() {
-		notifyObservers(null);
-	}
-	
-	@Override
-	public void useSkill(int skillNumber){
-		
-	}
 }
