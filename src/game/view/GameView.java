@@ -216,6 +216,7 @@ public class GameView extends AnchorPane {
 			
 			HUDController hudController = (HUDController) loader.getController();
 			gameController.setHudController(hudController);
+			hudController.setGameController(gameController);
 			InventoryViewController inventoryViewController = hudController.getInventoryViewController();
 			setInventoryViewController(inventoryViewController);
 			inventoryViewController.setPlayer(player);

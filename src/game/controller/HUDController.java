@@ -3,6 +3,7 @@ package game.controller;
 import java.io.IOException;
 
 import game.Main;
+import game.utilities.ResourceManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,12 +13,16 @@ import javafx.stage.Stage;
 
 public class HUDController {
 	
-	
+	private GameController gameController;
 	private InventoryViewController inventoryViewController;
 	private Stage inventoryWindow;
 	
 	@FXML
 	private Button inventoryButton;
+	
+	@FXML
+	private Button saveButton;
+	
 	
 	public HUDController() {
 		try {
@@ -34,6 +39,10 @@ public class HUDController {
 		}
 	}
 	
+	public void setGameController(GameController gameController){
+		this.gameController=gameController;
+	}
+	
 	@FXML
 	private void openInventory() {
 		if(inventoryWindow.getOwner() == null) {
@@ -42,6 +51,11 @@ public class HUDController {
 		inventoryWindow.show();
 	}
 
+	@FXML
+	private void save(){
+		ResourceManager.save(gameController.getGameModel(), "sauvegarde");
+	}
+	
 	public InventoryViewController getInventoryViewController() {
 		return inventoryViewController;
 	}

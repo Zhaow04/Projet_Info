@@ -14,7 +14,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	//****************************** Attributes ******************************
 
 	private Player player;
-	
+	private GameModel model;
 	private HUDController hudController;
 
 	private ArrayList<KeyCode> keyList = new ArrayList<KeyCode>();
@@ -23,11 +23,28 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	public GameController(GameModel model) {
 		setPlayer(model.getPlayer());
-		new Thread(this).start();   
+		new Thread(this).start();
+		setGameModel(model);
 	}
 
 	//************************** Getters and Setters **************************
 	
+
+	/**
+	 * Gets the game model.
+	 * @return gameModel
+	 */
+	public GameModel getGameModel() {
+		return this.model;
+	}
+
+	/**
+	 * Sets the game Model.
+	 * @param gameModel
+	 */
+	private void setGameModel(GameModel model) {
+		this.model = model;
+	}
 
 	/**
 	 * Gets the player.

@@ -1,5 +1,6 @@
 package game.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import game.model.monster.Monster;
 
@@ -7,13 +8,14 @@ import game.model.monster.Monster;
  * A class that creates the model of the game.
  *
  */
-public class GameModel  {
+public class GameModel implements Serializable{
 	
 	//****************************** Attributes ******************************
 	
 	private Map map;
 	private Player player;
 	
+	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************
 	

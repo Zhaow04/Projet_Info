@@ -1,6 +1,7 @@
 package game.controller;
 
 import game.model.GameModel;
+import game.utilities.ResourceManager;
 import game.view.GameView;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -23,10 +24,19 @@ public class StartSceneController {
 	private AnchorPane configMenu;
 	
 	@FXML
+	private AnchorPane loadMenu;
+	
+	@FXML
 	private Button startButton;
 	
 	@FXML
+	private Button loadButton;
+	
+	@FXML
 	private TextField mapSizeField;
+	
+	@FXML
+	private TextField fileNameField;
 	
 	/**
 	 * Void constructor.
@@ -78,6 +88,12 @@ public class StartSceneController {
 		//stage.setScene(mainScene);
 	}
 	
+	@FXML
+	private void loadGame() {
+		startMenu.setVisible(false);
+		loadMenu.setVisible(true);
+	}
+	
 	/**
 	 * Handles the map size input. Creates a model with the map size input and the associated view.
 	 */
@@ -109,4 +125,19 @@ public class StartSceneController {
 		return isValid;
 	}
 
+	/**
+	 * Handles the saved file name input. Load this file.
+	 */
+	@FXML
+	private void handleFileNameInput() {
+			String fileName = fileNameField.getText();
+			try {
+				ResourceManager.load(fileName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+	}
+
+	
 }

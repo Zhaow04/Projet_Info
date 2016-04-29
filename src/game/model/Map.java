@@ -1,5 +1,6 @@
 package game.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 //import game.model.item.IItem;
@@ -18,10 +19,11 @@ import game.view.Observer;
  * @see {@link ViewSettings}
  *
  */
-public class Map implements Observable {
+public class Map implements Observable, Serializable {
 	
 	//****************************** Attributes ******************************
 	
+	private static final long serialVersionUID = 1L;
 	private int[][] grid;
 	private final int mapCompoID = 1;
 	private final int damageableID = 2;
