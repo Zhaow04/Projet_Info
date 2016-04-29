@@ -1,9 +1,7 @@
-package game.utilities;
+package game.model;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import game.model.LivingBeing;
 /**
  * Public class the serves the purpose of assuring a HP regeneration system .
  *

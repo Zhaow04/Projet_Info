@@ -21,8 +21,8 @@ public abstract class Dot extends Skill {
 	/**
 	 * Creates a damage over time attack.
 	 */
-	public Dot(int damage, int range, ViewSettings viewSettings, int lapse, int count){
-		super(damage, range, viewSettings);
+	public Dot(int damage, int range, ViewSettings viewSettings,long releaseTime, int lapse, int count){
+		super(damage, range, viewSettings, releaseTime);
 		setLapse(lapse);
 		setCount(count);
 	}

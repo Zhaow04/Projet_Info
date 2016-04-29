@@ -17,7 +17,7 @@ public class FirstAttack extends DirectAttack {
 	 * Creates the first attack of the player : lightning that deals 100 damage.
 	 */
 	public FirstAttack() {
-		super(100, ImageDB.getLightningView());
+		super(100, ImageDB.getLightningView(), 1000);
 	}
 	
 }

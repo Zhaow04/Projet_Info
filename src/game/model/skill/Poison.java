@@ -19,8 +19,7 @@ public class Poison extends Dot {
 	 * Creates a long range poison attack with a damage over time ability.
 	 */
 	public Poison() {
-		super(40, 3, ImageDB.getPoisonView(), 2000, 5);
-		setReleaseTime(20000);
+		super(40, 3, ImageDB.getPoisonView(), 20000, 2000, 5);
 	}
 	
 	//******************************** Methods ********************************

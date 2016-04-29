@@ -21,8 +21,8 @@ public abstract class Aoe extends Skill {
 	/**
 	 * Creates an area damage attack.
 	 */
-	public Aoe(int damage, int range, ViewSettings viewSettings, int radius){
-		super(damage, range, viewSettings);
+	public Aoe(int damage, int range, ViewSettings viewSettings,long releaseTime, int radius){
+		super(damage, range, viewSettings, releaseTime);
 		setRadius(radius);
 	}
 	

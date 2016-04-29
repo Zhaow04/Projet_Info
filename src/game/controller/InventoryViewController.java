@@ -1,8 +1,10 @@
-package game.view;
+package game.controller;
 
 import game.model.Observable;
 import game.model.Player;
 import game.model.item.Item;
+import game.view.ItemView;
+import game.view.Observer;
 import game.view.component.ItemMenu;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;

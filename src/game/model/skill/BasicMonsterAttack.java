@@ -15,7 +15,7 @@ public class BasicMonsterAttack extends DirectAttack {
 	 * Creates a basic monster attack that deals 50 damage.
 	 */
 	public BasicMonsterAttack() {
-		super(50, ImageDB.getBasicMonsterAttackView());
+		super(50, ImageDB.getBasicMonsterAttackView(), 800);
 	}
 		
 }

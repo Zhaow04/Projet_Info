@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import game.Main;
 import game.controller.GameController;
+import game.controller.HUDController;
+import game.controller.InventoryViewController;
+import game.controller.StartSceneController;
 import game.model.GameModel;
 import game.model.Player;
 import javafx.application.Platform;

@@ -1,6 +1,7 @@
-package game.view;
+package game.controller;
 
 import game.model.GameModel;
+import game.view.GameView;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

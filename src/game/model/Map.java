@@ -8,7 +8,6 @@ import game.model.monster.Monster;
 import game.model.movement.Movement;
 import game.model.obstacle.Obstacle;
 import game.model.skill.SkillTarget;
-import game.utilities.CreationUnit;
 import game.utilities.ViewSettings;
 import game.view.Observer;
 

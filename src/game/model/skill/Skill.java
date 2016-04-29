@@ -25,12 +25,12 @@ public abstract class Skill {
 	 * @param damage
 	 * @param range
 	 * @param viewSettings
-	 * @param relaseTime
 	 */
-	public Skill(int damage, int range, ViewSettings viewSettings){
+	public Skill ( int damage, int range, ViewSettings viewSettings, long releaseTime){
 		setDamage(damage);
 		setRange(range);
 		setViewSettings(viewSettings);
+		setReleaseTime(releaseTime);
 	}
 	
 	//************************** Getters and Setters **************************

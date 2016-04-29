@@ -1,9 +1,7 @@
-package game.utilities;
+package game.model;
 
 import java.util.Random;
 
-import game.model.Map;
-import game.model.MapComponent;
 import game.model.item.HpPotion;
 import game.model.monster.BlueDragon;
 import game.model.monster.GiantRat;

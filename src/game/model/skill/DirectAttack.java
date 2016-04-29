@@ -20,8 +20,8 @@ public abstract class DirectAttack extends Skill {
 	/**
 	 * Creates a direct attack (range 1).
 	 */
-	public DirectAttack(int damage, ViewSettings viewSettings){
-		super(damage, 1, viewSettings);
+	public DirectAttack(int damage, ViewSettings viewSettings, long releaseTime){
+		super(damage, 1, viewSettings, releaseTime);
 	}
 	
 	//******************************** Methods ********************************

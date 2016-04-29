@@ -18,8 +18,8 @@ public class FireExplosion extends Aoe {
 	 * Creates a fire explosion attack (range: 3 + area damage: 100) and sets its release time (5sec).
 	 */
 	public FireExplosion() {
-		super(100, 3, ImageDB.getFireView(), 3);
-		setReleaseTime(5000);
+		super(100, 3, ImageDB.getFireView(),5000, 3);
+		//setReleaseTime(5000);
 	}
 
 	//******************************** Methods ********************************

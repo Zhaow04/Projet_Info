@@ -10,7 +10,6 @@ import game.model.skill.Poison;
 import game.model.skill.Skill;
 import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
-import game.utilities.HpRegen;
 import game.utilities.ImageDB;
 
 /**

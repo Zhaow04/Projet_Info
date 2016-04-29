@@ -1,5 +1,6 @@
 package game.view;
 
+import game.controller.InventoryViewController;
 import game.model.Observable;
 import game.model.item.Item;
 import game.utilities.ViewSettings;
