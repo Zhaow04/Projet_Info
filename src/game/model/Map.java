@@ -1,13 +1,14 @@
 package game.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import game.Main;
 import game.model.item.Item;
 import game.model.monster.Monster;
 import game.model.movement.Movement;
 import game.model.obstacle.Obstacle;
 import game.model.skill.SkillTarget;
-import game.utilities.ThreadPool;
 import game.utilities.ViewSettings;
 import game.view.Observer;
 
@@ -17,13 +18,18 @@ import game.view.Observer;
  * @see {@link ViewSettings}
  *
  */
-public class Map implements Observable {
+public class Map implements Observable, Serializable {
 	
 	//****************************** Attributes ******************************
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int[][] grid;
-	private final static int mapCompoID = 1;
-	private final static int damageableID = 2;
+	private static final int mapCompoID = 1;
+	private static final int damageableID = 2;
 	
 	private Player player;
 	private ArrayList<MapComponent> mapCompos = new ArrayList<MapComponent>();
@@ -31,9 +37,8 @@ public class Map implements Observable {
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
 	private ViewSettings viewSettings = new ViewSettings("game/model/images/plains.png");
-	private ThreadPool threadPool;
 	private boolean active = false;
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private transient ArrayList<Observer> observers;
 	
 	
 	//****************************** Constructor ******************************
@@ -47,25 +52,9 @@ public class Map implements Observable {
 	public Map(int size) {
 		initGrid(size);
 		createAllComponents();
-		threadPool = new ThreadPool();
 	}
 	
 	//************************** Getters and Setters **************************
-	
-	/**
-	 * Gets the grid associated to the map (matrix with the same number of rows and columns).
-	 * @return grid
-	 */
-	private int[][] getGrid() {
-		return grid;
-	}
-	/**
-	 * Sets the grid associated to the map (matrix with the same number of rows and columns).
-	 * @param grid
-	 */
-	private void setGrid(int[][] grid) {
-		this.grid = grid;
-	}
 	
 	/**
 	 * Sets the the ID of the element grid[y][x].
@@ -83,14 +72,6 @@ public class Map implements Observable {
 	 */
 	public Player getPlayer() {
 		return player;
-	}
-	
-	/**
-	 * Sets the player.
-	 * @param player
-	 */
-	private void setPlayer(Player player) {
-		this.player = player;
 	}
 	
 	/** 
@@ -122,7 +103,7 @@ public class Map implements Observable {
 	 * @return map size.
 	 */	
 	public int getSize(){
-		return getGrid().length;
+		return grid.length;
 	}
 	
 	/**
@@ -140,9 +121,9 @@ public class Map implements Observable {
 	 * @param size
 	 */
 	private void initGrid(int size) {
-		setGrid(new int[size][size]);
-		for(int i = 0; i < getGrid().length; i++){
-			for(int j = 0; j < getGrid()[0].length; j++) {
+		grid = new int[size][size];
+		for(int i = 0; i < grid.length; i++){
+			for(int j = 0; j < grid[0].length; j++) {
 				setGrid(0, j, i);
 			}
 		}
@@ -162,7 +143,7 @@ public class Map implements Observable {
 	 * @param y
 	 */
 	public void addToMap(Obstacle compo, int x, int y) {
-		if(getGrid()[y][x] == 0) {
+		if(grid[y][x] == 0) {
 			setGrid(mapCompoID, x, y);
 			getMapCompos().add(compo);
 			compo.addToMap(this, x, y);
@@ -175,7 +156,7 @@ public class Map implements Observable {
 	 * @param y
 	 */
 	public void addToMap(Monster monster, int x, int y) {
-		if(getGrid()[y][x] == 0) {
+		if(grid[y][x] == 0) {
 			setGrid(damageableID, x, y);
 			getMonsters().add(monster);
 			monster.addToMap(this, x, y);
@@ -188,7 +169,7 @@ public class Map implements Observable {
 	 * @param y
 	 */
 	public void addToMap(Item item, int x, int y) {
-		if(getGrid()[y][x] == 0) {
+		if(grid[y][x] == 0) {
 			getItems().add(item);
 			item.addToMap(this, x, y);
 		}
@@ -200,9 +181,9 @@ public class Map implements Observable {
 	 * @param y
 	 */
 	public void addToMap(Player player, int x, int y) {
-		if(getGrid()[y][x] == 0) {
+		if(grid[y][x] == 0) {
 			setGrid(damageableID, x, y);
-			setPlayer(player);
+			this.player = player;
 			player.addToMap(this, x, y);
 		}
 	}
@@ -264,7 +245,7 @@ public class Map implements Observable {
 	 * @param row
 	 */
 	private void setNoCollision(int column, int row){
-		getGrid()[row][column] = 0;
+		grid[row][column] = 0;
 	}
 	
 	/**
@@ -274,7 +255,7 @@ public class Map implements Observable {
 	 * @return boolean
 	 */
 	public boolean noCollision(int column, int row){
-		return getGrid()[row][column] < 1;
+		return grid[row][column] < 1;
 	}
 	
 	/**
@@ -319,7 +300,7 @@ public class Map implements Observable {
 	 */
 	public void notifyMovement(Movement movement) {
 		setNoCollision(movement.getOldX(), movement.getOldY());
-		getGrid()[movement.getNewY()][movement.getNewX()] = damageableID;
+		grid[movement.getNewY()][movement.getNewX()] = damageableID;
 		setGrid(damageableID, movement.getNewX(), movement.getNewY());		
 	}
 
@@ -352,12 +333,14 @@ public class Map implements Observable {
 	public void startThreads() {
 		ArrayList<Monster> monsters = getMonsters();
 		for(Monster m : monsters) {
-			threadPool.execute(m);
+			Main.execute(m);
 		}
 	}
 	
 	@Override
 	public void addObserver(Observer o) {
+		if(observers == null)
+			observers = new ArrayList<Observer>();
 		observers.add(o);
 	}
 

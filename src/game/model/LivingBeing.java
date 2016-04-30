@@ -29,7 +29,7 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	private Movement movement;
 	private Stats stats;
 	
-	private transient ArrayList<Observer> observers = new ArrayList<Observer>();
+	private transient ArrayList<Observer> observers;
 	
 	//****************************** Constructor ******************************
 	
@@ -119,6 +119,8 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 
 	@Override
 	public void addObserver(Observer o) {
+		if(observers == null)
+			observers = new ArrayList<Observer>();
 		observers.add(o);
 	}
 

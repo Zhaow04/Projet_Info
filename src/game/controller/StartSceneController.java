@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
  * @author ZhaoWen
  *
  */
-public class StartSceneController {
+public final class StartSceneController {
 	
 private GameView gameView;
 	
@@ -24,10 +24,19 @@ private GameView gameView;
 	private AnchorPane configMenu;
 	
 	@FXML
+	private AnchorPane loadMenu;
+	
+	@FXML
 	private Button startButton;
 	
 	@FXML
+	private Button loadButton;
+	
+	@FXML
 	private TextField mapSizeField;
+	
+	@FXML
+	private TextField fileNameField;
 	
 	/**
 	 * Void constructor.
@@ -63,6 +72,12 @@ private GameView gameView;
 		configMenu.setVisible(false);
 	}
 	
+	@FXML
+	private void loadGame() {
+		startMenu.setVisible(false);
+		loadMenu.setVisible(true);
+	}
+	
 	/**
 	 * Handles the map size input. Creates a model with the map size input and the associated view.
 	 */
@@ -92,4 +107,12 @@ private GameView gameView;
 		return isValid;
 	}
 
+	/**
+	 * Handles the saved file name input. Load this file.
+	 */
+	@FXML
+	private void handleFileNameInput() {
+			gameView.loadGame();
+	}
+	
 }

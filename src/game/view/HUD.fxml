@@ -27,7 +27,7 @@
                   <Button fx:id="characterButton" alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="P" />
                   <Button fx:id="inventoryButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#openInventory" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="I" />
                   <Button fx:id="configButton" alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="C" />
-                  <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="S" />
+                  <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#save" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="S" />
                </children>
                <StackPane.margin>
                   <Insets />

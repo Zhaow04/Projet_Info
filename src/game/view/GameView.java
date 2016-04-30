@@ -2,6 +2,8 @@ package game.view;
 
 import java.io.IOException;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import game.Main;
 import game.controller.GameController;
 import game.controller.HUDController;
@@ -10,6 +12,7 @@ import game.controller.StartSceneController;
 import game.model.GameModel;
 import game.model.Observable;
 import game.model.Player;
+import game.utilities.ResourceManager;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -62,10 +65,11 @@ public class GameView extends BorderPane implements Observer {
 	 */
 	public GameView(Stage stage, GameModel model, GameController gameController) {
 		super();
-		this.setPrefSize(100, 100);
-		this.model = model;
 		this.mainStage = stage;
+		this.model = model;
 		this.gameController = gameController;
+		gameScene = new Scene(this);
+		showStartMenu();
 	}
 
 	//************************** Getters and Setters **************************
@@ -120,7 +124,27 @@ public class GameView extends BorderPane implements Observer {
 	 * @param mapSize
 	 */
 	public void newGame(int mapSize) {
-		model = new GameModel(mapSize);
+		//model = new GameModel(mapSize);
+		model.init(mapSize);
+		model.getPlayer().addObserver(this);
+		gameController.init(model);
+		
+		mapView = new MapView(model.getMap(), this, gameController);
+		mapView.setOnKeyPressed(gameController);
+		this.setCenter(mapView);
+		
+		initPlayerViewAndHUD(model.getPlayer(), mapView, gameController);
+		
+		mainStage.setScene(gameScene);
+		mapView.requestFocus();
+		mainStage.sizeToScene();
+		mainStage.centerOnScreen();
+		
+		model.getMap().run();
+	}
+	
+	public void loadGame() {
+		model = ResourceManager.load();
 		model.getPlayer().addObserver(this);
 		gameController.init(model);
 		
@@ -156,6 +180,11 @@ public class GameView extends BorderPane implements Observer {
 			inventoryViewController = hudController.getInventoryViewController();
 			gameController.setHudController(hudController);
 			this.setBottom(hud);
+
+			hudController.setGameController(gameController);
+			/*InventoryViewController inventoryViewController = hudController.getInventoryViewController();
+			setInventoryViewController(inventoryViewController);
+			inventoryViewController.setPlayer(player);*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

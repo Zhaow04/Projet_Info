@@ -2,8 +2,10 @@
 
 import java.util.ArrayList;
 
+import game.Main;
 import game.model.GameModel;
 import game.model.Player;
+import game.utilities.ResourceManager;
 import game.utilities.Vector2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
@@ -13,13 +15,11 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	//****************************** Attributes ******************************
 
+	private GameModel model;
 	private Player player;
-	
 	private HUDController hudController;
 
 	private ArrayList<KeyCode> keyList = new ArrayList<KeyCode>();
-	
-	private Thread t;
 
 	//****************************** Constructor ******************************
 
@@ -28,8 +28,9 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	}
 	
 	public GameController(GameModel model) {
+		this.model = model;
 		this.player = model.getPlayer();
-		new Thread(this).start();
+		Main.execute(this);
 	}
 
 	//************************** Getters and Setters **************************
@@ -73,11 +74,9 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	}
 	
 	public void init(GameModel model) {
+		this.model = model;
 		this.player = model.getPlayer();
-		if(t == null) {
-			t = new Thread(this);
-			t.start();
-		}
+		Main.execute(this);
 	}
 
 	public synchronized void addKey(KeyCode key) {
@@ -145,5 +144,11 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 			player.useSkill(i-1);
 		}
 	}
+	
+	public void save() {
+		ResourceManager.save(model);
+	}
+	
+	
 
 }

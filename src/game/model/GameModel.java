@@ -1,18 +1,24 @@
 package game.model;
 
+import java.io.Serializable;
+
 /**
  * A class that creates the model of the game.
  *
  */
-public class GameModel  {
+public class GameModel implements Serializable {
 	
 	//****************************** Attributes ******************************
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private static boolean running;
 	
 	private Map map;
 	private Player player;
-	
 	
 	//****************************** Constructor ******************************
 	
@@ -26,6 +32,10 @@ public class GameModel  {
 		map = new Map(mapSize);
 		player = new Player();
 		map.addToMap(player, 5, 5);
+	}
+	
+	public GameModel() {
+		running = false;
 	}
 	
 	//************************** Getters and Setters **************************
@@ -52,9 +62,17 @@ public class GameModel  {
 	
 	//******************************** Methods ********************************
 
+	public void init(int mapSize) {
+		map = new Map(mapSize);
+		player = new Player();
+		map.addToMap(player, 5, 5);
+	}
+	
 	public void start() {
-		running = true;
-		map.startThreads();
+		if(!running) {
+			running = true;
+			map.startThreads();
+		}
 	}
 	
 	public void stop() {

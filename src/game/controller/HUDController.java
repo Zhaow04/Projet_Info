@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 public class HUDController implements Observer {
 	
 	private Player player;
+	private GameController gameController;
 	private InventoryViewController inventoryViewController;
 	private Stage inventoryWindow;
 	
@@ -49,8 +50,12 @@ public class HUDController implements Observer {
 		
 	}
 	
+	public void setGameController(GameController gameController) {
+		this.gameController = gameController;
+	}
+
 	/**
-	 * Initialize the HUD (health bar, experience bar, level, inventory window).
+	 * Initializes the HUD (health bar, experience bar, level, inventory window).
 	 * @param player
 	 */
 	public void init(Player player) {
@@ -87,6 +92,11 @@ public class HUDController implements Observer {
 			inventoryWindow.initOwner(inventoryButton.getScene().getWindow());
 		}
 		inventoryWindow.show();
+	}
+	
+	@FXML
+	private void save() {
+		gameController.save();
 	}
 
 	/**

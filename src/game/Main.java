@@ -3,6 +3,8 @@ package game;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import game.controller.GameController;
+import game.model.GameModel;
 import game.view.GameView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -13,7 +15,7 @@ public class Main extends Application {
 	private static final ExecutorService threadPool = Executors.newCachedThreadPool();
 	
 	//************************ main and start methods ************************
-	
+
 	public static void main(String[] args){
 		
 		launch(args);
@@ -27,7 +29,9 @@ public class Main extends Application {
 			Platform.exit();
 			System.exit(0);
 		});
-		new GameView(primaryStage);
+		GameModel model = new GameModel();
+		GameController controller = new GameController(model);
+		new GameView(primaryStage, model, controller);
 	}
 	
 	public static void execute(Runnable r) {

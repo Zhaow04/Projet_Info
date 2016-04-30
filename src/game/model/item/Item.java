@@ -28,7 +28,7 @@ public abstract class Item extends MapComponent implements Observable {
 	
 	private int numberOfUse;
 	
-	private transient ArrayList<Observer> observers = new ArrayList<Observer>();
+	private transient ArrayList<Observer> observers;
 	
 	//****************************** Constructor ******************************
 
@@ -73,6 +73,8 @@ public abstract class Item extends MapComponent implements Observable {
 
 	@Override
 	public void addObserver(Observer o) {
+		if(observers == null)
+			observers = new ArrayList<Observer>();
 		observers.add(o);
 	}
 

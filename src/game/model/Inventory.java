@@ -24,7 +24,7 @@ public class Inventory implements Observable, Serializable {
 	private Player owner;
 	private ArrayList<Item> listItem;
 	
-	private transient ArrayList<Observer> observers = new ArrayList<Observer>();
+	private transient ArrayList<Observer> observers;
 	
 	//****************************** Constructor ******************************
 	/**
@@ -77,6 +77,8 @@ public class Inventory implements Observable, Serializable {
 
 	@Override
 	public void addObserver(Observer o) {
+		if(observers == null)
+			observers = new ArrayList<Observer>();
 		observers.add(o);
 	}
 

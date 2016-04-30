@@ -1,8 +1,11 @@
 package game.utilities;
 
+import java.io.Serializable;
+
 import javafx.scene.image.Image;
 
 /**
+ * Implements {@link Serializable}. <br/>
  * Class that serves for display. Stocks all the informations needed for display such as
  * the URL of the image, the x and y offsets, the width and the height of the wanted region, how much
  * the image should span in x and y.
@@ -10,9 +13,14 @@ import javafx.scene.image.Image;
  * @author ZhaoWen
  *
  */
-public class ViewSettings {
+public class ViewSettings implements Serializable {
 	
 	//****************************** Attributes ******************************
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private String imageURL;
 	private double offsetX, offsetY, width, height;
