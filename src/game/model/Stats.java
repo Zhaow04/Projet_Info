@@ -1,13 +1,21 @@
 package game.model;
 
+import java.io.Serializable;
+
 /**
+ * Implements {@link Serializable}. <br/>
  * Public class that gathers all the characteristics and statistics of a living being.
  *
  */
-public class Stats {
+public class Stats implements Serializable {
 	
 	//****************************** Attributes ******************************
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int baseHp;
 	private int hp;
 	private int xp;
@@ -15,7 +23,8 @@ public class Stats {
 	private int maxHp;
 	private int xpToLevelUp;
 	
-	private static int level;    // Static : when the player will level up, all the other living beings will at the same time.
+	// Static: when the player will level up, all the other living beings will at the same time.
+	private static int level;
 	
 	//****************************** Constructor ******************************
 
@@ -24,11 +33,11 @@ public class Stats {
 	 * @param baseHp
 	 */
 	public Stats(int baseHp) {
-		setBaseHp(baseHp);
-		setHp(baseHp);
-		setXp(0);
-		setLevel(1);
-		setMaxHp(baseHp);
+		this.baseHp = baseHp;
+		hp = baseHp;
+		xp = 0;
+		level = 1;
+		maxHp = baseHp;
 		updateXpToLevelUp();
 	}
 	
@@ -38,29 +47,13 @@ public class Stats {
 	 * @param killxp
 	 */
 	public Stats(int baseHp, int killxp) {
-		setBaseHp(baseHp);
+		this.baseHp = baseHp;
 		updateMaxHp();
-		setHp(maxHp);
-		setKillXp(killxp);
+		hp = maxHp;
+		this.killXp = killxp;
 	}
 
 	//************************** Getters and Setters **************************
-
-	/**
-	 * Gets the base HP.
-	 * @return baseHP
-	 */
-	public int getBaseHp() {
-		return baseHp;
-	}
-
-	/**
-	 * Sets the base HP.
-	 * @param baseHp
-	 */
-	private void setBaseHp(int baseHp) {
-		this.baseHp = baseHp;
-	}
 
 	/**
 	 * Gets the HP.
@@ -71,27 +64,11 @@ public class Stats {
 	}
 
 	/**
-	 * Sets the HP.
-	 * @param hp
-	 */
-	private void setHp(int hp) {
-		this.hp = hp;
-	}
-
-	/**
 	 * Gets the XP.
 	 * @return xp
 	 */
 	public int getXp() {
 		return xp;
-	}
-
-	/**
-	 * Sets the XP
-	 * @param xp
-	 */
-	private void setXp(int xp) {
-		this.xp = xp;
 	}
 	
 	/**
@@ -103,27 +80,11 @@ public class Stats {
 	}
 
 	/**
-	 * Sets the killXp (of a monster).
-	 * @param killxp
-	 */
-	private void setKillXp(int killxp) {
-		this.killXp = killxp;
-	}
-
-	/**
 	 * Gets the level.
 	 * @return level
 	 */
 	public int getLevel() {
 		return level;
-	}
-
-	/**
-	 * Sets the level.
-	 * @param level
-	 */
-	private void setLevel(int level) {
-		Stats.level = level;
 	}
 	
 	/**
@@ -135,18 +96,10 @@ public class Stats {
 	}
 
 	/**
-	 * Sets the max of HP possible.
-	 * @param maxHp
-	 */
-	private void setMaxHp(int maxHp) {
-		this.maxHp = maxHp;
-	}
-
-	/**
 	 * Gets the needed Xp to level up.
 	 * @return xpToLevelUp
 	 */
-	private int getXpToLevelUp() {
+	public int getXpToLevelUp() {
 		return xpToLevelUp;
 	}
 	
@@ -156,7 +109,7 @@ public class Stats {
 	 * Updates the maximum of HP a living being can have (depending on his level).
 	 */
 	private void updateMaxHp() {
-		this.maxHp = getBaseHp() + getLevel()*100;
+		maxHp = baseHp + getLevel()*100;
 	}
 
 	/**
@@ -173,12 +126,12 @@ public class Stats {
 	public synchronized void addHp(int hp) {
 		if((hp > 0 && getHp() != getMaxHp()) || (hp < 0 && getHp() != 0)) {
 			if(getHp() + hp <= 0)
-				setHp(0);
+				this.hp = 0;
 			else if(getHp() + hp >= getMaxHp())
-				setHp(getMaxHp());
+				this.hp = maxHp;
 			else
-				setHp(getHp() + hp);
-			System.out.println(getHp());
+				this.hp += hp;
+			//System.out.println(this.hp);
 		}
 	}
 	
@@ -195,7 +148,7 @@ public class Stats {
 	 * @param xp
 	 */
 	private void addXp(int xp) {
-		setXp(this.getXp() + xp);
+		this.xp += xp;
 	}
 	
 	/**
@@ -214,7 +167,7 @@ public class Stats {
 	 * Resets the XP to 0.
 	 */
 	private void resetXp() {
-		setXp(0);
+		xp = 0;
 	}
 	
 	/**
@@ -231,7 +184,7 @@ public class Stats {
 	 * return maxHp
 	 */
 	private void levelUp() {
-		setLevel(getLevel() + 1);
+		level ++;
 		updateMaxHp();
 		int extraXp = getXpToLevelUp() - getXp();
 		resetXp();

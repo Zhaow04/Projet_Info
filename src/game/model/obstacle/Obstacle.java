@@ -4,10 +4,18 @@ import game.model.MapComponent;
 import game.utilities.ViewSettings;
 
 /**
- * Abstract class that serves as a super class to all the obstacles. <br/> 
- * Extends {@code MapComponent}.
+ * Extends {@code MapComponent}. <br/>
+ * Abstract class that serves as a super class to all the obstacles.
+ * 
+ * @see {@link MapComponent}
+ * 
  */
 public abstract class Obstacle extends MapComponent {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	//****************************** Constructor ******************************
 	

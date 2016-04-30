@@ -1,14 +1,22 @@
 package game.model.skill;
 
+import java.io.Serializable;
+
 import game.utilities.ViewSettings;
 
 /**
+ * Implements {@link Serializable}. <br/>
  * Abstract class that serves as a super class for all the skills.
  * 
  */
-public abstract class Skill {
+public abstract class Skill implements Serializable {
 	
 	//****************************** Attributes ******************************
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private int damage;
 	private int range;
@@ -26,11 +34,11 @@ public abstract class Skill {
 	 * @param range
 	 * @param viewSettings
 	 */
-	public Skill ( int damage, int range, ViewSettings viewSettings, long releaseTime){
-		setDamage(damage);
-		setRange(range);
-		setViewSettings(viewSettings);
-		setReleaseTime(releaseTime);
+	public Skill(int damage, int range, ViewSettings viewSettings, long releaseTime) {
+		this.damage = damage;
+		this.range = range;
+		this.viewSettings = viewSettings;
+		this.releaseTime = releaseTime;
 	}
 	
 	//************************** Getters and Setters **************************
@@ -40,18 +48,10 @@ public abstract class Skill {
 	 * 
 	 * @return damage dealt
 	 */
-	public int getDamage() {
+	protected int getDamage() {
 		return damage;
 	}
 
-	/**
-	 * Sets the damage dealt by the skill.
-	 * 
-	 * @param damage
-	 */
-	private void setDamage(int damage) {
-		this.damage = damage;
-	}
 	/**
 	 * Gets the range of the skill.
 	 * 
@@ -59,15 +59,6 @@ public abstract class Skill {
 	 */
 	protected int getRange() {
 		return range;
-	}
-	
-	/**
-	 * Gets the range of the skill.
-	 * 
-	 * @param range
-	 */
-	private void setRange(int range) {
-		this.range = range;
 	}
 	
 	/**
@@ -128,27 +119,11 @@ public abstract class Skill {
 	}
 	
 	/**
-	 * Sets the view settings of the skill.
-	 * @param viewSettings
-	 */
-	private void setViewSettings(ViewSettings viewSettings) {
-		this.viewSettings = viewSettings;
-	}
-	
-	/**
 	 * Sets the time of the last execution of the skill.
 	 * @param executionTime
 	 */
 	protected void setLastExecutionTime(long executionTime){
 		this.lastExecutionTime = executionTime;
-	}
-	
-	/**
-	 * Sets the release time of the skill.
-	 * @param releaseTime
-	 */
-	protected void setReleaseTime(long releaseTime) {
-		this.releaseTime = releaseTime;
 	}
 		
 	//******************************** Methods ********************************
@@ -171,8 +146,8 @@ public abstract class Skill {
 	 * @param user
 	 */
 	protected void gainKillXp(SkillUser user){
-		int killXp = getTarget().getStats().getKillXp();
-		user.getStats().gainXp(killXp);
+		int killXp = getTarget().getKillXp();
+		user.gainXp(killXp);
 	}
 	
 	/**

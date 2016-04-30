@@ -30,7 +30,7 @@
       </BorderPane>
       <AnchorPane fx:id="configMenu" layoutX="10.0" layoutY="10.0" prefHeight="610.0" prefWidth="610.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Text layoutX="191.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez entrer la taille de la carte (entre 15 et 50) :" wrappingWidth="217.21875" />
+            <Text layoutX="191.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez entrer la taille de la carte (entre 16 et 50) :" wrappingWidth="217.21875" />
             <TextField fx:id="mapSizeField" layoutX="264.0" layoutY="273.0" onAction="#handleMapSizeInput" prefHeight="27.0" prefWidth="71.0" />
          </children>
       </AnchorPane>

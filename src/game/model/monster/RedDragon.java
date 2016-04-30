@@ -12,6 +12,11 @@ import game.utilities.ImageDB;
  */
 public class RedDragon extends Monster {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 		
 	//****************************** Constructor ******************************
 	

@@ -1,11 +1,10 @@
 package game.model.skill;
 
 import game.model.Map;
-import game.model.Stats;
 import game.utilities.Vector2D;
 
 /**
- * A class implements {@code SkillUser} when the object can use a skill against a target.
+ * A class implements {@code SkillUser} when the object can use a skill against a {@link SkillTarget}.
  * 
  *
  */
@@ -41,10 +40,6 @@ public interface SkillUser {
 	 */
 	void notifyObservers(Object arg);
 	
-	/**
-	 * Gets the stats.
-	 * @return stats
-	 */
-	Stats getStats();
+	void gainXp(int xp);
 	
 }

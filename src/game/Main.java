@@ -1,11 +1,17 @@
 package game;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import game.view.GameView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	private static final ExecutorService threadPool = Executors.newCachedThreadPool();
+	
 	//************************ main and start methods ************************
 	
 	public static void main(String[] args){
@@ -16,31 +22,20 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		new GameView(primaryStage);
-		
-		
-		/*
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/StartScene.fxml"));
-			AnchorPane startRoot = (AnchorPane) loader.load();
-			StartSceneController startSceneController = (StartSceneController) loader.getController();
-			
-			startSceneController.setStage(primaryStage);
-			Scene primaryScene = new Scene(startRoot);
-			primaryStage.setTitle("RPG");
-			primaryStage.setScene(primaryScene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		/*GameModel model = new GameModel();
-		Controller controller = new Controller();
-		GameView view = new GameView(model,controller);
 		primaryStage.setTitle("RPG");
-		primaryStage.setScene(view.getStartScene());
-		primaryStage.show();*/
+		primaryStage.setOnCloseRequest((value) -> {
+			Platform.exit();
+			System.exit(0);
+		});
+		new GameView(primaryStage);
+	}
+	
+	public static void execute(Runnable r) {
+		threadPool.execute(r);
+	}
+	
+	public static void stopAll() {
+		threadPool.shutdownNow();
 	}
 
 }

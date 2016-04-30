@@ -8,41 +8,50 @@ import game.controller.HUDController;
 import game.controller.InventoryViewController;
 import game.controller.StartSceneController;
 import game.model.GameModel;
+import game.model.Observable;
 import game.model.Player;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class GameView extends AnchorPane {
+/**
+ * Implements {@code Observer} <br/>
+ * Extends from {@code BorderPane} <br/>
+ * View of the game.
+ * 
+ * @author ZhaoWen
+ * @see {@link BorderPane}
+ *
+ */
+public class GameView extends BorderPane implements Observer {
 
 	//****************************** Attributes ******************************
 
 	private GameModel model;
 	private GameController gameController;
-	public MapView mapView;
-	private PlayerView playerView;
-	private InventoryViewController inventoryViewController;
+	private MapView mapView;
+	public InventoryViewController inventoryViewController;
 
 	private Stage mainStage;
-	private Scene mainScene;
+	private Scene startScene;
+	private Scene gameScene;
 
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates the view of the game. Shows the start menu.
+	 * Creates a window and shows the start menu.
 	 * 
 	 * @param stage
 	 */
 	public GameView(Stage stage) {
 		super();
-		this.setPrefSize(100, 100);
-		setMainStage(stage);
-		stage.setTitle("RPG");
-		startMenu(this);
+		this.mainStage = stage;
+		gameScene = new Scene(this);
+		gameController = new GameController();
+		showStartMenu();
 	}
 	
 	/**
@@ -51,65 +60,32 @@ public class GameView extends AnchorPane {
 	 * @param model
 	 * @param stage
 	 */
-	public GameView(GameModel model, Stage stage) {
+	public GameView(Stage stage, GameModel model, GameController gameController) {
 		super();
 		this.setPrefSize(100, 100);
-		setModel(model);
-		setMainStage(stage);
-		
-		GameController gameController = new GameController(model);
-		setGameController(gameController);
-		init();
+		this.model = model;
+		this.mainStage = stage;
+		this.gameController = gameController;
 	}
 
 	//************************** Getters and Setters **************************
 	
-	public Stage getMainStage() {
-		return mainStage;
-	}
+	//******************************** Methods ********************************
 
-	private void setMainStage(Stage mainStage) {
-		this.mainStage = mainStage;
-	}
-
-	public GameModel getModel() {
-		return model;
-	}
-
-	private void setModel(GameModel model) {
-		this.model = model;
-	}
-
-	public GameController getGameController() {
-		return gameController;
-	}
-
-	private void setGameController(GameController gameController) {
-		this.gameController = gameController;
-	}
-
-	public MapView getMapView() {
-		return mapView;
-	}
-
-	private void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
-	public PlayerView getPlayerView() {
-		return playerView;
-	}
-
-	private void setPlayerView(PlayerView playerView) {
-		this.playerView = playerView;
-	}
-
-	public InventoryViewController getInventoryViewController() {
-		return inventoryViewController;
-	}
-
-	private void setInventoryViewController(InventoryViewController inventoryViewController) {
-		this.inventoryViewController = inventoryViewController;
+	/**
+	 * Shows the start menu if the player is dead.
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o instanceof Player && arg == "dead") {
+			model = null;
+			mapView = null;
+			inventoryViewController = null;
+			System.gc();
+			Platform.runLater(() -> {
+				showStartMenu();
+			});
+		}
 	}
 	
 	/**
@@ -117,117 +93,71 @@ public class GameView extends AnchorPane {
 	 * 
 	 * @param gameView
 	 */
-	private void startMenu(GameView gameView) {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/StartScene.fxml"));
-			AnchorPane startRoot = (AnchorPane) loader.load();
-			StartSceneController startSceneController = (StartSceneController) loader.getController();
-			
-			startSceneController.gameView = this;
-			Scene primaryScene = new Scene(startRoot);
-			getMainStage().setScene(primaryScene);
-			getMainStage().show();
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void showStartMenu() {
+		if(startScene == null) {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("view/StartScene.fxml"));
+				AnchorPane startRoot = (AnchorPane) loader.load();
+				StartSceneController startSceneController = (StartSceneController) loader.getController();
+
+				startSceneController.init(this);
+				startScene = new Scene(startRoot);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		mainStage.setScene(startScene);
+		mainStage.sizeToScene();
+		mainStage.centerOnScreen();
+		mainStage.show();
 	}
 	
+	/**
+	 * Creates a {@code GameModel} with {@code mapSize} as the parameter for the size of the map. Creates
+	 * also the controller of the game and the view. Finally, shows the view and starts the threads of the
+	 * model.
+	 * @param mapSize
+	 */
 	public void newGame(int mapSize) {
-		setModel(new GameModel(mapSize));
-		GameController gameController = new GameController(getModel());
-		setGameController(gameController);
-		initView();
-		getModel().startThreads();
-	}
-	
-	private void initView() {
-		mainScene = mainStage.getScene();
+		model = new GameModel(mapSize);
+		model.getPlayer().addObserver(this);
+		gameController.init(model);
 		
-		MapView mapView = new MapView(model.getMap(), this, getGameController());
+		mapView = new MapView(model.getMap(), this, gameController);
 		mapView.setOnKeyPressed(gameController);
-		setMapView(mapView);
-		test();
+		this.setCenter(mapView);
+		
 		initPlayerViewAndHUD(model.getPlayer(), mapView, gameController);
 		
-		mainScene.setRoot(this);
+		mainStage.setScene(gameScene);
 		mapView.requestFocus();
+		mainStage.sizeToScene();
+		mainStage.centerOnScreen();
 		
-		//getMainStage().setWidth(940);
-		//getMainStage().setHeight(640);
-		mainStage.minHeightProperty().bind(this.widthProperty());
-		mainStage.minWidthProperty().bind(this.heightProperty());
-		mainStage.setOnCloseRequest((value) -> {
-			Platform.exit();
-			System.exit(0);
-		});
+		model.getMap().run();
 	}
 	
-	private void init() {
-		mainScene = mainStage.getScene();
-		MapView mapView = new MapView(model.getMap(), this, getGameController());
-		mapView.setOnKeyPressed(gameController);
-		setMapView(mapView);
-		test();
-		initPlayerViewAndHUD(model.getPlayer(), mapView, gameController);
-		mainScene.setRoot(this);
-
-		mainStage.minHeightProperty().bind(this.widthProperty());
-		mainStage.minWidthProperty().bind(this.heightProperty());
-		mainStage.setOnCloseRequest((value) -> {
-			Platform.exit();
-			System.exit(0);
-		});
-		mapView.requestFocus();
-	}
-	
-	private void test() {
-		BorderPane b = new BorderPane();
-		//mapView.setClip(new Rectangle(605,500));
-		//mapView.getClip().translateXProperty().bind(mapView.translateXProperty().multiply(-1));
-		//mapView.getClip().translateYProperty().bind(mapView.translateYProperty().multiply(-1));
-		b.setCenter(mapView);
-		/*try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/GameView.fxml"));
-			BorderPane gameView = (BorderPane) loader.load();
-			
-			b.setBottom(gameView);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
-		this.getChildren().add(b);
-	}
-	
+	/**
+	 * Creates the view of the player and the HUD (Head-up display).
+	 * @param player
+	 * @param mapView
+	 * @param gameController
+	 */
 	private void initPlayerViewAndHUD(Player player, MapView mapView, GameController gameController) {
-		PlayerView playerView = new PlayerView(getModel().getPlayer(), mapView);
-		setPlayerView(playerView);
-		createHUD(getModel().getPlayer(), gameController);
-	}
-
-	private void createHUD(Player player, GameController gameController) {
+		PlayerView playerView = new PlayerView(model.getPlayer(), mapView);
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/HUD.fxml"));
-			StackPane hud = (StackPane) loader.load();
-			this.getChildren().add(hud);
-			AnchorPane.setBottomAnchor(hud, 0.0);
-			AnchorPane.setRightAnchor(hud, 0.0);
-			
+			BorderPane hud = (BorderPane) loader.load();
 			HUDController hudController = (HUDController) loader.getController();
+			
+			hudController.init(model.getPlayer());
+			inventoryViewController = hudController.getInventoryViewController();
 			gameController.setHudController(hudController);
-			InventoryViewController inventoryViewController = hudController.getInventoryViewController();
-			setInventoryViewController(inventoryViewController);
-			inventoryViewController.setPlayer(player);
+			this.setBottom(hud);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public boolean isViewUpToDate() {
-		return mapView.isViewUpToDate();
-	}
-	
-	
-
 }

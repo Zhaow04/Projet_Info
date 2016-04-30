@@ -9,10 +9,16 @@ import java.util.TimerTask;
 /**
  * Extends {@code Dot}. <br/>
  * Poisons the enemy with a damage over time ability + long range attack.
+ * 
  * @see {@link Dot}
  */
-public class Poison extends Dot {
+public final class Poison extends Dot {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	//****************************** Constructor ******************************
 	
 	/**
@@ -23,38 +29,6 @@ public class Poison extends Dot {
 	}
 	
 	//******************************** Methods ********************************
-
-	@Override
-	public void use(SkillUser user) {
-		Skill skillToNotify = this;
-		if (usable(user)) {
-			Timer timer = new Timer();
-			long startTime=System.currentTimeMillis();
-			setLastExecutionTime (startTime);
-			timer.scheduleAtFixedRate(new TimerTask() {
-				  @Override
-				  public void run() {
-					  	setStartPos(getTarget().getX(), getTarget().getY());
-						setPosition(getTarget().getX(), getTarget().getY());
-						user.notifyObservers(skillToNotify);
-						getTarget().loseHp(getDamage());
-						if (getTarget().getStats().getHp()<=0){
-							gainKillXp(user);
-							System.out.println(user.getStats().getXp());
-							System.out.println(user.getStats().getLevel());
-							timer.cancel();
-					        timer.purge();
-					   	}
-						else if ( System.currentTimeMillis() - startTime > getCount()*getLapse() ){
-							timer.cancel();
-					        timer.purge();
-						}
-				  }
-			}, 0, getLapse());
-		}
-	}
-
-
 
 	@Override
 	public boolean usable(SkillUser user) {
@@ -74,6 +48,34 @@ public class Poison extends Dot {
 			}
 		}
 		return (getTarget() != null);
+	}
+	
+	@Override
+	public void use(SkillUser user) {
+		Skill skillToNotify = this;
+		if(usable(user)) {
+			Timer timer = new Timer();
+			long startTime=System.currentTimeMillis();
+			setLastExecutionTime (startTime);
+			timer.scheduleAtFixedRate(new TimerTask() {
+				  @Override
+				  public void run() {
+					  	setStartPos(getTarget().getX(), getTarget().getY());
+						setPosition(getTarget().getX(), getTarget().getY());
+						user.notifyObservers(skillToNotify);
+						getTarget().loseHp(getDamage());
+						if(getTarget().isDead()){
+							gainKillXp(user);
+							timer.cancel();
+					        timer.purge();
+					   	}
+						else if(System.currentTimeMillis() - startTime > getCount()*getLapse()){
+							timer.cancel();
+					        timer.purge();
+						}
+				  }
+			}, 0, getLapse());
+		}
 	}
 	
 }

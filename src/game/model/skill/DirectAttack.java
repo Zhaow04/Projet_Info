@@ -14,13 +14,17 @@ import game.utilities.ViewSettings;
  */
 public abstract class DirectAttack extends Skill {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************
-	
+
 	/**
 	 * Creates a direct attack (range 1).
 	 */
-	public DirectAttack(int damage, ViewSettings viewSettings, long releaseTime){
+	public DirectAttack(int damage, ViewSettings viewSettings, long releaseTime) {
 		super(damage, 1, viewSettings, releaseTime);
 	}
 	
@@ -43,12 +47,9 @@ public abstract class DirectAttack extends Skill {
 			setPosition(getTarget().getX(), getTarget().getY());
 			user.notifyObservers(this);
 			getTarget().loseHp(getDamage());
-			if (user instanceof Player && getTarget().getStats().getHp()<=0){
+			if(user instanceof Player && getTarget().isDead()) {
 				gainKillXp(user);
-				System.out.println(user.getStats().getXp());
-				System.out.println(user.getStats().getLevel());
 			}
-
 		}
 	}
 	

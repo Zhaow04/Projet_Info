@@ -1,23 +1,30 @@
 package game.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import game.model.item.Item;
 import game.view.Observer;
 
 /**
+ * Implements {@link Serializable}. <br/>
  * Inventory of the player.
  * 
  *
  */
-public class Inventory implements Observable {
+public class Inventory implements Observable, Serializable {
 	
 	//****************************** Attributes ******************************
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private Player owner;
 	private ArrayList<Item> listItem;
 	
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private transient ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	//****************************** Constructor ******************************
 	/**
@@ -25,7 +32,7 @@ public class Inventory implements Observable {
 	 * 
 	 */
 	public Inventory(Player owner) {
-		setOwner(owner);
+		this.owner = owner;
 		setSpace(10);
 	}
 	
@@ -36,14 +43,6 @@ public class Inventory implements Observable {
 	 */
 	public Player getOwner() {
 		return owner;
-	}
-
-	/**
-	 * Sets the owner of the inventory.
-	 * @param owner
-	 */
-	private void setOwner(Player owner) {
-		this.owner = owner;
 	}
 	
 	/**

@@ -13,6 +13,11 @@ public abstract class Potion extends Item {
 	
 	//****************************** Attributes ******************************
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int value;
 	
 	//****************************** Constructor ******************************
@@ -24,7 +29,7 @@ public abstract class Potion extends Item {
 	 */
 	public Potion(ViewSettings viewSettings, int value) {
 		super(viewSettings, 1);
-		setValue(value);
+		this.value = value;
 	}
 	
 	//************************** Getters and Setters **************************
@@ -34,17 +39,8 @@ public abstract class Potion extends Item {
 	 * 
 	 * @return value of potion
 	 */
-	public int getValue() {
+	protected int getValue() {
 		return value;
-	}
-	
-	/**
-	 * Sets the value of the potion.
-	 * 
-	 * @param value
-	 */
-	private void setValue(int value) {
-		this.value = value;
 	}
 
 }

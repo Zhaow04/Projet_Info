@@ -1,18 +1,10 @@
 package game.model.skill;
 
-import game.model.Stats;
-
 /**
- * A class implements {@code SkillTarget} when the object can be the target of a skill.
+ * A class implements {@code SkillTarget} when the object can be the target of a {@link Skill}.
  *
  */
 public interface SkillTarget {
-	
-	/**
-	 * Gets the stats.
-	 * @return stats
-	 */
-	Stats getStats();
 	
 	/**
 	 * Gets the X position.
@@ -31,5 +23,9 @@ public interface SkillTarget {
 	 * @param hp
 	 */
 	void loseHp(int hp);
+	
+	boolean isDead();
+	
+	int getKillXp();
 	
 }

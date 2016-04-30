@@ -7,9 +7,15 @@ import game.utilities.ImageDB;
  * Extends from {@code Potion}. <br/>
  * Hp potion that heals the user.
  * 
+ * @see {@link Potion}
  *
  */
-public class HpPotion extends Potion {
+public final class HpPotion extends Potion {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************
 	
@@ -28,7 +34,7 @@ public class HpPotion extends Potion {
 	@Override
 	public void use(Player player) {
 		useOnce();
-		player.getStats().addHp(getValue());
+		player.addHp(getValue());
 	}
 
 }

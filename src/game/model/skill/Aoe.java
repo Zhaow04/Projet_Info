@@ -13,6 +13,11 @@ public abstract class Aoe extends Skill {
 	
 	//****************************** Attributes ******************************
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int radius;
 	private int userX, userY;
 	
@@ -21,9 +26,9 @@ public abstract class Aoe extends Skill {
 	/**
 	 * Creates an area damage attack.
 	 */
-	public Aoe(int damage, int range, ViewSettings viewSettings,long releaseTime, int radius){
+	public Aoe(int damage, int range, ViewSettings viewSettings,long releaseTime, int radius) {
 		super(damage, range, viewSettings, releaseTime);
-		setRadius(radius);
+		this.radius = radius;
 	}
 	
 	//************************** Getters and Setters **************************
@@ -33,17 +38,8 @@ public abstract class Aoe extends Skill {
 	 * 
 	 * @return radius
 	 */
-	public int getRadius() {
+	protected int getRadius() {
 		return radius;
-	}
-	
-	/**
-	 * Sets the radius of the attack.
-	 * 
-	 * @param radius
-	 */
-	private void setRadius(int radius) {
-		this.radius = radius;
 	}
 	
 	protected int getUserX() {

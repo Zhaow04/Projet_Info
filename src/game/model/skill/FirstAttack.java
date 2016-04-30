@@ -9,10 +9,15 @@ import game.utilities.ImageDB;
  * @see {@link DirectAttack}
  *
  */
-public class FirstAttack extends DirectAttack {
+public final class FirstAttack extends DirectAttack {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************
-	
+
 	/**
 	 * Creates the first attack of the player : lightning that deals 100 damage.
 	 */

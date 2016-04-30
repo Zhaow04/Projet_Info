@@ -8,9 +8,15 @@ import game.utilities.Vector2D;
 /**
  * Extends {@code Aoe}. <br/>
  * A fire explosion, long range attack with area damage and a release time.
+ * 
  * @see {@link Aoe} 
  */
-public class FireExplosion extends Aoe {
+public final class FireExplosion extends Aoe {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************
 
@@ -19,7 +25,6 @@ public class FireExplosion extends Aoe {
 	 */
 	public FireExplosion() {
 		super(100, 3, ImageDB.getFireView(),5000, 3);
-		//setReleaseTime(5000);
 	}
 
 	//******************************** Methods ********************************
@@ -58,15 +63,13 @@ public class FireExplosion extends Aoe {
 				for(int j = -(getRadius()-2); j <= getRadius()-2; j++) {
 					if(map.isTargetAt(targetX + j, targetY + i)){
 						map.getTargetAt(targetX + j, targetY + i).loseHp(getDamage());
-						if (user instanceof Player && getTarget().getStats().getHp()<=0){
+						if (user instanceof Player && getTarget().isDead()){
 							gainKillXp(user);
-							System.out.println(user.getStats().getXp());
-							System.out.println(user.getStats().getLevel());
 						}
 					}
 				}
 			}
-			setLastExecutionTime (System.currentTimeMillis());
+			setLastExecutionTime(System.currentTimeMillis());
 		}
 	}
 	

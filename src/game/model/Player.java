@@ -13,8 +13,8 @@ import game.model.skill.SkillUser;
 import game.utilities.ImageDB;
 
 /**
- * Extends from {@code LivingBeing} <br/>
  * Implements {@code SkillTarget, SkillUser}. <br/>
+ * Extends from {@code LivingBeing}. <br/>
  * Player of the game.
  * 
  * @see {@link LivingBeing}
@@ -24,9 +24,14 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	
 	//****************************** Attributes ******************************
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private boolean alive;
 	private Inventory inventory;
 	private ArrayList<Skill> skillList = new ArrayList<Skill>();
-	
 	
 	//****************************** Constructor ******************************
 	
@@ -38,14 +43,19 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	public Player(){
 		super(ImageDB.getPlayerView(), new BasicMove());
 		setStats(new Stats(1500));
-		setInventory(new Inventory(this));
+		this.inventory = new Inventory(this);
 		addSkill(new FirstAttack());
 		addSkill(new FireExplosion());
 		addSkill(new Poison());
 		new HpRegen(this);
+		alive = true;
 	}
 	
 	//************************** Getters and Setters **************************
+	
+	public boolean isAlive() {
+		return alive;
+	}
 	
 	/**
 	 * Gets the inventory.
@@ -56,25 +66,7 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 		return inventory;
 	}
 	
-	/**
-	 * Sets the inventory.
-	 * @param inventory
-	 */
-	private void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
-
-	/**
-	 * Gets the skills list of the player.
-	 * 
-	 * @return skills list
-	 */
-	private ArrayList<Skill> getSkillList() {
-		return skillList;
-	}
-	
 	//******************************** Methods ********************************
-	
 	
 	@Override
 	public void move(int dx, int dy) {
@@ -83,13 +75,28 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 			pickUpItem(getCurrentMap().getAndRemoveItem(getX(), getY()));
 	}
 	
+	@Override
+	public void gainXp(int xp) {
+		getStats().gainXp(xp);
+	}
+
+	@Override
+	public boolean isDead() {
+		return !alive;
+	}
+
+	@Override
+	public int getKillXp() {
+		return getStats().getKillXp();
+	}
+
 	/**
 	 * Gets the skill relative the the skillNumber guven
 	 * @param skillNumber
 	 * @return skill
 	 */
 	public Skill getSkill(int skillNumber) {
-		return getSkillList().get(skillNumber);
+		return skillList.get(skillNumber);
 	}
 	
 	/**
@@ -98,7 +105,7 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	 * @return
 	 */
 	public int getSkillNumber(Skill skill) {
-		return getSkillList().indexOf(skill);
+		return skillList.indexOf(skill);
 	}
 
 	/**
@@ -107,7 +114,7 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	 */
 	public void useSkill(int skillNumber) {
 		if (skillNumber+1<=getStats().getLevel()){
-			Skill skill = getSkillList().get(skillNumber);
+			Skill skill = skillList.get(skillNumber);
 			skill.use(this);
 		}
 	}
@@ -145,12 +152,25 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	 * @param skill
 	 */
 	public void addSkill(Skill skill){
-		getSkillList().add(skill);
+		skillList.add(skill);
 	}
 	
+	public void addHp(int hp) {
+		getStats().addHp(hp);
+		notifyObservers();
+	}
+
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
+		if(getStats().getHp() <= 0) {
+			alive = false;
+			Map m = getCurrentMap();
+			notifyObservers("dead");
+			m.notifyDead(this);
+		}
+		else
+			notifyObservers();
 	}
 	
 }

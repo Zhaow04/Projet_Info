@@ -8,8 +8,8 @@ import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**
- * Extends from {@code MapComponent}. <br/>
  * Implements {@code Movable, Observable}. <br/>
+ * Extends from {@code MapComponent}. <br/>
  * Abstract class that serves as a super class for all the living beings of the game.
  * 
  * @see {@link MapComponent}
@@ -19,11 +19,17 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	
 	//****************************** Attributes ******************************
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private boolean alive;
 	private Vector2D directionFacing = new Vector2D();
 	private Movement movement;
 	private Stats stats;
 	
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private transient ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	//****************************** Constructor ******************************
 	
@@ -40,6 +46,10 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	}
 	
 	//************************** Getters and Setters **************************
+	
+	public boolean isAlive() {
+		return alive;
+	}
 	
 	/**
 	 * Gets the direction the living being is facing to.
@@ -116,4 +126,10 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	public void notifyObservers() {
 		notifyObservers(null);
 	}
+	
+	public void addHp(int hp) {
+		getStats().addHp(hp);
+		notifyObservers();
+	}
+	
 }

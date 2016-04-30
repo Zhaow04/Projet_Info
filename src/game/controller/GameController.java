@@ -18,32 +18,21 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	private HUDController hudController;
 
 	private ArrayList<KeyCode> keyList = new ArrayList<KeyCode>();
+	
+	private Thread t;
 
 	//****************************** Constructor ******************************
 
+	public GameController() {
+		
+	}
+	
 	public GameController(GameModel model) {
-		setPlayer(model.getPlayer());
-		new Thread(this).start();   
+		this.player = model.getPlayer();
+		new Thread(this).start();
 	}
 
 	//************************** Getters and Setters **************************
-	
-
-	/**
-	 * Gets the player.
-	 * @return player
-	 */
-	private Player getPlayer() {
-		return player;
-	}
-
-	/**
-	 * Sets the player.
-	 * @param player
-	 */
-	private void setPlayer(Player player) {
-		this.player = player;
-	}
 	
 	/**
 	 * Gets the Heads Up Display (HUD) controller.
@@ -82,6 +71,14 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 			useFirstKey();
 		}
 	}
+	
+	public void init(GameModel model) {
+		this.player = model.getPlayer();
+		if(t == null) {
+			t = new Thread(this);
+			t.start();
+		}
+	}
 
 	public synchronized void addKey(KeyCode key) {
 		if(getKeyList().size() < 2) {
@@ -110,7 +107,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	public void useKey(KeyCode key) {
 		if(key.isArrowKey()) {
 			Vector2D direction = convertKeyToDirection(key.getName());
-			getPlayer().move(direction.getIntX(), direction.getIntY());
+			player.move(direction.getIntX(), direction.getIntY());
 		}
 		else if(key.isDigitKey()) {
 			attack(Integer.parseInt(key.getName()));
@@ -143,9 +140,9 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	 * Makes the player use his skill (i-1).
 	 * @param i
 	 */
-	public void attack(int i) {   
+	public void attack(int i) {
 		if(i <= 3) {	
-			getPlayer().useSkill(i-1);
+			player.useSkill(i-1);
 		}
 	}
 

@@ -4,13 +4,18 @@ import game.model.Movable;
 import game.model.Player;
 
 /**
- * Public class that represents a type of movement : facing the player. <br/>
- * Meant for the enemies. <br/>
- * Extends {@code BasicMove}
+ * Extends {@code BasicMove}. <br/>
+ * Public class that represents a type of movement : facing the player. Meant for the enemies.
+ * 
  * @see {@link BasicMove}
  *
  */
 public class FaceThePlayer extends BasicMove {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************
 

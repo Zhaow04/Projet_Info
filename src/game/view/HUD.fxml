@@ -2,19 +2,32 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.HUDController">
-<StackPane prefHeight="32.0" prefWidth="136.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+<BorderPane maxHeight="100.0" prefHeight="100.0" prefWidth="960.0" stylesheets="@component/HUD.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.HUDController">
+   <bottom>
+      <StackPane prefHeight="32.0" prefWidth="136.0">
          <children>
+            <ProgressBar id="xpBar" prefWidth="200.0" progress="0.28" fx:id="xpBar" />
+            <HBox alignment="CENTER" spacing="7.0">
+               <children>
+                  <Text fx:id="lvl" strokeType="OUTSIDE" strokeWidth="0.0" text="Nv. 1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Exp." />
+               </children>
+               <padding>
+                  <Insets right="280.0" />
+               </padding>
+            </HBox>
             <HBox alignment="CENTER_RIGHT" prefWidth="139.0" spacing="5.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="P" />
+                  <Button fx:id="characterButton" alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="P" />
                   <Button fx:id="inventoryButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#openInventory" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="I" />
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="C" />
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="S" />
+                  <Button fx:id="configButton" alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="C" />
+                  <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" prefWidth="27.0" style="-fx-background-radius: 100; -fx-focus-traversable: false;" text="S" />
                </children>
                <StackPane.margin>
                   <Insets />
@@ -25,4 +38,34 @@
             </HBox>
          </children>
       </StackPane>
-</StackPane>
+   </bottom>
+   <center>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" spacing="7.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PV" />
+               </children>
+               <padding>
+                  <Insets right="230.0" />
+               </padding>
+            </HBox>
+            <ProgressBar id="healthBar" fx:id="healthBar" prefWidth="200.0" progress="0.28" />
+         </children>
+      </StackPane>
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" />
+         </BorderPane.margin>
+         <children>
+            <ProgressBar id="skill" opacity="0.2" prefHeight="30.0" prefWidth="30.0" progress="0.81" rotate="-90.0">
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </ProgressBar>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

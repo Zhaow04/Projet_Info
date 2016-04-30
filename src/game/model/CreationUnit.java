@@ -18,15 +18,9 @@ import game.model.obstacle.Tree;
  * @see {@link MapComponent}
  *
  */
-public class CreationUnit {
+public abstract class CreationUnit {
 	
 	//****************************** Constructor ******************************
-	/**
-	 * Creates the creation unit. 
-	 * @param map
-	 */
-	public CreationUnit(Map map) {
-	}
 	
 	//******************************** Methods ********************************
 	

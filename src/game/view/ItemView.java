@@ -13,73 +13,79 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+/**
+ * Implements {@code Observer}. <br/>
+ * Extends from {@code StackPane}. <br/>
+ * View of an {@code Item}.
+ * 
+ * @author ZhaoWen
+ *
+ */
 public class ItemView extends StackPane implements Observer {
 	
 	private Item item;
 	private ImageView imageView;
 	private MapView mapView;
-	private InventoryViewController inventoryViewController;
 	
+	/**
+	 * Creates the view of {@code Item}.
+	 * @param item
+	 * @param mapView
+	 * @see {@link Item}
+	 */
 	public ItemView(Item item, MapView mapView) {
 		super();
 		this.setPrefSize(mapView.cellSize(), mapView.cellSize());
-		setItem(item);
+		this.item = item;
 		item.addObserver(this);
-		setMapView(mapView);
-		//setInventoryViewController(inventoryViewController);
+		this.mapView = mapView;
 		ViewSettings viewSettings = item.getViewSettings();
 		ImageView imageView = ViewUtils.initImageView(viewSettings, mapView.cellSize()*0.5);
-		setImageView(imageView);
+		this.imageView = imageView;
+		this.setTranslateX(viewSettings.getX()*mapView.cellSize());
+		this.setTranslateY(viewSettings.getY()*mapView.cellSize());
 		this.getChildren().add(imageView);
-		mapView.addToMap(this, viewSettings.getX(), viewSettings.getY());
 	}
 	
+	/**
+	 * Gets the {@code Item} associated to this {@code ItemView}.
+	 * @return associated {@code Item}
+	 * @see {@link Item}
+	 */
 	public Item getItem() {
 		return item;
 	}
 
-	private void setItem(Item item) {
-		this.item = item;
-	}
-
-	private ImageView getImageView() {
+	/**
+	 * Gets the {@code ImageView} of the {@code Item} associated to this {@code ItemView}.
+	 * @return {@code ImageView} of the {@code Item}
+	 * @see {@link Item}
+	 */
+	public ImageView getImageView() {
 		return imageView;
 	}
 
-	private void setImageView(ImageView imageView) {
-		this.imageView = imageView;
-	}
-
-	private MapView getMapView() {
-		return mapView;
-	}
-
-	private void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
-	private InventoryViewController getInventoryViewController() {
-		return inventoryViewController;
-	}
-
-	private void setInventoryViewController(InventoryViewController inventoryViewController) {
-		this.inventoryViewController = inventoryViewController;
-	}
-
+	/**
+	 * Transfers the view of the {@code Item} to the inventory window.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		Platform.runLater(() -> transferItemView());
 	}
 
+	/**
+	 * Removes the view from {@code MapView} and transfers to {@code InventoryViewController} to show
+	 * in the inventory window.
+	 * @see {@link InventoryViewController}
+	 */
 	private void transferItemView() {
 		ItemView itemView = this;
-		ImageView container = getImageView();
 		FadeTransition t = new FadeTransition(Duration.millis(300), this);
 		t.setOnFinished(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				getMapView().remove(itemView);
-				getMapView().getGameView().getInventoryViewController().addItemView(itemView);
+				mapView.remove(itemView);
+				mapView.gameView.inventoryViewController.addItemView(itemView);
 			}
 		});
 		t.setToValue(0.9);

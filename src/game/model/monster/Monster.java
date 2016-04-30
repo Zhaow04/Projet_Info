@@ -26,6 +26,11 @@ public abstract class Monster extends LivingBeing implements Runnable, SkillTarg
 	
 	//****************************** Attributes ******************************
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int state;
 	private int scope;
 	private Skill skill;
@@ -42,7 +47,7 @@ public abstract class Monster extends LivingBeing implements Runnable, SkillTarg
 		super(viewSettings, new MoveInX());
 		this.basicMovement= getMovement();
 		state = 1;
-		setSkill(new BasicMonsterAttack());
+		this.skill = new BasicMonsterAttack();
 	}
 	
 	//************************** Getters and Setters **************************
@@ -73,19 +78,11 @@ public abstract class Monster extends LivingBeing implements Runnable, SkillTarg
 		return this.skill ;
 	}
 	
-	/**
-	 * Sets the skill of the monster.
-	 * @param skill
-	 */
-	protected void setSkill(Skill skill) {
-		this.skill = skill;
-	}
-	
 	//******************************** Methods ********************************
 	
 	@Override
 	public void run() {
-		while(state != 0) {
+		while(state != 0 && getCurrentMap().isActive()) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
 				setMovement(new TrackPlayer());
@@ -105,11 +102,26 @@ public abstract class Monster extends LivingBeing implements Runnable, SkillTarg
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 	}
 	
+	@Override
+	public void gainXp(int xp) {
+		getStats().gainXp(xp);
+	}
+
+	@Override
+	public boolean isDead() {
+		return state == 0;
+	}
+
+	@Override
+	public int getKillXp() {
+		return getStats().getKillXp();
+	}
+
 	/**
 	 * Returns whether or not the player is in view (depending on the scope).
 	 * 

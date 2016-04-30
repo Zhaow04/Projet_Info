@@ -1,14 +1,22 @@
 package game.model;
 
+import java.io.Serializable;
+
 import game.utilities.ViewSettings;
 
 /**
+ * Implements {@link Serializable}. <br/>
  * Abstract class that serves as a super class for all the components of the map.
  *
  */
-public abstract class MapComponent {
+public abstract class MapComponent implements Serializable {
 	
 	//****************************** Attributes ******************************
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private Map currentMap;
 	private ViewSettings viewSettings;
@@ -21,7 +29,7 @@ public abstract class MapComponent {
 	 * @param viewSettings
 	 */
 	public MapComponent(ViewSettings viewSettings) {
-		setViewSettings(viewSettings);
+		this.viewSettings = viewSettings;
 	}
 	
 	//************************** Getters and Setters **************************
@@ -32,15 +40,6 @@ public abstract class MapComponent {
 	 */
 	public Map getCurrentMap(){
 		return currentMap;
-	}
-	
-	/**
-	 * Sets the current map on which the component currently is.
-	 * 
-	 * @param map
-	 */
-	private void setCurrentMap(Map map) {
-		currentMap = map;
 	}
 
 	/**
@@ -77,15 +76,6 @@ public abstract class MapComponent {
 		return viewSettings;
 	}
 	
-	/**
-	 * Sets the view settings.
-	 * @param viewSettings
-	 */
-	private void setViewSettings(ViewSettings viewSettings) {
-		this.viewSettings = viewSettings;
-	}
-	
-	
 	//******************************** Methods ********************************
 	
 	/**
@@ -95,7 +85,7 @@ public abstract class MapComponent {
 	 * @param y
 	 */
 	public void addToMap(Map map, int x, int y) {
-		setCurrentMap(map);
+		currentMap = map;
 		setPosition(x, y);
 	}
 	
@@ -103,7 +93,7 @@ public abstract class MapComponent {
 	 * Removes the component from the map.
 	 */
 	public void removeFromMap() {
-		setCurrentMap(null);
+		currentMap = null;
 		setPosition(-1, -1);
 	}
 	

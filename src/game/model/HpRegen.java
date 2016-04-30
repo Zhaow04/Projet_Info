@@ -6,7 +6,7 @@ import java.util.TimerTask;
  * Public class the serves the purpose of assuring a HP regeneration system .
  *
  */
-public class HpRegen{
+public class HpRegen {
 	
 	//****************************** Constructor ******************************
 
@@ -20,7 +20,10 @@ public class HpRegen{
 			
 			@Override
 			public void run() {
-				livingBeing.getStats().addHp(10);
+				if(livingBeing.isAlive() && GameModel.isRunning())
+					livingBeing.addHp(10);
+				else
+					t.cancel();
 			}
 		};
 		t.scheduleAtFixedRate(tt, 0, 10000);

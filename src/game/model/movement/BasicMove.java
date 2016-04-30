@@ -1,18 +1,26 @@
 package game.model.movement;
 
+import java.io.Serializable;
+
 import game.model.Map;
 import game.model.Movable;
 import game.utilities.Vector2D;
 /**
- * Public class that represents a basic type of movement. <br/>
- * Implements {@code Movement}
+ * Implements {@link Serializable}, {@code Movement}. <br/>
+ * Public class that represents a basic type of movement.
+ * 
  * @see {@link Movement}
  *
  */
-public class BasicMove implements Movement {
+public class BasicMove implements Movement, Serializable {
 	
 	//****************************** Attributes ******************************
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Movable movable;
 	private int oldX, oldY, newX, newY;
 	

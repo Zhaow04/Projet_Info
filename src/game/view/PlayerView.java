@@ -11,6 +11,14 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Implements {@code Observer}. <br/>
+ * Extends from {@code StackPane}. <br/>
+ * View of a {@code Player}.
+ * 
+ * @author ZhaoWen
+ *
+ */
 public class PlayerView extends StackPane implements Observer {
 	
 	private Player player;
@@ -18,74 +26,69 @@ public class PlayerView extends StackPane implements Observer {
 	private ImageView imageView;
 	private MovementAnimation movementAnimation;
 	
+	/**
+	 * Creates the view of {@code player} and adds to {@code mapView}.
+	 * @param player
+	 * @param mapView
+	 */
 	public PlayerView(Player player, MapView mapView) {
 		super();
 		this.setPrefSize(mapView.cellSize(), mapView.cellSize());
-		setPlayer(player);
+		this.player = player;
 		player.addObserver(this);
-		setMapView(mapView);
+		this.mapView = mapView;
 		ViewSettings viewSettings = player.getViewSettings();
 		ImageView imageView = ViewUtils.initImageView(viewSettings, mapView.cellSize()*0.8);
-		setImageView(imageView);
-		this.getChildren().add(imageView);
-		mapView.addToMap(this, viewSettings.getX(), viewSettings.getY());
-		movementAnimation = new MovementAnimation(300, this, getImageView(), viewSettings,
-				getMapView().cellSize());
-	}
-	
-	private Player getPlayer() {
-		return player;
-	}
-
-	private void setPlayer(Player player) {
-		this.player = player;
-	}
-
-	private MapView getMapView() {
-		return mapView;
-	}
-
-	private void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
-	private ImageView getImageView() {
-		return imageView;
-	}
-
-	private void setImageView(ImageView imageView) {
 		this.imageView = imageView;
+		this.getChildren().add(imageView);
+		this.setTranslateX(viewSettings.getX()*mapView.cellSize());
+		this.setTranslateY(viewSettings.getY()*mapView.cellSize());
+		mapView.add(this);
+		movementAnimation = new MovementAnimation(300, this, imageView, viewSettings,
+				mapView.cellSize());
 	}
 	
+	/**
+	 * Updates the view of the player. This method is used to move the view to a designated position, to 
+	 * change the direction in which the player is looking, to create a the view of a skill or to remove
+	 * the dead player.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		if(arg == "moved") {
 			Platform.runLater(() -> {
 				updatePosition();
-				mapView.updateWindowView(getPlayer());
+				mapView.updateWindowView(player);
 			});
 		}
 		else if(arg == "changedDirection") {
-			ViewSettings viewSettings = getPlayer().getViewSettings();
-			Platform.runLater(() -> getImageView().setViewport(
+			ViewSettings viewSettings = player.getViewSettings();
+			Platform.runLater(() -> imageView.setViewport(
 					new Rectangle2D(viewSettings.getOffsetX(), viewSettings.getOffsetY(),
 					viewSettings.getWidth(), viewSettings.getHeight())));
 		}
 		else if(arg instanceof Skill) {
 			Skill skill = (Skill) arg ;
-			Platform.runLater(() -> new SkillView(skill, getMapView()));
+			Platform.runLater(() -> new SkillView(skill, mapView));
 		}
 		else if(arg == "dead")
 			Platform.runLater(() -> removeView());
 	}
 	
+	/**
+	 * Updates the position of the view through a {@code MovementAnimation}.
+	 * @see {@link MovementAnimation}
+	 */
 	private void updatePosition() {
-		ViewSettings viewSettings = getPlayer().getViewSettings();
+		ViewSettings viewSettings = player.getViewSettings();
 		movementAnimation.updateAndPlay(viewSettings);
 	}
 	
+	/**
+	 * Removes the view.
+	 */
 	private void removeView() {
-		getMapView().remove(this);
+		mapView.remove(this);
 	}
 	
 }

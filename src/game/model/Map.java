@@ -2,18 +2,17 @@ package game.model;
 
 import java.util.ArrayList;
 
-//import game.model.item.IItem;
 import game.model.item.Item;
 import game.model.monster.Monster;
 import game.model.movement.Movement;
 import game.model.obstacle.Obstacle;
 import game.model.skill.SkillTarget;
+import game.utilities.ThreadPool;
 import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**
- * Map of the game. It knows whether or not a position
- * is occupied and which object is occupying it.
+ * Map of the game. It knows whether or not a position is occupied and which object is occupying it.
  * 
  * @see {@link ViewSettings}
  *
@@ -23,8 +22,8 @@ public class Map implements Observable {
 	//****************************** Attributes ******************************
 	
 	private int[][] grid;
-	private final int mapCompoID = 1;
-	private final int damageableID = 2;
+	private final static int mapCompoID = 1;
+	private final static int damageableID = 2;
 	
 	private Player player;
 	private ArrayList<MapComponent> mapCompos = new ArrayList<MapComponent>();
@@ -32,6 +31,8 @@ public class Map implements Observable {
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
 	private ViewSettings viewSettings = new ViewSettings("game/model/images/plains.png");
+	private ThreadPool threadPool;
+	private boolean active = false;
 	private ArrayList<Observer> observers = new ArrayList<Observer>();
 	
 	
@@ -46,6 +47,7 @@ public class Map implements Observable {
 	public Map(int size) {
 		initGrid(size);
 		createAllComponents();
+		threadPool = new ThreadPool();
 	}
 	
 	//************************** Getters and Setters **************************
@@ -131,7 +133,6 @@ public class Map implements Observable {
 		return viewSettings;
 	}
 	
-	
 	//******************************** Methods ********************************
 
 	/**
@@ -151,7 +152,7 @@ public class Map implements Observable {
 	 * Creates all the components of the map.
 	 */
 	private void createAllComponents() {
-		CreationUnit.createMap(this.getSize(), this);
+		CreationUnit.createMap(getSize(), this);
 	}
 
 	/**
@@ -206,7 +207,6 @@ public class Map implements Observable {
 		}
 	}
 
-	
 	/**
 	 * Removes the {@code SkillTarget} from the map.
 	 * 
@@ -332,6 +332,27 @@ public class Map implements Observable {
 		if(getMonsters().isEmpty()) {
 			CreationUnit.addMonsters(this);
 			notifyObservers("addMonsters");
+		}
+	}
+	
+	public void notifyDead(Player player) {
+		setNoCollision(player.getX(), player.getY());
+		active = false;
+	}
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void run() {
+		active = true;
+		startThreads();
+	}
+	
+	public void startThreads() {
+		ArrayList<Monster> monsters = getMonsters();
+		for(Monster m : monsters) {
+			threadPool.execute(m);
 		}
 	}
 	

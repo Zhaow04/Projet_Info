@@ -13,6 +13,11 @@ public abstract class Dot extends Skill {
 	
 	//****************************** Attributes ******************************
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int lapse;
 	private int count;
 	
@@ -23,8 +28,8 @@ public abstract class Dot extends Skill {
 	 */
 	public Dot(int damage, int range, ViewSettings viewSettings,long releaseTime, int lapse, int count){
 		super(damage, range, viewSettings, releaseTime);
-		setLapse(lapse);
-		setCount(count);
+		this.lapse = lapse;
+		this.count = count;
 	}
 	
 	//************************** Getters and Setters **************************
@@ -34,36 +39,17 @@ public abstract class Dot extends Skill {
 	 * 
 	 * @return lapse
 	 */
-	public int getLapse() {
+	protected int getLapse() {
 		return lapse;
 	}
-	
-	/**
-	 * Sets the lapse between two damages.
-	 * 
-	 * @param dt
-	 */
-	private void setLapse(int dt) {
-		this.lapse = dt;
-	}
-	
-	
 
 	/**
 	 * Gets the total number of periodic damages.
 	 * 
 	 * @return count
 	 */
-	public int getCount() {
+	protected int getCount() {
 		return count;
-	}
-	
-	/**
-	 * Sets the total number of periodic damages.
-	 * @param count
-	 */
-	protected void setCount(int count) {
-		this.count = count;
 	}
 	
 }
