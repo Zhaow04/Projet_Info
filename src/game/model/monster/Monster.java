@@ -1,10 +1,10 @@
 package game.model.monster;
 
+import game.model.GameModel;
 import game.model.LivingBeing;
 import game.model.Movable;
 import game.model.Player;
-import game.utilities.Vector2D;
-import game.utilities.ViewSettings;
+import game.model.Stats;
 import game.model.movement.FaceThePlayer;
 import game.model.movement.MoveInX;
 import game.model.movement.Movement;
@@ -13,6 +13,8 @@ import game.model.skill.BasicMonsterAttack;
 import game.model.skill.Skill;
 import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
+import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code LivingBeing} <br/>
@@ -43,8 +45,8 @@ public abstract class Monster extends LivingBeing implements Runnable, SkillTarg
 	 * 
 	 * @param viewSettings
 	 */
-	public Monster(ViewSettings viewSettings) {
-		super(viewSettings, new MoveInX());
+	public Monster(ViewSettings viewSettings, Stats stats) {
+		super(viewSettings, new MoveInX(), stats);
 		this.basicMovement= getMovement();
 		state = 1;
 		this.skill = new BasicMonsterAttack();
@@ -82,7 +84,7 @@ public abstract class Monster extends LivingBeing implements Runnable, SkillTarg
 	
 	@Override
 	public void run() {
-		while(state != 0 && getCurrentMap().isActive()) {
+		while(state != 0 && getCurrentMap().isActive() && GameModel.isRunning()) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
 				setMovement(new TrackPlayer());

@@ -2,6 +2,7 @@ package game.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 import game.Main;
 import game.model.item.Item;
@@ -13,6 +14,7 @@ import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**
+ * Implements {@link Observable}, {@link Serializable}. <br/>
  * Map of the game. It knows whether or not a position is occupied and which object is occupying it.
  * 
  * @see {@link ViewSettings}
@@ -181,10 +183,35 @@ public class Map implements Observable, Serializable {
 	 * @param y
 	 */
 	public void addToMap(Player player, int x, int y) {
+		int i;
 		if(grid[y][x] == 0) {
 			setGrid(damageableID, x, y);
 			this.player = player;
 			player.addToMap(this, x, y);
+		}
+		else if(grid[y-1][x] == 0) {
+			setGrid(damageableID, x, y-1);
+			this.player = player;
+			player.addToMap(this, x, y-1);
+		}
+		else if(grid[y][x-1] == 0) {
+			setGrid(damageableID, x-1, y);
+			this.player = player;
+			player.addToMap(this, x-1, y);
+		}
+		else if(grid[y+1][x] == 0) {
+			setGrid(damageableID, x, y+1);
+			this.player = player;
+			player.addToMap(this, x, y+1);
+		}
+		else if(grid[y][x+1] == 0) {
+			setGrid(damageableID, x+1, y);
+			this.player = player;
+			player.addToMap(this, x+1, y);
+		}
+		else {
+			Random r = new Random();
+			addToMap(player, r.nextInt(getSize()), r.nextInt(getSize()));
 		}
 	}
 

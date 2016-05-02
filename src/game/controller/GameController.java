@@ -11,6 +11,11 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Main controller class for the game. It handles keyboard inputs.
+ * @author ZhaoWen
+ *
+ */
 public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	//****************************** Attributes ******************************
@@ -30,18 +35,9 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	public GameController(GameModel model) {
 		this.model = model;
 		this.player = model.getPlayer();
-		Main.execute(this);
 	}
 
 	//************************** Getters and Setters **************************
-	
-	/**
-	 * Gets the Heads Up Display (HUD) controller.
-	 * @return HUD controller
-	 */
-	public HUDController getHudController() {
-		return hudController;
-	}
 
 	/**
 	 * Sets the Heads Up Display (HUD) controller.
@@ -50,60 +46,61 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	public void setHudController(HUDController hudController) {
 		this.hudController = hudController;
 	}
-	
-	/**
-	 * Gets the list of the different keys.
-	 * @return keys' list
-	 */
-	public ArrayList<KeyCode> getKeyList() {
-		return keyList;
-	}
 
 	//******************************** Methods ********************************
 	
 	@Override
 	public void handle(KeyEvent event) {
-		addKey(event.getCode());
+		if(GameModel.isRunning()) {
+			addKey(event.getCode());
+			Main.execute(this);
+		}
 	}
 
 	@Override
 	public void run() {
-		while(true) {
+		if(player.isAlive() && GameModel.isRunning())
 			useFirstKey();
-		}
 	}
 	
+	/**
+	 * Connects the controller to the model.
+	 * @param model
+	 */
 	public void init(GameModel model) {
 		this.model = model;
 		this.player = model.getPlayer();
-		Main.execute(this);
 	}
 
+	/**
+	 * Adds a key (user input) to a list of keys which can contain a maximum of two keys.
+	 * @param key
+	 */
 	public synchronized void addKey(KeyCode key) {
-		if(getKeyList().size() < 2) {
+		if(keyList.size() < 2) {
 			if(key.isArrowKey() || key.isDigitKey()) {
-				getKeyList().add(key);
-				notify();
+				keyList.add(key);
 			}	
 		}
 	}
 
+	/**
+	 * Uses the first key in the list of keys.
+	 * @see {@link #useKey(KeyCode)}
+	 */
 	private synchronized void useFirstKey() {
-		if(!getKeyList().isEmpty()) {
-			KeyCode key = getKeyList().get(0);
+		if(!keyList.isEmpty()) {
+			KeyCode key = keyList.get(0);
 			useKey(key);
-			getKeyList().remove(0);
-		}
-		else {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			keyList.remove(0);
 		}
 	}
 
-	public void useKey(KeyCode key) {
+	/**
+	 * Processes a key (user input), e.g. arrow keys for movement, digit keys for attacking.
+	 * @param key
+	 */
+	public synchronized void useKey(KeyCode key) {
 		if(key.isArrowKey()) {
 			Vector2D direction = convertKeyToDirection(key.getName());
 			player.move(direction.getIntX(), direction.getIntY());
@@ -145,10 +142,22 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 		}
 	}
 	
+	/**
+	 * Pauses the game if it's running and restart it if it's paused.
+	 */
+	public void pauseAndStart() {
+		if(GameModel.isRunning())
+			model.stop();
+		else
+			model.start();
+	}
+	
+	/**
+	 * Saves the game.
+	 * @see {@link ResourceManager#save(java.io.Serializable)}
+	 */
 	public void save() {
 		ResourceManager.save(model);
 	}
-	
-	
 
 }

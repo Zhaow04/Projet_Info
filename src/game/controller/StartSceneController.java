@@ -35,9 +35,6 @@ private GameView gameView;
 	@FXML
 	private TextField mapSizeField;
 	
-	@FXML
-	private TextField fileNameField;
-	
 	/**
 	 * Void constructor.
 	 */
@@ -72,10 +69,12 @@ private GameView gameView;
 		configMenu.setVisible(false);
 	}
 	
+	/**
+	 * Loads the previously saved game.
+	 */
 	@FXML
 	private void loadGame() {
-		startMenu.setVisible(false);
-		loadMenu.setVisible(true);
+		gameView.loadGame();
 	}
 	
 	/**
@@ -105,14 +104,6 @@ private GameView gameView;
 			
 		}
 		return isValid;
-	}
-
-	/**
-	 * Handles the saved file name input. Load this file.
-	 */
-	@FXML
-	private void handleFileNameInput() {
-			gameView.loadGame();
 	}
 	
 }

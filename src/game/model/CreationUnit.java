@@ -12,7 +12,6 @@ import game.model.obstacle.Rock;
 import game.model.obstacle.Tree;
 
 /**
- 
  * Public class that serves the purpose of creating all the map components of the game.
  * 
  * @see {@link MapComponent}

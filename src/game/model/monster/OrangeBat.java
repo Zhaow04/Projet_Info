@@ -23,9 +23,8 @@ public class OrangeBat extends Monster {
 	 * Creates an orange bat with 350HP and 75 killXp.
 	 */
 	public OrangeBat(){
-		super(ImageDB.getOrangeBatView());
+		super(ImageDB.getOrangeBatView(), new Stats(350, 75));
 		setScope(2);
-		setStats(new Stats(350, 75));
 	}
 	
 }

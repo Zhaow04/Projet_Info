@@ -24,9 +24,8 @@ public class RedDragon extends Monster {
 	 * Creates a red dragon with 450HP and 150 killXp.
 	 */
 	public RedDragon(){
-		super(ImageDB.getRedDragonView());
+		super(ImageDB.getRedDragonView(), new Stats(450, 150));
 		setScope(2);
-		setStats(new Stats(450, 150));
 	}
 	
 }

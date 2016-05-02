@@ -140,7 +140,7 @@ public class GameView extends BorderPane implements Observer {
 		mainStage.sizeToScene();
 		mainStage.centerOnScreen();
 		
-		model.getMap().run();
+		model.start();
 	}
 	
 	public void loadGame() {
@@ -159,7 +159,7 @@ public class GameView extends BorderPane implements Observer {
 		mainStage.sizeToScene();
 		mainStage.centerOnScreen();
 		
-		model.getMap().run();
+		model.start();
 	}
 	
 	/**

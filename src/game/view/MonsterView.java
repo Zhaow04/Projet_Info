@@ -46,7 +46,7 @@ public class MonsterView extends StackPane implements Observer {
 		ViewSettings viewSettings = monster.getViewSettings();
 		ImageView imageView = ViewUtils.initImageView(viewSettings, mapView.cellSize()*0.8);
 		this.imageView = imageView;
-		double d = ((double) monster.getStats().getHp())/(double) monster.getStats().getMaxHp();
+		double d = ((double) monster.getHp())/(double) monster.getMaxHp();
 		healthBar = new ProgressBar();
 		healthBar.setPrefWidth(mapView.cellSize()*0.6);
 		healthBar.getStylesheets().add(
@@ -67,7 +67,7 @@ public class MonsterView extends StackPane implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		double d = ((double) monster.getStats().getHp())/(double) monster.getStats().getMaxHp();
+		double d = ((double) monster.getHp())/(double) monster.getMaxHp();
 		healthBar.setProgress(d);
 		if(arg == "moved"){
 			Platform.runLater(() -> updatePosition());

@@ -23,9 +23,8 @@ public class BlueDragon extends Monster {
 	 * Creates a blue dragon with 400HP and 100 killXp.
 	 */
 	public BlueDragon() {
-		super(ImageDB.getBlueDragonView());
+		super(ImageDB.getBlueDragonView(), new Stats(400, 100));
 		setScope(2);
-		setStats(new Stats(400, 100));
 		}
 
 }

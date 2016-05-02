@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
+ * Implements {@link Observer}. <br/>
  * Controller class for the HUD. Displays the health, the experience and the level of the player.
  * 
  * @author ZhaoWen
@@ -50,6 +51,10 @@ public class HUDController implements Observer {
 		
 	}
 	
+	/**
+	 * Sets the {@link GameController}.
+	 * @param gameController
+	 */
 	public void setGameController(GameController gameController) {
 		this.gameController = gameController;
 	}
@@ -76,11 +81,19 @@ public class HUDController implements Observer {
 		
 		inventoryViewController.init(player);
 		player.addObserver(this);
-		double d = ((double) player.getStats().getHp())/player.getStats().getMaxHp();
+		double d = ((double) player.getHp())/player.getMaxHp();
 		healthBar.setProgress(d);
-		double d1 = ((double) player.getStats().getXp())/player.getStats().getXpToLevelUp();
+		double d1 = ((double) player.getXp())/player.getXpToLevelUp();
 		xpBar.setProgress(d1);
-		lvl.setText("Nv. " + player.getStats().getLevel());
+		lvl.setText("Nv. " + player.getLevel());
+	}
+	
+	/**
+	 * See {@link GameController#pauseAndStart()}.
+	 */
+	@FXML
+	private void pauseAndStart() {
+		gameController.pauseAndStart();
 	}
 	
 	/**
@@ -94,6 +107,9 @@ public class HUDController implements Observer {
 		inventoryWindow.show();
 	}
 	
+	/**
+	 * See {@link GameController#save()}.
+	 */
 	@FXML
 	private void save() {
 		gameController.save();
@@ -107,13 +123,16 @@ public class HUDController implements Observer {
 		return inventoryViewController;
 	}
 
+	/**
+	 * Updates the HUD (player's health, experience and level).
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		double d = ((double) player.getStats().getHp())/player.getStats().getMaxHp();
+		double d = ((double) player.getHp())/player.getMaxHp();
 		healthBar.setProgress(d);
-		double d1 = ((double) player.getStats().getXp())/player.getStats().getXpToLevelUp();
+		double d1 = ((double) player.getXp())/player.getXpToLevelUp();
 		xpBar.setProgress(d1);
-		lvl.setText("Nv. " + player.getStats().getLevel());
+		lvl.setText("Nv. " + player.getLevel());
 	}
 	
 }

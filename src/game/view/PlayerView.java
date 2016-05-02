@@ -44,6 +44,7 @@ public class PlayerView extends StackPane implements Observer {
 		this.setTranslateX(viewSettings.getX()*mapView.cellSize());
 		this.setTranslateY(viewSettings.getY()*mapView.cellSize());
 		mapView.add(this);
+		mapView.updateWindowView(player);
 		movementAnimation = new MovementAnimation(300, this, imageView, viewSettings,
 				mapView.cellSize());
 	}

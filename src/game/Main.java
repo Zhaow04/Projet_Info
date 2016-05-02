@@ -34,12 +34,12 @@ public class Main extends Application {
 		new GameView(primaryStage, model, controller);
 	}
 	
+	/**
+	 * Executes the {@link Runnable} in a thread.
+	 * @param r
+	 */
 	public static void execute(Runnable r) {
 		threadPool.execute(r);
-	}
-	
-	public static void stopAll() {
-		threadPool.shutdownNow();
 	}
 
 }

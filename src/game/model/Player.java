@@ -41,8 +41,7 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	 * @see {@link LivingBeing}
 	 */
 	public Player(){
-		super(ImageDB.getPlayerView(), new BasicMove());
-		setStats(new Stats(1500));
+		super(ImageDB.getPlayerView(), new BasicMove(), new Stats(1500));
 		this.inventory = new Inventory(this);
 		addSkill(new FirstAttack());
 		addSkill(new FireExplosion());
@@ -153,11 +152,6 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	 */
 	public void addSkill(Skill skill){
 		skillList.add(skill);
-	}
-	
-	public void addHp(int hp) {
-		getStats().addHp(hp);
-		notifyObservers();
 	}
 
 	@Override

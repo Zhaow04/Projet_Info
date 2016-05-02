@@ -8,7 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Side;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 
 /**
  * Extends from {@code MenuButton}. <br/>
@@ -30,7 +30,7 @@ public class ItemMenu extends MenuButton {
 	 * @param itemView
 	 * @see {@link game.model.item.Item}
 	 */
-	public ItemMenu(Player player, int index, ItemView itemView) {
+	public ItemMenu(Player player, int index, Pane itemView) {
 		super();
 		this.setPrefSize(50, 50);
 		this.setOpacity(0);
@@ -41,8 +41,9 @@ public class ItemMenu extends MenuButton {
 			@Override
 			public void handle(ActionEvent event) {
 				player.useItem(index);
-				StackPane parent = (StackPane) itemView.getParent();
-				parent.getChildren().remove(itemView);
+				itemView.getChildren().clear();
+				//Pane parent = (Pane) itemView.getParent();
+				//parent.getChildren().remove(itemView);
 			}
 		});
 		MenuItem throwItem = new MenuItem("Jeter");
@@ -50,8 +51,9 @@ public class ItemMenu extends MenuButton {
 			@Override
 			public void handle(ActionEvent event) {
 				player.throwItem(index);
-				StackPane parent = (StackPane) itemView.getParent();
-				parent.getChildren().remove(itemView);
+				itemView.getChildren().clear();
+				//Pane parent = (Pane) itemView.getParent();
+				//parent.getChildren().remove(itemView);
 			}
 		});
 		this.getItems().addAll(useItem,throwItem);

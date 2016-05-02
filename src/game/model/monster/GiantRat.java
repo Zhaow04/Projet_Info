@@ -23,9 +23,8 @@ public class GiantRat extends Monster {
 	 * Creates a giant rat with 300HP and 50 killXp.
 	 */
 	public GiantRat(){
-		super(ImageDB.getGiantRatView());
+		super(ImageDB.getGiantRatView(), new Stats(300, 50));
 		setScope(2);
-		setStats(new Stats(300, 50));
 	}
 	
 }

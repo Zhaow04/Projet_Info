@@ -39,14 +39,19 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	 * @param ViewSettings
 	 * @param Movement
 	 */
-	public LivingBeing(ViewSettings viewSettings, Movement movement) {
+	public LivingBeing(ViewSettings viewSettings, Movement movement, Stats stats) {
 		super(viewSettings);
 		setDirectionFacing(0, 1);
-		setMovement(movement);
+		this.movement = movement;
+		this.stats = stats;
 	}
 	
 	//************************** Getters and Setters **************************
 	
+	/**
+	 * Returns whether or not the {@code LivingBeing} is alive (health > 0).
+	 * @return
+	 */
 	public boolean isAlive() {
 		return alive;
 	}
@@ -91,12 +96,29 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 		this.movement = movement;
 	}
 	
-	public Stats getStats() {
+	protected Stats getStats() {
+		int i;
 		return stats;
 	}
-
-	protected void setStats(Stats stats) {
-		this.stats = stats;
+	
+	public int getHp() {
+		return stats.getHp();
+	}
+	
+	public int getMaxHp() {
+		return stats.getMaxHp();
+	}
+	
+	public int getXp() {
+		return stats.getXp();
+	}
+	
+	public int getXpToLevelUp() {
+		return stats.getXpToLevelUp();
+	}
+	
+	public int getLevel() {
+		return stats.getLevel();
 	}
 	
 	//******************************** Methods ********************************
@@ -129,9 +151,25 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 		notifyObservers(null);
 	}
 	
+	/**
+	 * Adds the specified amount of health to the {@code LivingBeing}.
+	 * @param hp
+	 */
 	public void addHp(int hp) {
-		getStats().addHp(hp);
+		stats.addHp(hp);
 		notifyObservers();
+	}
+	
+	public void loseHp(int hp) {
+		stats.loseHp(hp);
+		if(stats.getHp() <= 0) {
+			alive = false;
+			Map m = getCurrentMap();
+			notifyObservers("dead");
+			//m.notifyDead(this);
+		}
+		else
+			notifyObservers();
 	}
 	
 }

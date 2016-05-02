@@ -35,11 +35,5 @@
             <TextField fx:id="mapSizeField" layoutX="264.0" layoutY="273.0" onAction="#handleMapSizeInput" prefHeight="27.0" prefWidth="71.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="loadMenu" layoutX="20.0" layoutY="20.0" prefHeight="605.0" prefWidth="605.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Text layoutX="191.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Veuillez entrer le nom de la sauvegarde :" wrappingWidth="217.21875" />
-            <TextField fx:id="fileNameField" layoutX="264.0" layoutY="273.0" onAction="#handleFileNameInput" prefHeight="27.0" prefWidth="71.0" />
-         </children>
-      </AnchorPane>
    </children>
 </AnchorPane>

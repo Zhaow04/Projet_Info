@@ -22,11 +22,12 @@ public class Inventory implements Observable, Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Player owner;
-	private ArrayList<Item> listItem;
+	private ArrayList<Item> items;
 	
 	private transient ArrayList<Observer> observers;
 	
 	//****************************** Constructor ******************************
+	
 	/**
 	 * Creates an inventory with 10 slots.
 	 * 
@@ -37,6 +38,7 @@ public class Inventory implements Observable, Serializable {
 	}
 	
 	//************************** Getters and Setters **************************
+	
 	/**
 	 * Gets the owner of the inventory.
 	 * @return
@@ -46,12 +48,21 @@ public class Inventory implements Observable, Serializable {
 	}
 	
 	/**
+	 * Gets a new {@code ArrayList<Item>} which is a copy of the list of items. Ensure that the list of items
+	 * is not altered by an unknown source.
+	 * @return
+	 */
+	public ArrayList<Item> getItems() {
+		return new ArrayList<Item>(items);
+	}
+
+	/**
 	 * Gets the max number of slots.
 	 * 
 	 * @return max number of slots
 	 */
 	public int getSpace() {
-		return listItem.size();
+		return items.size();
 	}
 
 	/**
@@ -60,9 +71,9 @@ public class Inventory implements Observable, Serializable {
 	 * @param space
 	 */
 	private void setSpace(int space) {
-		listItem = new ArrayList<Item>(space);
+		items = new ArrayList<Item>(space);
 		for(int i = 0; i < space; i++) {
-			listItem.add(null);
+			items.add(null);
 		}
 	}
 	
@@ -94,8 +105,9 @@ public class Inventory implements Observable, Serializable {
 	 */
 	public void addItem(Item item) {
 		for(int i = 0; i < getSpace(); i++) {
-			if(listItem.get(i) == null) {
-				listItem.set(i, item);
+			if(items.get(i) == null) {
+				items.set(i, item);
+				notifyObservers();
 				break;
 			}
 		}
@@ -107,7 +119,7 @@ public class Inventory implements Observable, Serializable {
 	 * @param item
 	 */
 	public void removeItem(Item item){
-		listItem.remove(item);
+		items.remove(item);
 	}
 	
 	/**
@@ -115,7 +127,7 @@ public class Inventory implements Observable, Serializable {
 	 * @param index
 	 */
 	public void removeItem(int index) {
-		listItem.set(index, null);
+		items.set(index, null);
 	}
 	
 	/**
@@ -142,7 +154,7 @@ public class Inventory implements Observable, Serializable {
 	 * @return item
 	 */
 	public Item getItem(int itemNumber){
-		return listItem.get(itemNumber);
+		return items.get(itemNumber);
 	}
 	
 	/**
@@ -151,7 +163,7 @@ public class Inventory implements Observable, Serializable {
 	 * @return itemNumber
 	 */
 	public int getItemNumber(Item item) {
-		return listItem.indexOf(item);
+		return items.indexOf(item);
 	}
 
 }
