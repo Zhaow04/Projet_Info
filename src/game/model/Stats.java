@@ -1,5 +1,8 @@
 package game.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -22,9 +25,10 @@ public class Stats implements Serializable {
 	private int killXp;
 	private int maxHp;
 	private int xpToLevelUp;
+	private static int level;
 	
 	// Static: when the player will level up, all the other living beings will at the same time.
-	private static int level;
+	//private static int commonLevel;
 	
 	//****************************** Constructor ******************************
 
@@ -191,6 +195,16 @@ public class Stats implements Serializable {
 		updateXpToLevelUp();
 		if(extraXp > 0)
 			gainXp(extraXp);
+	}
+
+	private void writeObject(ObjectOutputStream oos) throws IOException {
+		oos.defaultWriteObject();
+		oos.writeObject(new Integer(level));
+	}
+
+	private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+		ois.defaultReadObject();
+		level = (Integer) ois.readObject();
 	}
 
 }

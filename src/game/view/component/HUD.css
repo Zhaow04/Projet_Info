@@ -1,0 +1,31 @@
+#healthBar .bar {
+	-fx-accent: red;
+	-fx-padding: 10px;
+	-fx-background-radius: 6;
+}
+
+#healthBar .track {
+	-fx-background-radius: 6;
+}
+
+#healthBar {
+	-fx-background-radius: 6;
+}
+
+#xpBar .bar {
+	-fx-accent: gold;
+	-fx-padding: 5px;
+	-fx-background-radius: 10;
+}
+
+#xpBar .track {
+	-fx-background-radius: 10;
+}
+
+#xpBar {
+	-fx-background-radius: 10;
+}
+
+#skill .bar {
+	-fx-accent: grey;
+}
