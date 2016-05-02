@@ -20,15 +20,14 @@ public class HpRegen {
 			
 			@Override
 			public void run() {
-				if(livingBeing.isAlive()) {
-					if(GameModel.isRunning())
-						livingBeing.addHp(100);
+				if(livingBeing.isAlive() && GameModel.isRunning()) {
+					livingBeing.addHp(100);
 				}
 				else
 					t.cancel();
 			}
 		};
-		t.scheduleAtFixedRate(tt, 0, 5000);
+		t.scheduleAtFixedRate(tt, 2000, 5000);
 	}
 	
 }

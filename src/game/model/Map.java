@@ -8,7 +8,6 @@ import game.Main;
 import game.model.item.Item;
 import game.model.monster.Monster;
 import game.model.movement.Movement;
-import game.model.obstacle.Obstacle;
 import game.model.skill.SkillTarget;
 import game.utilities.ViewSettings;
 import game.view.Observer;
@@ -116,6 +115,14 @@ public class Map implements Observable, Serializable {
 		return viewSettings;
 	}
 	
+	/**
+	 * Returns whether or not the map is active. An active map means all the runnables are running.
+	 * @return
+	 */
+	public boolean isActive() {
+		return active;
+	}
+	
 	//******************************** Methods ********************************
 
 	/**
@@ -144,7 +151,7 @@ public class Map implements Observable, Serializable {
 	 * @param x
 	 * @param y
 	 */
-	public void addToMap(Obstacle compo, int x, int y) {
+	public void addToMap(MapComponent compo, int x, int y) {
 		if(grid[y][x] == 0) {
 			setGrid(mapCompoID, x, y);
 			getMapCompos().add(compo);
@@ -346,10 +353,6 @@ public class Map implements Observable, Serializable {
 	public void notifyDead(Player player) {
 		setNoCollision(player.getX(), player.getY());
 		active = false;
-	}
-	
-	public boolean isActive() {
-		return active;
 	}
 
 	public void run() {

@@ -33,7 +33,7 @@ public final class Poison extends Dot {
 	@Override
 	public boolean usable(SkillUser user) {
 		setTarget(null);
-		if (timingIsOk()){
+		if(timingIsOk()){
 			Map map = user.getCurrentMap();
 			Vector2D direction = user.getDirectionFacing();
 			Vector2D targetPos = new Vector2D(user.getX(), user.getY());
@@ -44,6 +44,8 @@ public final class Poison extends Dot {
 					setTarget(map.getTargetAt(targetPos.getIntX(), targetPos.getIntY()));
 					break;
 				}
+				else if(!map.noCollision(targetPos.getIntX(), targetPos.getIntY()))
+					break;
 				a++;
 			}
 		}

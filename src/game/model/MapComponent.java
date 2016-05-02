@@ -9,7 +9,7 @@ import game.utilities.ViewSettings;
  * Abstract class that serves as a super class for all the components of the map.
  *
  */
-public abstract class MapComponent implements Serializable {
+public class MapComponent implements Serializable {
 	
 	//****************************** Attributes ******************************
 	

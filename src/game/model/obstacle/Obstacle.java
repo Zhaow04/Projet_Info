@@ -10,7 +10,7 @@ import game.utilities.ViewSettings;
  * @see {@link MapComponent}
  * 
  */
-public abstract class Obstacle extends MapComponent {
+public class Obstacle extends MapComponent {
 	
 	/**
 	 * 

@@ -46,7 +46,6 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 		addSkill(new FirstAttack());
 		addSkill(new FireExplosion());
 		addSkill(new Poison());
-		new HpRegen(this);
 		alive = true;
 	}
 	
@@ -72,6 +71,10 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 		super.move(dx,dy);
 		if(getCurrentMap().isItemAt(getX(), getY()))
 			pickUpItem(getCurrentMap().getAndRemoveItem(getX(), getY()));
+	}
+	
+	public void startRegen() {
+		new HpRegen(this);
 	}
 	
 	@Override

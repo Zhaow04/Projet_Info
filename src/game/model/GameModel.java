@@ -89,6 +89,7 @@ public class GameModel implements Serializable {
 		if(!running) {
 			running = true;
 			map.run();
+			player.startRegen();
 		}
 	}
 	

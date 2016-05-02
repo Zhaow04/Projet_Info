@@ -24,7 +24,7 @@ import game.utilities.ViewSettings;
  * @see {@link LivingBeing}
  *
  */
-public abstract class Monster extends LivingBeing implements Runnable, SkillTarget, SkillUser {
+public class Monster extends LivingBeing implements Runnable, SkillTarget, SkillUser {
 	
 	//****************************** Attributes ******************************
 	
@@ -45,8 +45,9 @@ public abstract class Monster extends LivingBeing implements Runnable, SkillTarg
 	 * 
 	 * @param viewSettings
 	 */
-	public Monster(ViewSettings viewSettings, Stats stats) {
+	public Monster(ViewSettings viewSettings, Stats stats, int scope) {
 		super(viewSettings, new MoveInX(), stats);
+		this.scope = scope;
 		this.basicMovement= getMovement();
 		state = 1;
 		this.skill = new BasicMonsterAttack();

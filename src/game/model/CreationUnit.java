@@ -3,13 +3,8 @@ package game.model;
 import java.util.Random;
 
 import game.model.item.HpPotion;
-import game.model.monster.BlueDragon;
-import game.model.monster.GiantRat;
-import game.model.monster.OrangeBat;
-import game.model.monster.RedDragon;
-import game.model.obstacle.Bush;
-import game.model.obstacle.Rock;
-import game.model.obstacle.Tree;
+import game.model.monster.Monster;
+import game.utilities.ImageDB;
 
 /**
  * Public class that serves the purpose of creating all the map components of the game.
@@ -57,13 +52,13 @@ public abstract class CreationUnit {
 	private static void addObstacle(int i,  Map map, int x, int y) {
 		switch (i) {
 		case 0:
-			map.addToMap(new Bush(),x,y);
+			map.addToMap(new MapComponent(ImageDB.getBushView()),x,y);
 			break;
 		case 1:
-			map.addToMap(new Rock(),x,y);
+			map.addToMap(new MapComponent(ImageDB.getRockView()),x,y);
 			break;
 		case 2:
-			map.addToMap(new Tree(),x,y);
+			map.addToMap(new MapComponent(ImageDB.getTreeView()),x,y);
 			break;
 		}
 	}
@@ -92,16 +87,16 @@ public abstract class CreationUnit {
 	private static void addMonster(int i,  Map map, int x, int y) {
 		switch (i) {
 		case 0:
-			map.addToMap(new BlueDragon(),x,y);
+			map.addToMap(new Monster(ImageDB.getBlueDragonView(), new Stats(400, 100), 3),x,y);
 			break;
 		case 1:
-			map.addToMap(new RedDragon(),x,y);
+			map.addToMap(new Monster(ImageDB.getRedDragonView(), new Stats(450, 150), 3),x,y);
 			break;
 		case 2:
-			map.addToMap(new GiantRat(),x,y);
+			map.addToMap(new Monster(ImageDB.getGiantRatView(), new Stats(300, 50), 3),x,y);
 			break;
 		case 3:
-			map.addToMap(new OrangeBat(),x,y);
+			map.addToMap(new Monster(ImageDB.getOrangeBatView(), new Stats(350, 75), 3),x,y);
 			break;
 		}
 	}

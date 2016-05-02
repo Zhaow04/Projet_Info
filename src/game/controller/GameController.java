@@ -28,10 +28,17 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	//****************************** Constructor ******************************
 
+	/**
+	 * Void constructor.
+	 */
 	public GameController() {
 		
 	}
 	
+	/**
+	 * Creates a controller that handles keyboard inputs.
+	 * @param model
+	 */
 	public GameController(GameModel model) {
 		this.model = model;
 		this.player = model.getPlayer();
