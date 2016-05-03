@@ -38,8 +38,10 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	
 	@Override
 	public void handle(KeyEvent event) {
-		addKey(event.getCode());
-		Main.execute(this);
+		if (GameModel.isRunning()){
+			addKey(event.getCode());
+			Main.execute(this);
+		}
 	}
 
 	@Override

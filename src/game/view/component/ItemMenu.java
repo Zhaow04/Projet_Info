@@ -15,7 +15,6 @@ import javafx.scene.layout.Pane;
  * Transparent {@link MenuButton} to be added on top of a {@link ItemView} to allow the user to use or throw the
  * {@code Item}.
  * 
- * @author ZhaoWen
  * @see {@link MenuButton}
  * @see {@link game.model.item.Item}
  *
