@@ -16,9 +16,6 @@ public class Inventory implements Observable, Serializable {
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Player owner;
@@ -50,7 +47,7 @@ public class Inventory implements Observable, Serializable {
 	/**
 	 * Gets a new {@code ArrayList<Item>} which is a copy of the list of items. Ensure that the list of items
 	 * is not altered by an unknown source.
-	 * @return
+	 * @return list of items
 	 */
 	public ArrayList<Item> getItems() {
 		return new ArrayList<Item>(items);
@@ -164,6 +161,17 @@ public class Inventory implements Observable, Serializable {
 	 */
 	public int getItemNumber(Item item) {
 		return items.indexOf(item);
+	}
+	
+	public boolean isFull(){
+		boolean isFull = true;
+		for (Item item : items){
+			if (item == null){
+				isFull=false;
+				break;
+			}
+		}
+		return isFull;
 	}
 
 }

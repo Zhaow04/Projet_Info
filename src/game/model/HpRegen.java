@@ -12,7 +12,7 @@ public class HpRegen {
 
 	/**
 	 * Creates the HP regeneration system of the living being.
-	 * @param living
+	 * @param livingBeing
 	 */
 	public HpRegen(LivingBeing livingBeing) {
 		Timer t = new Timer();

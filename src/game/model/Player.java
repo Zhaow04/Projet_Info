@@ -24,12 +24,8 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	private boolean alive;
 	private Inventory inventory;
 	private ArrayList<Skill> skillList = new ArrayList<Skill>();
 	
@@ -46,15 +42,26 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 		addSkill(new FirstAttack());
 		addSkill(new FireExplosion());
 		addSkill(new Poison());
-		alive = true;
 	}
 	
 	//************************** Getters and Setters **************************
 	
-	public boolean isAlive() {
-		return alive;
+	/**
+	 * Gets the Xp of the Player.
+	 * @return Xp
+	 */
+	public int getXp() {
+		return getStats().getXp();
 	}
 	
+	/**
+	 * Gets the Xp needed by the player in order to level up.
+	 * @return xpToLevelUp
+	 */
+	public int getXpToLevelUp() {
+		return getStats().getXpToLevelUp();
+	}
+		
 	/**
 	 * Gets the inventory.
 	 * 
@@ -69,10 +76,14 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	@Override
 	public void move(int dx, int dy) {
 		super.move(dx,dy);
-		if(getCurrentMap().isItemAt(getX(), getY()))
+		if(getCurrentMap().isItemAt(getX(), getY()) && !getInventory().isFull())
 			pickUpItem(getCurrentMap().getAndRemoveItem(getX(), getY()));
 	}
 	
+	/**
+	 * Starts the Hp regeneration system.
+	 * @see {@link HpRegen}
+	 */
 	public void startRegen() {
 		new HpRegen(this);
 	}
@@ -80,11 +91,6 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	@Override
 	public void gainXp(int xp) {
 		getStats().gainXp(xp);
-	}
-
-	@Override
-	public boolean isDead() {
-		return !alive;
 	}
 
 	@Override
@@ -157,11 +163,11 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 		skillList.add(skill);
 	}
 
+	 
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
-		if(getStats().getHp() <= 0) {
-			alive = false;
+		if ( isDead() ) {
 			Map m = getCurrentMap();
 			notifyObservers("dead");
 			m.notifyDead(this);

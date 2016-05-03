@@ -10,12 +10,13 @@ import game.utilities.ImageDB;
  * @see {@link Potion}
  *
  */
-public final class HpPotion extends Potion {
+public final class HpPotion extends Item {
 	
-	/**
-	 * 
-	 */
+    //****************************** Attributes ******************************
+	
 	private static final long serialVersionUID = 1L;
+	
+	private int hpValue;
 	
 	//****************************** Constructor ******************************
 	
@@ -25,8 +26,10 @@ public final class HpPotion extends Potion {
 	 * @param value
 	 */
 	public HpPotion(int value) {
-		super(ImageDB.getHpPotionView(),value);
+		super(ImageDB.getHpPotionView(), 1);
+		this.hpValue = value;
 	}
+	
 	
 	//******************************** Methods ********************************
 	
@@ -34,7 +37,7 @@ public final class HpPotion extends Potion {
 	@Override
 	public void use(Player player) {
 		useOnce();
-		player.addHp(getValue());
+		player.addHp(hpValue);
 	}
 
 }

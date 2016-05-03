@@ -19,12 +19,8 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	private boolean alive;
 	private Vector2D directionFacing = new Vector2D();
 	private Movement movement;
 	private Stats stats;
@@ -34,7 +30,7 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a living being, sets its view settings and its movement.
+	 * Creates a living being, sets its direction facing, its stats and its movement.
 	 * 
 	 * @param ViewSettings
 	 * @param Movement
@@ -48,16 +44,10 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	
 	//************************** Getters and Setters **************************
 	
-	/**
-	 * Returns whether or not the {@code LivingBeing} is alive (health > 0).
-	 * @return
-	 */
-	public boolean isAlive() {
-		return alive;
-	}
+	
 	
 	/**
-	 * Gets the direction the living being is facing to.
+	 * Gets the direction the living being is facing.
 	 * 
 	 * @return direction facing
 	 */
@@ -96,25 +86,28 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 		this.movement = movement;
 	}
 	
+	/**
+	 * Gets the stats of the living being.
+	 * @return stats
+	 */
 	protected Stats getStats() {
-		int i;
 		return stats;
 	}
 	
+	/**
+	 * Gets the Hp of the living being.
+	 * @return Hp
+	 */
 	public int getHp() {
 		return stats.getHp();
 	}
 	
+	/**
+	 * Gets the maximum of Hp the living being can reach.
+	 * @return maxHp
+	 */
 	public int getMaxHp() {
 		return stats.getMaxHp();
-	}
-	
-	public int getXp() {
-		return stats.getXp();
-	}
-	
-	public int getXpToLevelUp() {
-		return stats.getXpToLevelUp();
 	}
 	
 	public int getLevel() {
@@ -160,16 +153,19 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 		notifyObservers();
 	}
 	
-	public void loseHp(int hp) {
-		stats.loseHp(hp);
-		if(stats.getHp() <= 0) {
-			alive = false;
-			Map m = getCurrentMap();
-			notifyObservers("dead");
-			//m.notifyDead(this);
-		}
-		else
-			notifyObservers();
+	/**
+	 * Returns whether or not the {@code LivingBeing} is alive (health > 0).
+	 * @return boolean
+	 */
+	public boolean isAlive() {
+		return (getHp() > 0);
 	}
 	
+	/**
+	 * Returns whether or not the {@code LivingBeing} is dead (health <= 0).
+	 * @return boolean
+	 */
+	public boolean isDead() {
+		return !isAlive();
+	}
 }

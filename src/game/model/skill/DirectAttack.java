@@ -32,7 +32,7 @@ public abstract class DirectAttack extends Skill {
 
 	@Override
 	public boolean usable(SkillUser user) {
-		return getTarget() != null;
+		return getTarget() != null && timingIsOk();
 	}
 	
 	
@@ -42,11 +42,11 @@ public abstract class DirectAttack extends Skill {
 		Vector2D direction = user.getDirectionFacing();
 		Vector2D targetPos = direction.plus(user.getX(), user.getY());
 		setTarget(map.getTargetAt(targetPos.getIntX(), targetPos.getIntY()));
-		if(usable(user)) {
-			setStartPos(getTarget().getX(), getTarget().getY());
+		if(usable(user) ) {
 			setPosition(getTarget().getX(), getTarget().getY());
 			user.notifyObservers(this);
 			getTarget().loseHp(getDamage());
+			setLastExecutionTime(System.currentTimeMillis());
 			if(user instanceof Player && getTarget().isDead()) {
 				gainKillXp(user);
 			}

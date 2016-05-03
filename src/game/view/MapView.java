@@ -39,9 +39,7 @@ public class MapView extends Group implements Observer {
 	private AnchorPane bottomLayer;
 	private AnchorPane stepOnLayer;
 	private AnchorPane interactiveLayer;
-	
-	private ArrayList<MapComponentView> mapComponentViews = new ArrayList<MapComponentView>();
-	
+		
 	//****************************** Constructor ******************************
 	
 	/**
@@ -66,10 +64,7 @@ public class MapView extends Group implements Observer {
 	}
 	
 	//************************** Getters and Setters **************************
-
-	public ArrayList<MapComponentView> getMapComponentViews() {
-		return mapComponentViews;
-	}
+	
 	
 	//******************************** Methods ********************************
 	

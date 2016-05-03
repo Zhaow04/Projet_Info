@@ -9,6 +9,7 @@ import game.model.item.Item;
 import game.model.monster.Monster;
 import game.model.movement.Movement;
 import game.model.skill.SkillTarget;
+import game.utilities.ImageDB;
 import game.utilities.ViewSettings;
 import game.view.Observer;
 
@@ -23,9 +24,6 @@ public class Map implements Observable, Serializable {
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private int[][] grid;
@@ -37,7 +35,6 @@ public class Map implements Observable, Serializable {
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	private ArrayList<Item> items = new ArrayList<Item>();
 	
-	private ViewSettings viewSettings = new ViewSettings("game/model/images/plains.png");
 	private boolean active = false;
 	private transient ArrayList<Observer> observers;
 	
@@ -112,7 +109,7 @@ public class Map implements Observable, Serializable {
 	 * @return viewSettings
 	 */
 	public ViewSettings getViewSettings() {
-		return viewSettings;
+		return ImageDB.getMapView();
 	}
 	
 	/**
@@ -190,7 +187,6 @@ public class Map implements Observable, Serializable {
 	 * @param y
 	 */
 	public void addToMap(Player player, int x, int y) {
-		int i;
 		if(grid[y][x] == 0) {
 			setGrid(damageableID, x, y);
 			this.player = player;

@@ -15,10 +15,9 @@ import javafx.util.Duration;
 
 /**
  * Implements {@code Observer}. <br/>
- * Extends from {@code StackPane}. <br/>
+ * Extends {@code StackPane}. <br/>
  * View of an {@code Item}.
  * 
- * @author ZhaoWen
  *
  */
 public class ItemView extends StackPane implements Observer {
@@ -70,7 +69,7 @@ public class ItemView extends StackPane implements Observer {
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		Platform.runLater(() -> transferItemView());
+			Platform.runLater(() -> transferItemView());
 	}
 
 	/**

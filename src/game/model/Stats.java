@@ -14,9 +14,6 @@ public class Stats implements Serializable {
 	
 	//****************************** Attributes ******************************
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private int baseHp;
@@ -25,11 +22,10 @@ public class Stats implements Serializable {
 	private int killXp;
 	private int maxHp;
 	private int xpToLevelUp;
-	private static int level;
 	
-	// Static: when the player will level up, all the other living beings will at the same time.
-	//private static int commonLevel;
+	private static int level; // Static: when the player will level up, all the other living beings will at the same time.
 	
+
 	//****************************** Constructor ******************************
 
 	/**
@@ -135,7 +131,6 @@ public class Stats implements Serializable {
 				this.hp = maxHp;
 			else
 				this.hp += hp;
-			//System.out.println(this.hp);
 		}
 	}
 	
@@ -197,11 +192,24 @@ public class Stats implements Serializable {
 			gainXp(extraXp);
 	}
 
+	// These two following methods are written in order to save and load the static int: level.
+	
+	/**
+	 * Writes the non-transient fields of the current class to this stream.
+	 * @param ObjectOutputStream oos
+	 * @throws IOException
+	 */
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 		oos.defaultWriteObject();
 		oos.writeObject(new Integer(level));
 	}
 
+	/**
+	 * Read the non-transient fields of the current class from this stream.
+	 * @param ObjectInputStream ois
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
 		ois.defaultReadObject();
 		level = (Integer) ois.readObject();

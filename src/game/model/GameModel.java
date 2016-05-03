@@ -11,13 +11,8 @@ public class GameModel implements Serializable {
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	private static boolean running;
-	
+	private static boolean running;	
 	private Map map;
 	private Player player;
 	

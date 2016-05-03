@@ -16,9 +16,6 @@ public class BasicMove implements Movement, Serializable {
 	
 	//****************************** Attributes ******************************
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Movable movable;

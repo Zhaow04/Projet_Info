@@ -62,7 +62,6 @@ public final class Poison extends Dot {
 			timer.scheduleAtFixedRate(new TimerTask() {
 				  @Override
 				  public void run() {
-					  	setStartPos(getTarget().getX(), getTarget().getY());
 						setPosition(getTarget().getX(), getTarget().getY());
 						user.notifyObservers(skillToNotify);
 						getTarget().loseHp(getDamage());

@@ -102,15 +102,6 @@ public abstract class Skill implements Serializable {
 	}
 	
 	/**
-	 * Sets the starting position of the skill.
-	 * @param startX
-	 * @param startY
-	 */
-	protected void setStartPos(int startX, int startY) {
-		getViewSettings().setStartPos(startX, startY);
-	}
-	
-	/**
 	 * Gets the view settings of the skill.
 	 * @return viewSettings
 	 */

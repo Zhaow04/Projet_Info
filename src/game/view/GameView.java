@@ -1,9 +1,6 @@
 package game.view;
 
 import java.io.IOException;
-
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 import game.Main;
 import game.controller.GameController;
 import game.controller.HUDController;
@@ -53,25 +50,11 @@ public class GameView extends BorderPane implements Observer {
 		super();
 		this.mainStage = stage;
 		gameScene = new Scene(this);
-		gameController = new GameController();
+		//gameController = new GameController();
 		showStartMenu();
 	}
 	
-	/**
-	 * Creates the view of the game.
-	 * 
-	 * @param model
-	 * @param stage
-	 */
-	public GameView(Stage stage, GameModel model, GameController gameController) {
-		super();
-		this.mainStage = stage;
-		this.model = model;
-		this.gameController = gameController;
-		gameScene = new Scene(this);
-		showStartMenu();
-	}
-
+	
 	//************************** Getters and Setters **************************
 	
 	//******************************** Methods ********************************
@@ -124,10 +107,10 @@ public class GameView extends BorderPane implements Observer {
 	 * @param mapSize
 	 */
 	public void newGame(int mapSize) {
-		//model = new GameModel(mapSize);
+		model = new GameModel(mapSize);
 		model.init(mapSize);
 		model.getPlayer().addObserver(this);
-		gameController.init(model);
+		gameController = new GameController(model);
 		
 		mapView = new MapView(model.getMap(), this, gameController);
 		mapView.setOnKeyPressed(gameController);
@@ -146,7 +129,7 @@ public class GameView extends BorderPane implements Observer {
 	public void loadGame() {
 		model = ResourceManager.load();
 		model.getPlayer().addObserver(this);
-		gameController.init(model);
+		gameController = new GameController(model);
 		
 		mapView = new MapView(model.getMap(), this, gameController);
 		mapView.setOnKeyPressed(gameController);
@@ -169,22 +152,16 @@ public class GameView extends BorderPane implements Observer {
 	 * @param gameController
 	 */
 	private void initPlayerViewAndHUD(Player player, MapView mapView, GameController gameController) {
-		PlayerView playerView = new PlayerView(model.getPlayer(), mapView);
+		new PlayerView(model.getPlayer(), mapView);
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/HUD.fxml"));
 			BorderPane hud = (BorderPane) loader.load();
-			HUDController hudController = (HUDController) loader.getController();
-			
+			HUDController hudController = (HUDController) loader.getController();			
 			hudController.init(model.getPlayer());
 			inventoryViewController = hudController.getInventoryViewController();
-			gameController.setHudController(hudController);
 			this.setBottom(hud);
-
 			hudController.setGameController(gameController);
-			/*InventoryViewController inventoryViewController = hudController.getInventoryViewController();
-			setInventoryViewController(inventoryViewController);
-			inventoryViewController.setPlayer(player);*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

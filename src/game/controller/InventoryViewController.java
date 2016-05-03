@@ -69,24 +69,5 @@ public final class InventoryViewController implements Observer {
 			}
 		}
 	}
-
-	/**
-	 * Adds a {@code ItemView} to the inventory window and allows the user to use or throw the item.
-	 * @param itemView
-	 */
-	/*public synchronized void addItemView(ItemView itemView) {
-		Item item = itemView.getItem();
-		int index = player.getInventory().getItemNumber(item);
-		StackPane itemContainer = (StackPane) inventoryContainer.getChildren().get(index);
-		itemView.setTranslateX(0); itemView.setTranslateY(0);
-		new ItemMenu(player, index, itemView);
-		itemContainer.getChildren().add(itemView);
-		itemView.setPrefWidth(itemContainer.getPrefWidth());
-		itemView.setPrefHeight(itemContainer.getPrefHeight());
-		ImageView imageView = (ImageView) itemView.getChildren().get(0);
-		imageView.setFitWidth(itemContainer.getPrefWidth());
-		imageView.setFitHeight(itemContainer.getPrefHeight());
-		//itemView.setPreserveRatio(true);
-	}*/
 	
 }

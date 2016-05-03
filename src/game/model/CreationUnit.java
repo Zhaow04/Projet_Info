@@ -3,6 +3,7 @@ package game.model;
 import java.util.Random;
 
 import game.model.item.HpPotion;
+import game.model.item.XpParchment;
 import game.model.monster.Monster;
 import game.utilities.ImageDB;
 
@@ -13,9 +14,7 @@ import game.utilities.ImageDB;
  *
  */
 public abstract class CreationUnit {
-	
-	//****************************** Constructor ******************************
-	
+		
 	//******************************** Methods ********************************
 	
 	/**
@@ -34,10 +33,8 @@ public abstract class CreationUnit {
 		for(int i = 1; i <= size-7; i+=5) {
 			for(int j = 1; j <= size-7; j+=5) {
 				addObstacle(rand.nextInt(3), map, j+rand.nextInt(5), i+rand.nextInt(5));
-				if(rand.nextInt(2) == 0){
-					addMonster(rand.nextInt(4), map, j+rand.nextInt(5), i+rand.nextInt(5));
-					addItem(0, map, j+rand.nextInt(5), i+rand.nextInt(5));
-				}
+				addItem(rand.nextInt(3), map, j+rand.nextInt(5), i+rand.nextInt(5));
+				addMonster(rand.nextInt(4), map, j+rand.nextInt(5), i+rand.nextInt(5));
 			}
 		}
 	}
@@ -71,7 +68,6 @@ public abstract class CreationUnit {
 		Random rand = new Random();
 		for(int i = 1; i <= map.getSize()-7; i+=5) {
 			for(int j = 1; j <= map.getSize()-7; j+=5) {
-				if(rand.nextInt(2) == 0)
 					addMonster(rand.nextInt(4), map, j+rand.nextInt(5), i+rand.nextInt(5));
 			}
 		}
@@ -112,6 +108,11 @@ public abstract class CreationUnit {
 		switch (i) {
 		case 0:
 			map.addToMap(new HpPotion(100),x,y);
+			break;
+		case 1:
+			map.addToMap(new XpParchment(50),x,y);
+			break;
+		case 2:
 			break;
 		}
 	}

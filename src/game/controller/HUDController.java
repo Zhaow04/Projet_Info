@@ -19,8 +19,6 @@ import javafx.stage.Stage;
  * Implements {@link Observer}. <br/>
  * Controller class for the HUD. Displays the health, the experience and the level of the player.
  * 
- * @author ZhaoWen
- *
  */
 public class HUDController implements Observer {
 	

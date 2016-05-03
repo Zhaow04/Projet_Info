@@ -17,9 +17,6 @@ public class ViewSettings implements Serializable {
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String imageURL;
@@ -28,7 +25,6 @@ public class ViewSettings implements Serializable {
 	private int spanX = 1, spanY = 1; // Number of cells in x and y the image should take on the map
 	// MapInfos (x,y) of the image on the map. By default use the map component's position.
 	private int[] position; // End position for a skill
-	private int startX, startY; // Start position for a skill
 	
 	//****************************** Constructor ******************************
 	
@@ -223,17 +219,6 @@ public class ViewSettings implements Serializable {
 		position[0] = x; position[1] = y;
 	}
 	
-	public int getStartX() {
-		return startX;
-	}
-	
-	public int getStartY() {
-		return startY;
-	}
-
-	public void setStartPos(int startX, int startY) {
-		this.startX = startX; this.startY = startY;
-	}
 	
 	//******************************** Methods ********************************
 

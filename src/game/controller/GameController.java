@@ -1,7 +1,6 @@
-	package game.controller;
+package game.controller;
 
 import java.util.ArrayList;
-
 import game.Main;
 import game.model.GameModel;
 import game.model.Player;
@@ -13,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 
 /**
  * Main controller class for the game. It handles keyboard inputs.
- * @author ZhaoWen
  *
  */
 public class GameController implements EventHandler<KeyEvent>, Runnable {
@@ -22,46 +20,26 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	private GameModel model;
 	private Player player;
-	private HUDController hudController;
 
 	private ArrayList<KeyCode> keyList = new ArrayList<KeyCode>();
 
 	//****************************** Constructor ******************************
 
 	/**
-	 * Void constructor.
-	 */
-	public GameController() {
-		
-	}
-	
-	/**
 	 * Creates a controller that handles keyboard inputs.
 	 * @param model
 	 */
 	public GameController(GameModel model) {
-		this.model = model;
-		this.player = model.getPlayer();
-	}
-
-	//************************** Getters and Setters **************************
-
-	/**
-	 * Sets the Heads Up Display (HUD) controller.
-	 * @param hudController
-	 */
-	public void setHudController(HUDController hudController) {
-		this.hudController = hudController;
+			this.model = model;
+			this.player = model.getPlayer();
 	}
 
 	//******************************** Methods ********************************
 	
 	@Override
 	public void handle(KeyEvent event) {
-		if(GameModel.isRunning()) {
-			addKey(event.getCode());
-			Main.execute(this);
-		}
+		addKey(event.getCode());
+		Main.execute(this);
 	}
 
 	@Override
@@ -70,15 +48,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 			useFirstKey();
 	}
 	
-	/**
-	 * Connects the controller to the model.
-	 * @param model
-	 */
-	public void init(GameModel model) {
-		this.model = model;
-		this.player = model.getPlayer();
-	}
-
+	
 	/**
 	 * Adds a key (user input) to a list of keys which can contain a maximum of two keys.
 	 * @param key

@@ -2,9 +2,6 @@ package game;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import game.controller.GameController;
-import game.model.GameModel;
 import game.view.GameView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -16,10 +13,8 @@ public class Main extends Application {
 	
 	//************************ main and start methods ************************
 
-	public static void main(String[] args){
-		
-		launch(args);
-		
+	public static void main(String[] args){		
+		launch(args);		
 	}
 
 	@Override
@@ -28,15 +23,13 @@ public class Main extends Application {
 		primaryStage.setOnCloseRequest((value) -> {
 			Platform.exit();
 			System.exit(0);
-		});
-		GameModel model = new GameModel();
-		GameController controller = new GameController(model);
-		new GameView(primaryStage, model, controller);
+		});		
+		new GameView(primaryStage);
 	}
 	
 	/**
 	 * Executes the {@link Runnable} in a thread.
-	 * @param r
+	 * @param runnable
 	 */
 	public static void execute(Runnable r) {
 		threadPool.execute(r);

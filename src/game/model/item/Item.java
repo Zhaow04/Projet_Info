@@ -21,13 +21,9 @@ public abstract class Item extends MapComponent implements Observable {
 	
 	//****************************** Attributes ******************************
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int numberOfUse;
-	
+	private int numberOfUse;	
 	private transient ArrayList<Observer> observers;
 	
 	//****************************** Constructor ******************************

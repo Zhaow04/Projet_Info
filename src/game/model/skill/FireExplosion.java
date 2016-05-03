@@ -21,7 +21,7 @@ public final class FireExplosion extends Aoe {
 	//****************************** Constructor ******************************
 
 	/**
-	 * Creates a fire explosion attack (range: 3 + area damage: 100) and sets its release time (5sec).
+	 * Creates a fire explosion attack (range: 3; area damage: 100) and sets its release time (5sec).
 	 */
 	public FireExplosion() {
 		super(100, 3, ImageDB.getFireView(),5000, 3);
@@ -58,7 +58,6 @@ public final class FireExplosion extends Aoe {
 			Map map = user.getCurrentMap();
 			int targetX = getTarget().getX();
 			int targetY = getTarget().getY();
-			setStartPos(getTarget().getX()-1, getTarget().getY()-1);
 			setPosition(getTarget().getX()-1, getTarget().getY()-1);
 			user.notifyObservers(this);
 			for(int i = -(getRadius()-2); i <= getRadius()-2; i++) {
