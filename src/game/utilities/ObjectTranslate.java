@@ -7,9 +7,6 @@ import javafx.util.Duration;
 /**
  * Used for fluid transition when a living being moves.
  * 
- * @author ZhaoWen
- * @see {@link Runnable}
- *
  */
 public class ObjectTranslate {
 	

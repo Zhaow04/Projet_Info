@@ -13,9 +13,6 @@ public class MapComponent implements Serializable {
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Map currentMap;

@@ -8,14 +8,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 /**
- * Controller class for the start scene. The start menu allows the user to enter the size of the map.
+ * Controller class for the start scene. The start menu allows the user to enter the size of the map or to load the previous game.
  * 
- * @author ZhaoWen
  *
  */
 public final class StartSceneController {
 	
-private GameView gameView;
+	//****************************** Attributes ******************************
+
+	private GameView gameView;
 	
 	@FXML
 	private BorderPane startMenu;
@@ -35,6 +36,8 @@ private GameView gameView;
 	@FXML
 	private TextField mapSizeField;
 	
+	//****************************** Constructor ******************************
+
 	/**
 	 * Void constructor.
 	 */
@@ -42,6 +45,8 @@ private GameView gameView;
 
 	}
 	
+	//******************************** Methods ********************************
+
 	/**
 	 * Connects the {@code StartSceneController} to the specified {@code GameView} in order to call the
 	 * method {@link GameView#newGame} after the user enters a size for the map.

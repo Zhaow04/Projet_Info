@@ -15,9 +15,6 @@ import game.model.Player;
  */
 public class TrackPlayer extends BasicMove {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************

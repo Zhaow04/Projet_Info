@@ -6,14 +6,10 @@ import java.io.Serializable;
  * Implements {@link Serializable}. <br/>
  * Class that allows to create 2-dimensional vectors and provides vector addition and vector subtraction.
  * 
- * @author ZhaoWen
  *
  */
 public class Vector2D implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private double x,y;

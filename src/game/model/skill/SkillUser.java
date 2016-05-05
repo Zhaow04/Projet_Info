@@ -40,6 +40,10 @@ public interface SkillUser {
 	 */
 	void notifyObservers(Object arg);
 	
+	/**
+	 * Makes the user gain xp.
+	 * @param xp
+	 */
 	void gainXp(int xp);
 	
 }

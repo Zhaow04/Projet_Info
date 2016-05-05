@@ -13,9 +13,6 @@ import game.utilities.Vector2D;
  */
 public final class FireExplosion extends Aoe {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************

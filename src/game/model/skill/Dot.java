@@ -13,9 +13,6 @@ public abstract class Dot extends Skill {
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private int lapse;

@@ -12,9 +12,6 @@ import game.model.Player;
  */
 public class FaceThePlayer extends BasicMove {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************

@@ -9,9 +9,18 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import game.model.GameModel;
-
+/**
+ * Public abstract class that gathers all the methods regarding the save and load of the game.
+ *
+ */
 public abstract class ResourceManager {
 
+	//******************************** Methods ********************************
+
+	/**
+	 * 
+	 * @param data {@link Serializable}
+	 */
     public static void save(Serializable data) {
         try {
         	FileOutputStream fos = new FileOutputStream("src/game/save.ser");
@@ -40,13 +49,5 @@ public abstract class ResourceManager {
 		}
     	return model;
     }
-/*
-    public static GameModel load(String fileName) throws Exception {
-        try {
-        	FileInputStream fis = new FileInputStream(fileName);
-        	ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(fileName)));
-            return (GameModel) ois.readObject();
-        }
-    }*/
     
 }

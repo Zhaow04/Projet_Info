@@ -18,22 +18,27 @@ import javafx.scene.layout.TilePane;
  * Implements {@link Observer}. <br/>
  * Controller class for the inventory window. Allows the user the use or throw items.
  * 
- * @author ZhaoWen
  *
  */
 public final class InventoryViewController implements Observer {
 	
+	//****************************** Attributes ******************************
+
 	private Player player;
 	
 	@FXML
 	private TilePane inventoryContainer; // Contains StackPanes, 1 StackPane = 1 item slot
 	
+	//****************************** Constructor ******************************
+
 	/**
 	 * Void constructor.
 	 */
 	public InventoryViewController() {
 		
 	}
+
+	//******************************** Methods ********************************
 
 	/**
 	 * Updates the inventory window, i.e. shows the items in the inventory.

@@ -17,11 +17,13 @@ import javafx.stage.Stage;
 
 /**
  * Implements {@link Observer}. <br/>
- * Controller class for the HUD. Displays the health, the experience and the level of the player.
+ * Controller class for the HUD. Displays the health, the experience and the level of the player, as well as the buttons P,S,I.
  * 
  */
 public class HUDController implements Observer {
 	
+	//****************************** Attributes ******************************
+
 	private Player player;
 	private GameController gameController;
 	private InventoryViewController inventoryViewController;
@@ -34,14 +36,14 @@ public class HUDController implements Observer {
 	@FXML
 	private Text lvl;
 	@FXML
-	private Button characterButton;
+	private Button pauseButton;
 	@FXML
 	private Button inventoryButton;
 	@FXML
-	private Button configButton;
-	@FXML
 	private Button saveButton;
 	
+	//****************************** Constructor ******************************
+
 	/**
 	 * Void constructor.
 	 */
@@ -49,6 +51,8 @@ public class HUDController implements Observer {
 		
 	}
 	
+	//******************************** Methods ********************************
+
 	/**
 	 * Sets the {@link GameController}.
 	 * @param gameController

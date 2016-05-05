@@ -14,9 +14,6 @@ import java.util.TimerTask;
  */
 public final class Poison extends Dot {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************
@@ -32,8 +29,7 @@ public final class Poison extends Dot {
 
 	@Override
 	public boolean usable(SkillUser user) {
-		setTarget(null);
-		if(timingIsOk()){
+			setTarget(null);
 			Map map = user.getCurrentMap();
 			Vector2D direction = user.getDirectionFacing();
 			Vector2D targetPos = new Vector2D(user.getX(), user.getY());
@@ -48,14 +44,14 @@ public final class Poison extends Dot {
 					break;
 				a++;
 			}
-		}
 		return (getTarget() != null);
 	}
 	
 	@Override
 	public void use(SkillUser user) {
 		Skill skillToNotify = this;
-		if(usable(user)) {
+		if (timingIsOk()){
+			if(usable(user)) {
 			Timer timer = new Timer();
 			long startTime=System.currentTimeMillis();
 			setLastExecutionTime (startTime);
@@ -75,8 +71,8 @@ public final class Poison extends Dot {
 					        timer.purge();
 						}
 				  }
-			}, 0, getLapse());
+			}, 0, getLapse());}
 		}
 	}
+	}
 	
-}

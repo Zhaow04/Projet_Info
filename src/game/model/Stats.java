@@ -19,7 +19,6 @@ public class Stats implements Serializable {
 	private int baseHp;
 	private int hp;
 	private int xp;
-	private int killXp;
 	private int maxHp;
 	private int xpToLevelUp;
 	
@@ -46,11 +45,11 @@ public class Stats implements Serializable {
 	 * @param baseHp
 	 * @param killxp
 	 */
-	public Stats(int baseHp, int killxp) {
+	public Stats(int baseHp, int xp) {
 		this.baseHp = baseHp;
 		updateMaxHp();
 		hp = maxHp;
-		this.killXp = killxp;
+		this.xp = xp;
 	}
 
 	//************************** Getters and Setters **************************
@@ -71,14 +70,6 @@ public class Stats implements Serializable {
 		return xp;
 	}
 	
-	/**
-	 * Gets the killXp (of a monster).
-	 * @return killXp
-	 */
-	public int getKillXp() {
-		return killXp;
-	}
-
 	/**
 	 * Gets the level.
 	 * @return level

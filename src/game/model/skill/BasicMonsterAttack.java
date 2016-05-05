@@ -10,12 +10,9 @@ import game.utilities.ImageDB;
  */
 public class BasicMonsterAttack extends DirectAttack {
 	
-	//****************************** Constructor ******************************
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	//****************************** Constructor ******************************
 	
 	/**
 	 * Creates a basic monster attack that deals 50 damage.

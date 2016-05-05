@@ -16,9 +16,6 @@ public class MoveInX extends BasicMove {
 	
 	//****************************** Attributes ******************************
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private int baseX=-1, baseY=-1;

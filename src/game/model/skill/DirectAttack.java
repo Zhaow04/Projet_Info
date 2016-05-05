@@ -14,9 +14,6 @@ import game.utilities.ViewSettings;
  */
 public abstract class DirectAttack extends Skill {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	//****************************** Constructor ******************************

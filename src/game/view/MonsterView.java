@@ -1,8 +1,8 @@
 package game.view;
 
 import game.Main;
+import game.model.Monster;
 import game.model.Observable;
-import game.model.monster.Monster;
 import game.model.skill.Skill;
 import game.utilities.MovementAnimation;
 import game.utilities.ViewSettings;

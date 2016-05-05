@@ -13,7 +13,6 @@ import javafx.util.Duration;
  * Class that handles the animation during a movement. Plays a {@link TranslateTransition} and a
  * {@link SpriteAnimation} in parallel.
  * 
- * @author ZhaoWen
  *
  */
 public final class MovementAnimation {

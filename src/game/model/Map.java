@@ -6,7 +6,6 @@ import java.util.Random;
 
 import game.Main;
 import game.model.item.Item;
-import game.model.monster.Monster;
 import game.model.movement.Movement;
 import game.model.skill.SkillTarget;
 import game.utilities.ImageDB;
@@ -346,16 +345,27 @@ public class Map implements Observable, Serializable {
 		}
 	}
 	
+	/**
+	 * Makes changes relative to the death of the player : the map is no more active.
+	 * @param player
+	 */
 	public void notifyDead(Player player) {
 		setNoCollision(player.getX(), player.getY());
 		active = false;
 	}
 
+	/**
+	 * Runs the map by starting the threads.
+	 * @see {@link startThreads}
+	 */
 	public void run() {
 		active = true;
 		startThreads();
 	}
 	
+	/**
+	 * Executes the runnable monsters.
+	 */
 	public void startThreads() {
 		ArrayList<Monster> monsters = getMonsters();
 		for(Monster m : monsters) {

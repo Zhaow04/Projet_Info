@@ -24,8 +24,16 @@ public interface SkillTarget {
 	 */
 	void loseHp(int hp);
 	
+	/**
+	 * Returns whether or not the target is dead.
+	 * @return boolean
+	 */
 	boolean isDead();
 	
-	int getKillXp();
+	/**
+	 * Gets the xp of the target.
+	 * @return xp
+	 */
+	int getXp();
 	
 }

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import game.model.item.HpPotion;
 import game.model.item.XpParchment;
-import game.model.monster.Monster;
 import game.utilities.ImageDB;
 
 /**

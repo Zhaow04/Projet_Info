@@ -45,15 +45,7 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	}
 	
 	//************************** Getters and Setters **************************
-	
-	/**
-	 * Gets the Xp of the Player.
-	 * @return Xp
-	 */
-	public int getXp() {
-		return getStats().getXp();
-	}
-	
+		
 	/**
 	 * Gets the Xp needed by the player in order to level up.
 	 * @return xpToLevelUp
@@ -94,8 +86,8 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	}
 
 	@Override
-	public int getKillXp() {
-		return getStats().getKillXp();
+	public int getXp() {
+		return getStats().getXp();
 	}
 
 	/**

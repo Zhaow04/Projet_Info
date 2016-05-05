@@ -43,9 +43,7 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 	}
 	
 	//************************** Getters and Setters **************************
-	
-	
-	
+
 	/**
 	 * Gets the direction the living being is facing.
 	 * 

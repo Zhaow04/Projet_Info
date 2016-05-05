@@ -13,9 +13,6 @@ public abstract class Skill implements Serializable {
 	
 	//****************************** Attributes ******************************
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private int damage;
@@ -137,7 +134,7 @@ public abstract class Skill implements Serializable {
 	 * @param user
 	 */
 	protected void gainKillXp(SkillUser user){
-		int killXp = getTarget().getKillXp();
+		int killXp = getTarget().getXp();
 		user.gainXp(killXp);
 	}
 	

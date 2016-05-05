@@ -92,8 +92,8 @@ public class BasicMove implements Movement, Serializable {
 	//******************************** Methods ********************************
 
 	/**
-	 * Returns whether or not the movable m can move towards the direction (dx,dy).
-	 * @param m
+	 * Returns whether or not the movable can move towards the direction (dx,dy).
+	 * @param movable
 	 * @param dx
 	 * @param dy
 	 * @return boolean

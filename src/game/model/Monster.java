@@ -1,13 +1,7 @@
-package game.model.monster;
+package game.model;
 
-import game.model.GameModel;
-import game.model.LivingBeing;
-import game.model.Movable;
-import game.model.Player;
-import game.model.Stats;
 import game.model.movement.FaceThePlayer;
 import game.model.movement.MoveInX;
-import game.model.movement.Movement;
 import game.model.movement.TrackPlayer;
 import game.model.skill.BasicMonsterAttack;
 import game.model.skill.Skill;
@@ -27,16 +21,12 @@ import game.utilities.ViewSettings;
 public class Monster extends LivingBeing implements Runnable, SkillTarget, SkillUser {
 	
 	//****************************** Attributes ******************************
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	
 	private int state;
 	private int scope;
 	private Skill skill;
-	private Movement basicMovement;
 	
 	//****************************** Constructor ******************************
 	
@@ -48,7 +38,6 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	public Monster(ViewSettings viewSettings, Stats stats, int scope) {
 		super(viewSettings, new MoveInX(), stats);
 		this.scope = scope;
-		this.basicMovement= getMovement();
 		state = 1;
 		this.skill = new BasicMonsterAttack();
 	}
@@ -88,24 +77,21 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 		while(state != 0 && getCurrentMap().isActive() && GameModel.isRunning()) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
-				setMovement(new TrackPlayer());
-				getMovement().move(m);
-				basicMovement.setBaseX(this.getX());
-				basicMovement.setBaseY(this.getY());
+				new TrackPlayer().move(m);
+				getMovement().setBaseX(this.getX());
+				getMovement().setBaseY(this.getY());
 			}
 			else if (isPlayerNearby()){
-				setMovement(new FaceThePlayer());
-				getMovement().move(m);
+				new FaceThePlayer().move(m);
 				getSkill().use(this);
 			}
 			else {
-				setMovement(basicMovement);
 				getMovement().move(m);
 			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 	}
@@ -121,8 +107,8 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	}
 
 	@Override
-	public int getKillXp() {
-		return getStats().getKillXp();
+	public int getXp() {
+		return getStats().getXp();
 	}
 
 	/**

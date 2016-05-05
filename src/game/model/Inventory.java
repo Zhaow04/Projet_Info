@@ -163,6 +163,10 @@ public class Inventory implements Observable, Serializable {
 		return items.indexOf(item);
 	}
 	
+	/**
+	 * Returns whether or not the inventory is full of items (no more available slots).
+	 * @return boolean
+	 */
 	public boolean isFull(){
 		boolean isFull = true;
 		for (Item item : items){
