@@ -334,7 +334,7 @@ public class Map implements Observable, Serializable {
 	}
 
 	/**
-	 * Notifies the observer that the skill target given is dead,
+	 * Makes changes relative to the death of the skill target.
 	 * @param skillTarget
 	 */
 	public void notifyDead(SkillTarget target) {

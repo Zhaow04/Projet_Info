@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import game.model.item.Item;
 import game.model.movement.BasicMove;
-import game.model.skill.FireExplosion;
-import game.model.skill.FirstAttack;
-import game.model.skill.Poison;
+import game.model.skill.Aoe;
+import game.model.skill.DirectAttack;
+import game.model.skill.Dot;
 import game.model.skill.Skill;
 import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
@@ -39,9 +39,9 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	public Player(){
 		super(ImageDB.getPlayerView(), new BasicMove(), new Stats(1500));
 		this.inventory = new Inventory(this);
-		addSkill(new FirstAttack());
-		addSkill(new FireExplosion());
-		addSkill(new Poison());
+		addSkill(new DirectAttack(100, ImageDB.getLightningView(), 1000));
+		addSkill(new Dot(40, 3, ImageDB.getPoisonView(), 20000, 2000, 5));
+		addSkill(new Aoe(100, 3, ImageDB.getFireView(),5000, 3));
 	}
 	
 	//************************** Getters and Setters **************************

@@ -3,10 +3,11 @@ package game.model;
 import game.model.movement.FaceThePlayer;
 import game.model.movement.MoveInX;
 import game.model.movement.TrackPlayer;
-import game.model.skill.BasicMonsterAttack;
+import game.model.skill.DirectAttack;
 import game.model.skill.Skill;
 import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
+import game.utilities.ImageDB;
 import game.utilities.Vector2D;
 import game.utilities.ViewSettings;
 
@@ -39,7 +40,7 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 		super(viewSettings, new MoveInX(), stats);
 		this.scope = scope;
 		state = 1;
-		this.skill = new BasicMonsterAttack();
+		this.skill = new DirectAttack(50, ImageDB.getBasicMonsterAttackView(), 800);
 	}
 	
 	//************************** Getters and Setters **************************
@@ -51,23 +52,6 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	 */
 	public int getScope() {
 		return scope;
-	}
-	
-	/**
-	 * Sets the the scope of the monster (the range of its vision).
-	 * 
-	 * @param scope
-	 */
-	protected void setScope(int scope) {
-		this.scope = scope;
-	}
-	
-	/**
-	 * Gets the skill of the monster.
-	 * @return skill
-	 */
-	protected Skill getSkill() {
-		return this.skill ;
 	}
 	
 	//******************************** Methods ********************************
@@ -83,7 +67,7 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 			}
 			else if (isPlayerNearby()){
 				new FaceThePlayer().move(m);
-				getSkill().use(this);
+				skill.use(this);
 			}
 			else {
 				getMovement().move(m);
@@ -116,7 +100,7 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	 * 
 	 * @return boolean
 	 */
-	protected boolean isPlayerInView() {
+	private boolean isPlayerInView() {
 		Player player = getCurrentMap().getPlayer();
 		int x = this.getX();
 		int y = this.getY();
@@ -151,7 +135,7 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	 * Returns whether or not a Player is Nearby (right on the left/right/behind/facing).
 	 * @return boolean
 	 */
-	public boolean isPlayerNearby(){
+	private boolean isPlayerNearby(){
 		Player player=this.getCurrentMap().getPlayer();
 		int x0 = this.getX();
 		int y0 = this.getY();

@@ -12,7 +12,7 @@ import game.utilities.ViewSettings;
  * @see {@link Skill}
  *
  */
-public abstract class DirectAttack extends Skill {
+public class DirectAttack extends Skill {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -28,7 +28,7 @@ public abstract class DirectAttack extends Skill {
 	//******************************** Methods ********************************
 
 	@Override
-	public boolean usable(SkillUser user) {
+	protected boolean usable(SkillUser user) {
 		return getTarget() != null && timingIsOk();
 	}
 	

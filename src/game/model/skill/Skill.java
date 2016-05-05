@@ -121,7 +121,7 @@ public abstract class Skill implements Serializable {
 	 * @param user
 	 * @return boolean
 	 */
-	public abstract boolean usable(SkillUser user);
+	protected abstract boolean usable(SkillUser user);
 	
 	/**
 	 * Makes the skill user use the skill.
@@ -130,7 +130,7 @@ public abstract class Skill implements Serializable {
 	public abstract void use(SkillUser user);
 	
 	/**
-	 * Makes the user (player) gain the killXp of the monster.
+	 * Makes the user gain the Xp of the target.
 	 * @param user
 	 */
 	protected void gainKillXp(SkillUser user){
