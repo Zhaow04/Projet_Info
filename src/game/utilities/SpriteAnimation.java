@@ -9,10 +9,11 @@ import javafx.util.Duration;
 /**
  * Class that handles the animation of a sprite.
  * 
- * @author ZhaoWen
  *
  */
 public class SpriteAnimation extends Transition {
+
+	//****************************** Attributes ******************************
 
     private final ImageView imageView;
     private final int count;
@@ -21,8 +22,9 @@ public class SpriteAnimation extends Transition {
     private int offsetY;
     private int width;
     private int height;
-
     private int lastIndex;
+    
+	//****************************** Constructor ******************************
 
     /**
      * Constructor of {@link SpriteAnimation}.
@@ -44,38 +46,8 @@ public class SpriteAnimation extends Transition {
         this.setOnFinished((value) -> imageView.setViewport((
         		new Rectangle2D(offsetX, offsetY, width, height))));
     }
-    /*
-    public SpriteAnimation(Observable o, ImageView imageView, Duration duration,
-    		int count, int columns) {
-        this.imageView = imageView;
-        this.count     = count;
-        this.columns   = columns;
-        ViewSettings viewSettings = o.getViewSettings();
-        this.offsetX   = (int) viewSettings.getOffsetX();
-        this.offsetY   = (int) viewSettings.getOffsetY();
-        this.width     = (int) viewSettings.getWidth();
-        this.height    = (int) viewSettings.getHeight();
-        setCycleDuration(duration);
-        setInterpolator(Interpolator.LINEAR);
-        setCycleCount(1);
-        this.play();
-    }*/
-    /*
-    public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, Duration duration,
-    		int count, int columns) {
-        this.imageView = imageView;
-        this.count     = count;
-        this.columns   = columns;
-        this.offsetX   = (int) viewSettings.getOffsetX();
-        this.offsetY   = (int) viewSettings.getOffsetY();
-        this.width     = (int) viewSettings.getWidth();
-        this.height    = (int) viewSettings.getHeight();
-        setCycleDuration(duration);
-        setInterpolator(Interpolator.LINEAR);
-        setCycleCount(1);
-        this.play();
-        
-    }*/
+   
+	//******************************** Methods ********************************
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);

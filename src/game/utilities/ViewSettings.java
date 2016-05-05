@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
  * the URL of the image, the x and y offsets, the width and the height of the wanted region, how much
  * the image should span in x and y.
  * 
- * @author ZhaoWen
  *
  */
 public class ViewSettings implements Serializable {

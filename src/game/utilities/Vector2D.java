@@ -14,11 +14,12 @@ public class Vector2D implements Serializable {
 	
 	private double x,y;
 	
+	//****************************** Constructor ******************************
+
 	/**
 	 * Void constructor.
 	 */
 	public Vector2D() {
-		
 	}
 	
 	/**
@@ -31,6 +32,8 @@ public class Vector2D implements Serializable {
 		this.y = y;
 	}
 	
+	//************************** Getters and Setters **************************
+
 	/**
 	 * Gets the x component as a double.
 	 * @return x component
@@ -73,6 +76,8 @@ public class Vector2D implements Serializable {
 		this.y = y;
 	}
 	
+	//******************************** Methods ********************************
+
 	/**
 	 * Returns whether or not the x and y components are equal to the specified values.
 	 * @param x

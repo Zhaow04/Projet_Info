@@ -15,10 +15,9 @@ import game.model.GameModel;
  */
 public abstract class ResourceManager {
 
-	//******************************** Methods ********************************
 
 	/**
-	 * 
+	 * Saves the Serializable data using {@link ObjectOutputStream}.
 	 * @param data {@link Serializable}
 	 */
     public static void save(Serializable data) {
@@ -33,6 +32,10 @@ public abstract class ResourceManager {
         }
     }
     
+    /**
+     * Loads GameModel from the previous saved data using {@link ObjectInputStream}
+     * @return {@codeGameModel}
+     */
     public static GameModel load() {
     	GameModel model = null;
     	try {

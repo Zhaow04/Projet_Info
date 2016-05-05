@@ -7,13 +7,16 @@ import java.util.concurrent.Executors;
  * Class that manages multiple {@link Thread} by using {@link Executors}'
  * {@link Executors#newCachedThreadPool()}.
  * 
- * @author ZhaoWen
  *
  */
 public class ThreadPool {
 	
+	//****************************** Attributes ******************************
+
 	private ExecutorService threadPool;
 	
+	//****************************** Constructor ******************************
+
 	/**
 	 * Creates a new thread pool with {@link Executors#newCachedThreadPool()}.
 	 */
@@ -21,10 +24,8 @@ public class ThreadPool {
 		 threadPool = Executors.newCachedThreadPool();
 	}
 	
-	/**
-	 * 
-	 * @param r
-	 */
+	//******************************** Methods ********************************
+
 	public void execute(Runnable r) {
 		threadPool.execute(r);
 	}

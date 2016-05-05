@@ -17,11 +17,15 @@ import javafx.util.Duration;
  */
 public final class MovementAnimation {
 	
+	//****************************** Attributes ******************************
+
 	private TranslateTransition tt;
 	private SpriteAnimation sa;
 	private ParallelTransition pt;
 	private double cellSize;
 	private Node node;
+	
+	//****************************** Constructor ******************************
 	
 	/**
 	 * Constructor of {@link MovementAnimation}.
@@ -66,6 +70,8 @@ public final class MovementAnimation {
 		sa.update(viewSettings);
 		Platform.runLater(() -> pt.playFromStart());
 	}
+
+	//******************************** Methods ********************************
 
 	/**
 	 * Adds an {@code action} which will be executed at the end of the animation.
