@@ -1,35 +1,41 @@
 package game.model.skill;
 
-import game.model.item.Item;
+import java.io.Serializable;
+
 import game.utilities.ViewSettings;
 
 /**
- * Implements {@code Item}. <br/>
+ * Implements {@link Serializable}. <br/>
  * Abstract class that serves as a super class for all the skills.
  * 
- * @author ZhaoWen
- * @see {@link Item}
- *
  */
-public abstract class Skill implements ISkill {
+public abstract class Skill implements Serializable {
 	
 	//****************************** Attributes ******************************
+	
+	private static final long serialVersionUID = 1L;
 	
 	private int damage;
 	private int range;
 	private SkillTarget target;
+	private long lastExecutionTime;
+	private long releaseTime;
 
 	private ViewSettings viewSettings;
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a skill. Currently void.
+	 * Creates a skill, sets its damage, range, and viewSettings.
+	 * @param damage
+	 * @param range
+	 * @param viewSettings
 	 */
-	public Skill(int damage, int range, ViewSettings viewSettings){
-		setDamage(damage);
-		setRange(range);
-		setViewSettings(viewSettings);
+	public Skill(int damage, int range, ViewSettings viewSettings, long releaseTime) {
+		this.damage = damage;
+		this.range = range;
+		this.viewSettings = viewSettings;
+		this.releaseTime = releaseTime;
 	}
 	
 	//************************** Getters and Setters **************************
@@ -39,79 +45,105 @@ public abstract class Skill implements ISkill {
 	 * 
 	 * @return damage dealt
 	 */
-	public int getDamage() {
+	protected int getDamage() {
 		return damage;
 	}
 
 	/**
-	 * Sets the damage dealt by the skill.
-	 * 
-	 * @param damage
-	 */
-	private void setDamage(int damage) {
-		this.damage = damage;
-	}
-	/**
 	 * Gets the range of the skill.
 	 * 
-	 * @return
+	 * @return range
 	 */
 	protected int getRange() {
 		return range;
 	}
 	
 	/**
-	 * Gets the range of the skill.
-	 * 
-	 * @param range
+	 * Gets the target of the skill.
+	 * @return skill target
 	 */
-	private void setRange(int range) {
-		this.range = range;
-	}
-	
 	protected SkillTarget getTarget() {
 		return target;
 	}
 
+	/**
+	 * Sets the target of the skill.
+	 * @param skillTarget
+	 */
 	protected void setTarget(SkillTarget target) {
 		this.target = target;
 	}
 	
-	
+	/**
+	 * Gets the X position where the skill will take place.
+	 * @return x
+	 */
 	protected int getX() {
 		return getViewSettings().getX();
 	}
-	
+	/**
+	 * Gets the Y position where the skill will take place.
+	 * @return y
+	 */
 	protected int getY() {
 		return getViewSettings().getY();
 	}
 
+	/**
+	 * Sets the position where the skill will take place.
+	 * @param x
+	 * @param y
+	 */
 	protected void setPosition(int x, int y) {
 		getViewSettings().setPosition(x, y);
 	}
 	
-	protected void setStartPos(int startX, int startY) {
-		getViewSettings().setStartPos(startX, startY);
-	}
-	
-	@Override
+	/**
+	 * Gets the view settings of the skill.
+	 * @return viewSettings
+	 */
 	public ViewSettings getViewSettings() {
 		return viewSettings;
 	}
 	
-	private void setViewSettings(ViewSettings viewSettings) {
-		this.viewSettings = viewSettings;
+	/**
+	 * Sets the time of the last execution of the skill.
+	 * @param executionTime
+	 */
+	protected void setLastExecutionTime(long executionTime){
+		this.lastExecutionTime = executionTime;
 	}
-	
+		
 	//******************************** Methods ********************************
 	
-	//public abstract void use(SkillUser user);
+	/**
+	 * Returns whether or not the skill can be used.
+	 * @param user
+	 * @return boolean
+	 */
+	protected abstract boolean usable(SkillUser user);
 	
+	/**
+	 * Makes the skill user use the skill.
+	 * @param user
+	 */
+	public abstract void use(SkillUser user);
+	
+	/**
+	 * Makes the user gain the Xp of the target.
+	 * @param user
+	 */
 	protected void gainKillXp(SkillUser user){
-		int killXp = getTarget().getStats().getKillXp();
-		user.getStats().gainXp(killXp);
+		int killXp = getTarget().getXp();
+		user.gainXp(killXp);
 	}
 	
-	
+	/**
+	 * Returns whether or not the release time has been respected before using the skill another time.
+	 * @return boolean
+	 */
+	protected boolean timingIsOk(){
+		return System.currentTimeMillis()- this.lastExecutionTime >= this.releaseTime ;
+	}
 
 }

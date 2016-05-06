@@ -9,26 +9,32 @@ import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**
- * A class implements {@code Item} when it can be used by another class. Example : item
- * used by the player.
- * Implements {@code Item}. <br/>
- * Extends from {@code ViewSettings} <br/>
- * Abstract class that serves as a super class for all the items.
+ * Implements {@code Observable}. <br/>
+ * Extends from {@code MapComponent}. <br/>
+ * Public abstract class that serves as a super class for all the items.
  * 
- * @author ZhaoWen
+ * @see {@link Observable}
+ * @see {@link MapComponent}
  *
  */
-public abstract class Item extends MapComponent implements IItem, Observable {
+public abstract class Item extends MapComponent implements Observable {
 	
-	private int numberOfUse;
+	//****************************** Attributes ******************************
+
+	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private int numberOfUse;	
+	private transient ArrayList<Observer> observers;
 	
+	//****************************** Constructor ******************************
+
 	public Item(ViewSettings viewSettings, int numberOfUse) {
 		super(viewSettings);
-		setNumberOfUse(numberOfUse);
+		this.numberOfUse = numberOfUse;
 	}
 	
+	//************************** Getters and Setters **************************
+
 	/**
 	 * Gets the remaining number of use.
 	 * 
@@ -38,51 +44,46 @@ public abstract class Item extends MapComponent implements IItem, Observable {
 		return numberOfUse;
 	}
 	
-	/**
-	 * Sets the number of use.
-	 * 
-	 * @param numberOfUse
-	 */
-	private void setNumberOfUse(int numberOfUse) {
-		this.numberOfUse = numberOfUse;
-	}
-	
+	//******************************** Methods ********************************
+
 	/**
 	 * Adds a number of use to the item.
 	 * 
 	 * @param value
 	 */
 	protected void addNumberOfUse(int value){
-		int x = getNumberOfUse();
-		setNumberOfUse(x+value);
+		this.numberOfUse += value;
 	}
+	
 	/**
-	 * Uses the item once.
+	 * Diminishes the number of use by 1.
 	 */
-	public void useOnce(){
+	protected void useOnce(){
 		numberOfUse --;
 	}
 
-	@Override
-	public void pickUp(Player player) {
-		
-	}
-
-	@Override
-	public void notifyObservers(Object arg) {
-		for(Observer o : observers) {
-			o.update(this, arg);
-		}
-	}
+	/**
+	 * Makes the player use the item.
+	 */
+	public abstract void use(Player player);
 
 	@Override
 	public void addObserver(Observer o) {
+		if(observers == null)
+			observers = new ArrayList<Observer>();
 		observers.add(o);
 	}
 
 	@Override
 	public void notifyObservers() {
 		notifyObservers(null);
+	}
+	
+	@Override
+	public void notifyObservers(Object arg) {
+		for(Observer o : observers) {
+			o.update(this, arg);
+		}
 	}
 	
 }

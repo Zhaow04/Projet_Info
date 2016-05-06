@@ -1,70 +1,48 @@
-package game.model.monster;
+package game.model;
 
-import java.util.ArrayList;
-
-import game.model.LivingBeing;
-import game.model.Observable;
-import game.model.Player;
-import game.utilities.Vector2D;
-import game.utilities.ViewSettings;
-import game.view.Observer;
-import game.model.component.Stats;
 import game.model.movement.FaceThePlayer;
-import game.model.movement.Movable;
 import game.model.movement.MoveInX;
-import game.model.movement.Movement;
 import game.model.movement.TrackPlayer;
-import game.model.skill.BasicMonsterAttack;
-import game.model.skill.ISkill;
+import game.model.skill.DirectAttack;
+import game.model.skill.Skill;
 import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
+import game.utilities.ImageDB;
+import game.utilities.Vector2D;
+import game.utilities.ViewSettings;
 
 /**
  * Extends from {@code LivingBeing} <br/>
- * Abstract class that serves as a super class for all the different monsters.
+ * Abstract class that serves as a super class for all the different monsters.<br/>
+ * Implements {@code Runnable}
  * 
- * @author ZhaoWen
  * @see {@link LivingBeing}
  *
  */
-public abstract class Monster extends LivingBeing implements SkillTarget, SkillUser, Runnable, Observable {
+public class Monster extends LivingBeing implements Runnable, SkillTarget, SkillUser {
 	
 	//****************************** Attributes ******************************
+
+	private static final long serialVersionUID = 1L;
 	
-	private int state;
-	private Stats stats;
 	private int scope;
-	private ISkill skill;
-	private Movement basicMovement;
-	
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private Skill skill;
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a monster and sets the map on which it is.
+	 * Creates a monster.
 	 * 
-	 * @param map
-	 * @see {@link LivingBeing#LivingBeing(Map)}
+	 * @param viewSettings
 	 */
-	public Monster(ViewSettings viewSettings) {
-		super(viewSettings, new MoveInX());
-		this.basicMovement= getMovement();
-		state = 1;
-		setSkill(new BasicMonsterAttack());
+	public Monster(ViewSettings viewSettings, Stats stats, int scope) {
+		super(viewSettings, new MoveInX(), stats);
+		this.scope = scope;
+		this.skill = new DirectAttack(50, ImageDB.getBasicMonsterAttackView(), 800);
 	}
 	
 	//************************** Getters and Setters **************************
-	
-	@Override
-	public Stats getStats() {
-		return stats;
-	}
-
-	protected void setStats(Stats stats) {
-		this.stats = stats;
-	}
-	
+		
 	/**
 	 * Gets the scope of the monster (the range of its vision).
 	 * 
@@ -74,42 +52,22 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		return scope;
 	}
 	
-	/**
-	 * Sets the the scope of the monster (the range of its vision).
-	 * 
-	 * @param scope
-	 */
-	protected void setScope(int scope) {
-		this.scope = scope;
-	}
-	
-	protected ISkill getSkill() {
-		return this.skill ;
-	}
-	
-	protected void setSkill(ISkill skill) {
-		this.skill = skill;
-	}
-	
 	//******************************** Methods ********************************
 	
 	@Override
 	public void run() {
-		while(state != 0) {
+		while(isAlive() && getCurrentMap().isActive() && GameModel.isRunning()) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
-				setMovement(new TrackPlayer());
-				getMovement().move(m);
-				basicMovement.setBaseX(this.getX());
-				basicMovement.setBaseY(this.getY());
+				new TrackPlayer().move(m);
+				getMovement().setBaseX(this.getX());
+				getMovement().setBaseY(this.getY());
 			}
 			else if (isPlayerNearby()){
-				setMovement(new FaceThePlayer());
-				getMovement().move(m);
-				getSkill().use(this);
+				new FaceThePlayer().move(m);
+				skill.use(this);
 			}
 			else {
-				setMovement(basicMovement);
 				getMovement().move(m);
 			}
 			try {
@@ -120,12 +78,27 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		}
 	}
 	
+	@Override
+	public void gainXp(int xp) {
+		getStats().gainXp(xp);
+	}
+
+	@Override
+	public boolean isDead() {
+		return !isAlive();
+	}
+
+	@Override
+	public int getXp() {
+		return getStats().getXp();
+	}
+
 	/**
-	 * Returns whether or not the player is in view.
+	 * Returns whether or not the player is in view (depending on the scope).
 	 * 
-	 * @return player in view or not
+	 * @return boolean
 	 */
-	protected boolean isPlayerInView() {
+	private boolean isPlayerInView() {
 		Player player = getCurrentMap().getPlayer();
 		int x = this.getX();
 		int y = this.getY();
@@ -156,7 +129,11 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		return playerInView;
 	}
 	
-	public boolean isPlayerNearby(){
+	/**
+	 * Returns whether or not a Player is Nearby (right on the left/right/behind/facing).
+	 * @return boolean
+	 */
+	private boolean isPlayerNearby(){
 		Player player=this.getCurrentMap().getPlayer();
 		int x0 = this.getX();
 		int y0 = this.getY();
@@ -172,39 +149,16 @@ public abstract class Monster extends LivingBeing implements SkillTarget, SkillU
 		return isPlayerNearby;
 	}
 	
-
-	
-
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
-		if(getStats().getHp() <= 0) {
-			state = 0;
+		notifyObservers();
+		if(isDead()) {
 			notifyObservers("dead");
 			getCurrentMap().notifyDead(this);
 		}
+		else
+			notifyObservers();
 	}
 	
-
-	@Override
-	public void notifyObservers(Object arg) {
-		for(Observer o : observers) {
-			o.update(this, arg);
-		}
-	}
-
-	@Override
-	public void addObserver(Observer o) {
-		observers.add(o);
-	}
-
-	@Override
-	public void notifyObservers() {
-		notifyObservers(null);
-	}
-	
-	@Override
-	public void useSkill(int skillNumber){
-		
-	}
 }

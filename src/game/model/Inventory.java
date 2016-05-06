@@ -1,56 +1,65 @@
-package game.model.component;
+package game.model;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import game.model.IMap;
-import game.model.Observable;
-import game.model.Player;
-import game.model.item.IItem;
 import game.model.item.Item;
-import game.utilities.ViewSettings;
 import game.view.Observer;
 
 /**
+ * Implements {@link Serializable}. <br/>
  * Inventory of the player.
  * 
- * @author ZhaoWen
  *
  */
-public class Inventory implements Observable {
+public class Inventory implements Observable, Serializable {
 	
 	//****************************** Attributes ******************************
 	
-	private Player owner;
-	private ArrayList<IItem> listItem;
+	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private Player owner;
+	private ArrayList<Item> items;
+	
+	private transient ArrayList<Observer> observers;
 	
 	//****************************** Constructor ******************************
+	
 	/**
 	 * Creates an inventory with 10 slots.
 	 * 
 	 */
 	public Inventory(Player owner) {
-		setOwner(owner);
+		this.owner = owner;
 		setSpace(10);
 	}
 	
 	//************************** Getters and Setters **************************
 	
+	/**
+	 * Gets the owner of the inventory.
+	 * @return
+	 */
 	public Player getOwner() {
 		return owner;
 	}
-
-	private void setOwner(Player owner) {
-		this.owner = owner;
-	}
 	
+	/**
+	 * Gets a new {@code ArrayList<Item>} which is a copy of the list of items. Ensure that the list of items
+	 * is not altered by an unknown source.
+	 * @return list of items
+	 */
+	public ArrayList<Item> getItems() {
+		return new ArrayList<Item>(items);
+	}
+
 	/**
 	 * Gets the max number of slots.
 	 * 
 	 * @return max number of slots
 	 */
 	public int getSpace() {
-		return listItem.size();
+		return items.size();
 	}
 
 	/**
@@ -59,9 +68,9 @@ public class Inventory implements Observable {
 	 * @param space
 	 */
 	private void setSpace(int space) {
-		listItem = new ArrayList<IItem>(space);
+		items = new ArrayList<Item>(space);
 		for(int i = 0; i < space; i++) {
-			listItem.add(null);
+			items.add(null);
 		}
 	}
 	
@@ -76,6 +85,8 @@ public class Inventory implements Observable {
 
 	@Override
 	public void addObserver(Observer o) {
+		if(observers == null)
+			observers = new ArrayList<Observer>();
 		observers.add(o);
 	}
 
@@ -84,31 +95,19 @@ public class Inventory implements Observable {
 		notifyObservers(null);
 	}
 	
-	@Override
-	public ViewSettings getViewSettings() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addToMap(IMap map, int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * Adds an item to the inventory.
 	 * 
 	 * @param item
 	 */
-	public void addItem(IItem item) {
+	public void addItem(Item item) {
 		for(int i = 0; i < getSpace(); i++) {
-			if(listItem.get(i) == null) {
-				listItem.set(i, item);
+			if(items.get(i) == null) {
+				items.set(i, item);
+				notifyObservers();
 				break;
 			}
 		}
-		//item.setInventory(this);
 	}
 	
 	/**
@@ -117,11 +116,15 @@ public class Inventory implements Observable {
 	 * @param item
 	 */
 	public void removeItem(Item item){
-		listItem.remove(item);
+		items.remove(item);
 	}
 	
+	/**
+	 * Removes an item referenced by its index from the inventory.
+	 * @param index
+	 */
 	public void removeItem(int index) {
-		listItem.set(index, null);
+		items.set(index, null);
 	}
 	
 	/**
@@ -133,6 +136,10 @@ public class Inventory implements Observable {
 		getItem(itemNumber).use(getOwner());
 	}
 	
+	/**
+	 * Removes an item referenced by its index from the inventory.
+	 * @param index
+	 */
 	public void throwItem(int index) {
 		removeItem(index);
 	}
@@ -143,12 +150,32 @@ public class Inventory implements Observable {
 	 * @param itemNumber
 	 * @return item
 	 */
-	public IItem getItem(int itemNumber){
-		return listItem.get(itemNumber);
+	public Item getItem(int itemNumber){
+		return items.get(itemNumber);
 	}
 	
-	public int getItemNumber(IItem item) {
-		return listItem.indexOf(item);
+	/**
+	 * Gets the item number (index) of the given item.
+	 * @param item
+	 * @return itemNumber
+	 */
+	public int getItemNumber(Item item) {
+		return items.indexOf(item);
+	}
+	
+	/**
+	 * Returns whether or not the inventory is full of items (no more available slots).
+	 * @return boolean
+	 */
+	public boolean isFull(){
+		boolean isFull = true;
+		for (Item item : items){
+			if (item == null){
+				isFull=false;
+				break;
+			}
+		}
+		return isFull;
 	}
 
 }

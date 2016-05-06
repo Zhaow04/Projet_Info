@@ -1,39 +1,56 @@
 package game.model;
 
+import java.io.Serializable;
+
 import game.utilities.ViewSettings;
 
-public abstract class MapComponent {
+/**
+ * Implements {@link Serializable}. <br/>
+ * Abstract class that serves as a super class for all the components of the map.
+ *
+ */
+public class MapComponent implements Serializable {
 	
-	private IMap currentMap;
+	//****************************** Attributes ******************************
 	
+	private static final long serialVersionUID = 1L;
+	
+	private Map currentMap;
 	private ViewSettings viewSettings;
 	
+	
+	//****************************** Constructor ******************************
+
+	/**
+	 * Creates a map component and sets its view settings.
+	 * @param viewSettings
+	 */
 	public MapComponent(ViewSettings viewSettings) {
-		setViewSettings(viewSettings);
+		this.viewSettings = viewSettings;
 	}
 	
+	//************************** Getters and Setters **************************
+
 	/**
-	 * Gets the map on which the viewable currently is.
-	 * 
-	 * @return current map
+	 * Gets the current map of the component.
+	 * @return Map
 	 */
-	public IMap getCurrentMap(){
+	public Map getCurrentMap(){
 		return currentMap;
 	}
-	
-	/**
-	 * Sets the map on which the living being currently is.
-	 * 
-	 * @param map
-	 */
-	private void setCurrentMap(IMap map) {
-		currentMap = map;
-	}
 
+	/**
+	 * Gets the X position of the map component.
+	 * @return x
+	 */
 	public int getX() {
 		return getViewSettings().getX();
 	}
 	
+	/**
+	 * Gets the Y position of the map component.
+	 * @return y
+	 */
 	public int getY() {
 		return getViewSettings().getY();
 	}
@@ -48,21 +65,32 @@ public abstract class MapComponent {
 		getViewSettings().setPosition(x, y);
 	}
 	
+	/**
+	 * Gets the view settings.
+	 * @return viewSettings
+	 */
 	public ViewSettings getViewSettings() {
 		return viewSettings;
 	}
 	
-	private void setViewSettings(ViewSettings viewSettings) {
-		this.viewSettings = viewSettings;
-	}
+	//******************************** Methods ********************************
 	
-	public void addToMap(IMap map, int x, int y) {
-		setCurrentMap(map);
+	/**
+	 * Adds the component to the given map.
+	 * @param map
+	 * @param x
+	 * @param y
+	 */
+	public void addToMap(Map map, int x, int y) {
+		currentMap = map;
 		setPosition(x, y);
 	}
 	
+	/**
+	 * Removes the component from the map.
+	 */
 	public void removeFromMap() {
-		setCurrentMap(null);
+		currentMap = null;
 		setPosition(-1, -1);
 	}
 	

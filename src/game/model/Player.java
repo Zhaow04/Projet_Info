@@ -2,72 +2,58 @@ package game.model;
 
 import java.util.ArrayList;
 
-import game.model.component.HpRegen;
-import game.model.component.Inventory;
-import game.model.component.Stats;
-import game.model.item.IItem;
+import game.model.item.Item;
 import game.model.movement.BasicMove;
-import game.model.skill.FireExplosion;
-import game.model.skill.FirstAttack;
-import game.model.skill.ISkill;
-import game.model.skill.Poison;
+import game.model.skill.Aoe;
+import game.model.skill.DirectAttack;
+import game.model.skill.Dot;
 import game.model.skill.Skill;
 import game.model.skill.SkillTarget;
 import game.model.skill.SkillUser;
 import game.utilities.ImageDB;
-import game.view.Observer;
 
 /**
- * Extends from {@code LivingBeing} <br/>
+ * Implements {@code SkillTarget, SkillUser}. <br/>
+ * Extends from {@code LivingBeing}. <br/>
  * Player of the game.
  * 
- * @author ZhaoWen
  * @see {@link LivingBeing}
  *
  */
-public class Player extends LivingBeing implements SkillTarget, SkillUser, Observable {
+public class Player extends LivingBeing implements SkillTarget, SkillUser{
 	
 	//****************************** Attributes ******************************
 	
-	//private int mana;
-	//private int regenMana;
-	//private int stamina;
-	//private int regenStamina;
-	private Stats stats;
-	private Inventory inventory;
-	private ArrayList<ISkill> skillList = new ArrayList<ISkill>();
+	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<Observer> observers = new ArrayList<Observer>();
+	private Inventory inventory;
+	private ArrayList<Skill> skillList = new ArrayList<Skill>();
 	
 	//****************************** Constructor ******************************
 	
 	/**
-	 * Creates a player with initial stats and position, sets the map on which it is.
+	 * Creates a player with initial stats, an empty inventory, skills and a HP regeneration system.
 	 * 
-	 * @param map
-	 * @see {@link LivingBeing#LivingBeing(Map)}
+	 * @see {@link LivingBeing}
 	 */
 	public Player(){
-		super(ImageDB.getPlayerView(), new BasicMove());
-		setStats(new Stats(1500));
-		setInventory(new Inventory(this));
-		addSkill(new FirstAttack());
-		addSkill(new FireExplosion());
-		addSkill(new Poison());
-		new HpRegen(this);
+		super(ImageDB.getPlayerView(), new BasicMove(), new Stats(1500));
+		this.inventory = new Inventory(this);
+		addSkill(new DirectAttack(100, ImageDB.getLightningView(), 1000));
+		addSkill(new Dot(40, 3, ImageDB.getPoisonView(), 20000, 2000, 5));
+		addSkill(new Aoe(100, 3, ImageDB.getFireView(),5000, 3));
 	}
 	
 	//************************** Getters and Setters **************************
-	
-	@Override
-	public Stats getStats() {
-		return stats;
+		
+	/**
+	 * Gets the Xp needed by the player in order to level up.
+	 * @return xpToLevelUp
+	 */
+	public int getXpToLevelUp() {
+		return getStats().getXpToLevelUp();
 	}
-
-	private void setStats(Stats stats) {
-		this.stats = stats;
-	}
-	
+		
 	/**
 	 * Gets the inventory.
 	 * 
@@ -77,52 +63,69 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 		return inventory;
 	}
 	
-	private void setInventory(Inventory inventory) {
-		this.inventory = inventory;
-	}
-
-	/**
-	 * Gets the skills list of the player.
-	 * 
-	 * @return skills list
-	 */
-	private ArrayList<ISkill> getSkillList() {
-		return skillList;
-	}
-	
 	//******************************** Methods ********************************
 	
-	/**
-	 * Makes the living being move if possible.
-	 * 
-	 * @param direction
-	 */
 	@Override
-	public void move(int x, int y) {
-		super.move(x,y);
-		if(getCurrentMap().isItemAt(getX(), getY()))
+	public void move(int dx, int dy) {
+		super.move(dx,dy);
+		if(getCurrentMap().isItemAt(getX(), getY()) && !getInventory().isFull())
 			pickUpItem(getCurrentMap().getAndRemoveItem(getX(), getY()));
 	}
 	
-	public ISkill getSkill(int skillNumber) {
-		return getSkillList().get(skillNumber);
+	/**
+	 * Starts the Hp regeneration system.
+	 * @see {@link HpRegen}
+	 */
+	public void startRegen() {
+		new HpRegen(this);
 	}
 	
-	public int getSkillNumber(Object skill) {
-		return getSkillList().indexOf(skill);
+	@Override
+	public void gainXp(int xp) {
+		getStats().gainXp(xp);
 	}
 
 	@Override
-	public void useSkill(int skillNumber) {
-		ISkill skill = getSkillList().get(skillNumber);
-		skill.use(this);
+	public int getXp() {
+		return getStats().getXp();
+	}
+
+	/**
+	 * Gets the skill relative the the skillNumber guven
+	 * @param skillNumber
+	 * @return skill
+	 */
+	public Skill getSkill(int skillNumber) {
+		return skillList.get(skillNumber);
 	}
 	
-	public void pickUpItem(IItem item) {
+	/**
+	 * Gets the skill number of the skill given.
+	 * @param skill
+	 * @return
+	 */
+	public int getSkillNumber(Skill skill) {
+		return skillList.indexOf(skill);
+	}
+
+	/**
+	 * Makes the Player use the skill referenced by its skillNumber.
+	 * @param skillNumber
+	 */
+	public void useSkill(int skillNumber) {
+		if (skillNumber+1<=getStats().getLevel()){
+			Skill skill = skillList.get(skillNumber);
+			skill.use(this);
+		}
+	}
+		
+	/**
+	 * Makes the player pick up the item given and put it in his inventory if possible.
+	 * @param item
+	 */
+	public void pickUpItem(Item item) {
 		getInventory().addItem(item);
 		item.notifyObservers();
-		//getCurrentMap().notifyRemovedFromMap(this);
-		//notifyObservers("removedFromMap");
 	}
 
 	/**
@@ -135,6 +138,10 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 		getInventory().removeItem(itemNumber);
 	}
 	
+	/**
+	 * Throws an item from the inventory.
+	 * @param index of the item
+	 */
 	public void throwItem(int index) {
 		getInventory().removeItem(index);
 	}
@@ -145,66 +152,20 @@ public class Player extends LivingBeing implements SkillTarget, SkillUser, Obser
 	 * @param skill
 	 */
 	public void addSkill(Skill skill){
-		getSkillList().add(skill);
-	}
-	
-	/**
-	 * Tells if the character can attack or not (need to be in front of a monster)
-	 * 
-	 */
-	/*private boolean canAttack(){
-		return (isLivingInFront() && getLivingInFront() instanceof Monster);
-	}*/
-	
-	/**
-	 * Makes the character use one of its attacks if he can.
-	 * 
-	 * @param skillNumber
-	 */
-	/*public void useDirectAttack(Integer skillNumber){	// keep it Integer for the arg instanceof Integer in update observableView
-		if(canAttack()){
-			Monster target =(Monster) getLivingInFront();
-			System.out.println(target);
-			Skill Skill = getSkillList().get(skillNumber);
-			Skill.use(target);
-			if(target.getHp() <= 0) {
-				target.notifyObservers(Skill);
-				gainKillXp(target);
-				upgradeLevel();
-				System.out.println(getXp());
-				System.out.println(getLevel());
-			}
-			else {
-				notifyObservers(skillNumber);
-			}
-		}
-	}*/
-	
-	public void addHp(int hp) {
-		getStats().addHp(hp);
+		skillList.add(skill);
 	}
 
+	 
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
-	}
-
-	@Override
-	public void notifyObservers(Object arg) {
-		for(Observer o : observers) {
-			o.update(this, arg);
+		if ( isDead() ) {
+			Map m = getCurrentMap();
+			notifyObservers("dead");
+			m.notifyDead(this);
 		}
+		else
+			notifyObservers();
 	}
-
-	@Override
-	public void addObserver(Observer o) {
-		observers.add(o);
-	}
-
-	@Override
-	public void notifyObservers() {
-		notifyObservers(null);
-	}
-
 	
 }

@@ -1,17 +1,22 @@
 package game.utilities;
 
+import java.io.Serializable;
+
 import javafx.scene.image.Image;
 
 /**
+ * Implements {@link Serializable}. <br/>
  * Class that serves for display. Stocks all the informations needed for display such as
- * the URL of the image, the x and y offsets, the width and the height of the wanted region.
+ * the URL of the image, the x and y offsets, the width and the height of the wanted region, how much
+ * the image should span in x and y.
  * 
- * @author ZhaoWen
  *
  */
-public class ViewSettings {
+public class ViewSettings implements Serializable {
 	
 	//****************************** Attributes ******************************
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String imageURL;
 	private double offsetX, offsetY, width, height;
@@ -19,10 +24,13 @@ public class ViewSettings {
 	private int spanX = 1, spanY = 1; // Number of cells in x and y the image should take on the map
 	// MapInfos (x,y) of the image on the map. By default use the map component's position.
 	private int[] position; // End position for a skill
-	private int startX, startY; // Start position for a skill
 	
 	//****************************** Constructor ******************************
 	
+	/**
+	 * 
+	 * @param imageURL
+	 */
 	public ViewSettings(String imageURL) {
 		setImageURL(imageURL);
 		setOffsetX(0); setOffsetY(0);
@@ -210,17 +218,6 @@ public class ViewSettings {
 		position[0] = x; position[1] = y;
 	}
 	
-	public int getStartX() {
-		return startX;
-	}
-	
-	public int getStartY() {
-		return startY;
-	}
-
-	public void setStartPos(int startX, int startY) {
-		this.startX = startX; this.startY = startY;
-	}
 	
 	//******************************** Methods ********************************
 

@@ -1,135 +1,99 @@
 package game.controller;
 
 import java.util.ArrayList;
-
+import game.Main;
 import game.model.GameModel;
 import game.model.Player;
+import game.utilities.ResourceManager;
 import game.utilities.Vector2D;
-import game.view.GameView;
-import game.view.HUDController;
-import game.view.MapView;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Main controller class for the game. It handles keyboard inputs.
+ *
+ */
 public class GameController implements EventHandler<KeyEvent>, Runnable {
 
 	//****************************** Attributes ******************************
 
 	private GameModel model;
-	private GameView view;
-	private MapView mapView;
-	
 	private Player player;
-	
-	private HUDController hudController;
 
 	private ArrayList<KeyCode> keyList = new ArrayList<KeyCode>();
 
 	//****************************** Constructor ******************************
 
-	public GameController(GameModel model, GameView view) {
-		setModel(model);
-		setView(view);
-		setMapView(view.mapView);
-		setPlayer(model.getPlayer());
-		new Thread(this).start();   
-	}
-
-	//************************** Getters and Setters **************************
-	
-	private GameModel getModel() {
-		return model;
-	}
-
-	private void setModel(GameModel model) {
-		this.model = model;
-	}
-
-	private GameView getView() {
-		return view;
-	}
-
-	private void setView(GameView view) {
-		this.view = view;
-	}
-
-	private MapView getMapView() {
-		return mapView;
-	}
-
-	private void setMapView(MapView mapView) {
-		this.mapView = mapView;
-	}
-
-	private Player getPlayer() {
-		return player;
-	}
-
-	private void setPlayer(Player player) {
-		this.player = player;
-	}
-	
-	public HUDController getHudController() {
-		return hudController;
-	}
-
-	public void setHudController(HUDController hudController) {
-		this.hudController = hudController;
-	}
-	
-	public ArrayList<KeyCode> getKeyList() {
-		return keyList;
+	/**
+	 * Creates a controller that handles keyboard inputs.
+	 * @param model
+	 */
+	public GameController(GameModel model) {
+			this.model = model;
+			this.player = model.getPlayer();
 	}
 
 	//******************************** Methods ********************************
 	
 	@Override
 	public void handle(KeyEvent event) {
-		addKey(event.getCode());
+		if (GameModel.isRunning()){
+			addKey(event.getCode());
+			Main.execute(this);
+		}
 	}
 
 	@Override
 	public void run() {
-		while(true) {
+		if(player.isAlive() && GameModel.isRunning())
 			useFirstKey();
-		}
 	}
-
+	
+	
+	/**
+	 * Adds a key (user input) to a list of keys which can contain a maximum of two keys.
+	 * @param key
+	 */
 	public synchronized void addKey(KeyCode key) {
-		if(getKeyList().size() < 2) {
+		if(keyList.size() < 2) {
 			if(key.isArrowKey() || key.isDigitKey()) {
-				getKeyList().add(key);
-				notify();
+				keyList.add(key);
 			}	
 		}
 	}
 
+	/**
+	 * Uses the first key in the list of keys.
+	 * @see {@link #useKey(KeyCode)}
+	 */
 	private synchronized void useFirstKey() {
-		if(!getKeyList().isEmpty()) {
-			KeyCode key = getKeyList().get(0);
+		if(!keyList.isEmpty()) {
+			KeyCode key = keyList.get(0);
 			useKey(key);
-			getKeyList().remove(0);
-		}
-		else {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			keyList.remove(0);
 		}
 	}
 
-	public void useKey(KeyCode key) {
+	/**
+	 * Processes a key (user input), e.g. arrow keys for movement, digit keys for attacking.
+	 * @param key
+	 */
+	public synchronized void useKey(KeyCode key) {
 		if(key.isArrowKey()) {
 			Vector2D direction = convertKeyToDirection(key.getName());
-			getPlayer().move(direction.getIntX(), direction.getIntY());
+			player.move(direction.getIntX(), direction.getIntY());
 		}
 		else if(key.isDigitKey()) {
 			attack(Integer.parseInt(key.getName()));
 		}
 	}
 	
+	/**
+	 * Converts the key (string) to a direction (Vector2D).
+	 * @param key
+	 * @return Vector2D
+	 */
 	private Vector2D convertKeyToDirection(String key) {
 		Vector2D c;
 		if(key.equals("Up")) {
@@ -147,10 +111,32 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 		return c;
 	}
 
-	public void attack(int i) {   
-		if(i <= 3) {		// Va falloir ameliorer ca, ou alors mettre un if pour chaque attack	
-			getPlayer().useSkill(i-1);
+	/**
+	 * Makes the player use his skill (i-1).
+	 * @param i
+	 */
+	public void attack(int i) {
+		if(i <= 3) {	
+			player.useSkill(i-1);
 		}
+	}
+	
+	/**
+	 * Pauses the game if it's running and restart it if it's paused.
+	 */
+	public void pauseAndStart() {
+		if(GameModel.isRunning())
+			model.stop();
+		else
+			model.start();
+	}
+	
+	/**
+	 * Saves the game.
+	 * @see {@link ResourceManager#save(java.io.Serializable)}
+	 */
+	public void save() {
+		ResourceManager.save(model);
 	}
 
 }

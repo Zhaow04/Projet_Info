@@ -1,60 +1,106 @@
 package game.model.movement;
 
-import game.model.IMap;
-import game.utilities.Vector2D;
+import java.io.Serializable;
 
-public class BasicMove implements Movement {
+import game.model.Map;
+import game.model.Movable;
+import game.utilities.Vector2D;
+/**
+ * Implements {@link Serializable}, {@code Movement}. <br/>
+ * Public class that represents a basic type of movement.
+ * 
+ * @see {@link Movement}
+ *
+ */
+public class BasicMove implements Movement, Serializable {
+	
+	//****************************** Attributes ******************************
+
+	private static final long serialVersionUID = 1L;
 	
 	private Movable movable;
 	private int oldX, oldY, newX, newY;
 	
+	//****************************** Constructor ******************************
+
+	/**
+	 * Creates a basic move.
+	 */
 	public BasicMove() {
 		
 	}
 	
+	//************************** Getters and Setters **************************
+
+	@Override
 	public Movable getMovable() {
 		return movable;
 	}
-
-	private void setMovable(Movable movable) {
-		this.movable = movable;
-	}
-
+	
+	@Override
 	public int getOldX() {
 		return oldX;
 	}
-
+	
+	/**
+	 * Sets the previous X position (right before the movement).
+	 * @param oldX
+	 */
 	private void setOldX(int oldX) {
 		this.oldX = oldX;
 	}
 
+	@Override
 	public int getOldY() {
 		return oldY;
 	}
 
+	/**
+	 * Sets the previous Y position (right before the movement).
+	 * @param oldY
+	 */
 	private void setOldY(int oldY) {
 		this.oldY = oldY;
 	}
 
+	@Override
 	public int getNewX() {
 		return newX;
 	}
 
+	/**
+	 * Sets the new X position (right after the movement).
+	 * @param newX
+	 */
 	private void setNewX(int newX) {
 		this.newX = newX;
 	}
 
+	@Override
 	public int getNewY() {
 		return newY;
 	}
 
+	/**
+	 * Sets the new Y position (right after the movement).
+	 * @param newY
+	 */
 	private void setNewY(int newY) {
 		this.newY = newY;
 	}
 
+	//******************************** Methods ********************************
+
+	/**
+	 * Returns whether or not the movable can move towards the direction (dx,dy).
+	 * @param movable
+	 * @param dx
+	 * @param dy
+	 * @return boolean
+	 */
 	protected boolean canMove(Movable m, int dx, int dy) {
 		boolean canMove = false;
-		IMap currentMap = m.getCurrentMap();
+		Map currentMap = m.getCurrentMap();
 		Vector2D direction = new Vector2D(dx,dy);
 		direction.add(m.getX(), m.getY());
 		if(direction.isPositive() &&
@@ -72,7 +118,7 @@ public class BasicMove implements Movement {
 		m.setDirectionFacing(dx, dy);
 		m.notifyObservers("changedDirection");
 		if(canMove(m, dx, dy)) {
-		IMap map = m.getCurrentMap();
+		Map map = m.getCurrentMap();
 			setOldX(m.getX()); setOldY(m.getY());
 			setNewX(m.getX() + dx); setNewY(m.getY() + dy);
 			m.setPosition(m.getX() + dx, m.getY() + dy);
@@ -88,13 +134,11 @@ public class BasicMove implements Movement {
 
 	@Override
 	public void setBaseX(int baseX) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setBaseY(int baseY) {
-		// TODO Auto-generated method stub
 		
 	}
 

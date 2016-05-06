@@ -1,0 +1,5 @@
+.progress-bar .bar {
+	-fx-accent: darkred;
+	-fx-padding: 2px;
+	-fx-background-insets: 0;
+}

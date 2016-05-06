@@ -1,13 +1,19 @@
 package game.utilities;
 
-import game.model.Observable;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/**
+ * Class that handles the animation of a sprite.
+ * 
+ *
+ */
 public class SpriteAnimation extends Transition {
+
+	//****************************** Attributes ******************************
 
     private final ImageView imageView;
     private final int count;
@@ -16,9 +22,16 @@ public class SpriteAnimation extends Transition {
     private int offsetY;
     private int width;
     private int height;
-
     private int lastIndex;
+    
+	//****************************** Constructor ******************************
 
+    /**
+     * Constructor of {@link SpriteAnimation}.
+     * @param viewSettings The {@code ViewSettings} which contains the information concerning the animation
+     * @param imageView The {@code ImageView} which will be animated
+     * @param millis The duration in milliseconds of the animation
+     */
     public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, int millis) {
         this.imageView = imageView;
         this.count     = viewSettings.getCount();
@@ -33,39 +46,8 @@ public class SpriteAnimation extends Transition {
         this.setOnFinished((value) -> imageView.setViewport((
         		new Rectangle2D(offsetX, offsetY, width, height))));
     }
-    
-    public SpriteAnimation(Observable o, ImageView imageView, Duration duration,
-    		int count, int columns) {
-        this.imageView = imageView;
-        this.count     = count;
-        this.columns   = columns;
-        ViewSettings viewSettings = o.getViewSettings();
-        this.offsetX   = (int) viewSettings.getOffsetX();
-        this.offsetY   = (int) viewSettings.getOffsetY();
-        this.width     = (int) viewSettings.getWidth();
-        this.height    = (int) viewSettings.getHeight();
-        setCycleDuration(duration);
-        setInterpolator(Interpolator.LINEAR);
-        setCycleCount(1);
-        this.play();
-        
-    }
-    
-    public SpriteAnimation(ViewSettings viewSettings, ImageView imageView, Duration duration,
-    		int count, int columns) {
-        this.imageView = imageView;
-        this.count     = count;
-        this.columns   = columns;
-        this.offsetX   = (int) viewSettings.getOffsetX();
-        this.offsetY   = (int) viewSettings.getOffsetY();
-        this.width     = (int) viewSettings.getWidth();
-        this.height    = (int) viewSettings.getHeight();
-        setCycleDuration(duration);
-        setInterpolator(Interpolator.LINEAR);
-        setCycleCount(1);
-        this.play();
-        
-    }
+   
+	//******************************** Methods ********************************
 
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
@@ -77,6 +59,10 @@ public class SpriteAnimation extends Transition {
         }
     }
     
+    /**
+     * Updates the x and y offsets, the width and the height of the {@code ImageView}'s viewport.
+     * @param viewSettings
+     */
     public void update(ViewSettings viewSettings) {
     	this.offsetX   = (int) viewSettings.getOffsetX();
         this.offsetY   = (int) viewSettings.getOffsetY();
