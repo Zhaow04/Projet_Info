@@ -92,7 +92,7 @@ public class GameController implements EventHandler<KeyEvent>, Runnable {
 	/**
 	 * Converts the key (string) to a direction (Vector2D).
 	 * @param key
-	 * @return
+	 * @return Vector2D
 	 */
 	private Vector2D convertKeyToDirection(String key) {
 		Vector2D c;

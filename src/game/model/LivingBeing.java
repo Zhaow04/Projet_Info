@@ -108,6 +108,10 @@ public abstract class LivingBeing extends MapComponent implements Movable, Obser
 		return stats.getMaxHp();
 	}
 	
+	/**
+	 * Gets the level of the living being.
+	 * @return level
+	 */
 	public int getLevel() {
 		return stats.getLevel();
 	}

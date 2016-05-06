@@ -20,7 +20,6 @@ public class GameModel implements Serializable {
 	
 	/**
 	 * Creates all the components of the model. The size of the map is defined by {@code mapSize}.
-	 * 
 	 * @param mapSize
 	 */
 	public GameModel(int mapSize) {
