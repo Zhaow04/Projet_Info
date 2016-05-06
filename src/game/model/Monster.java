@@ -25,7 +25,6 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 
 	private static final long serialVersionUID = 1L;
 	
-	private int state;
 	private int scope;
 	private Skill skill;
 	
@@ -39,7 +38,6 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	public Monster(ViewSettings viewSettings, Stats stats, int scope) {
 		super(viewSettings, new MoveInX(), stats);
 		this.scope = scope;
-		state = 1;
 		this.skill = new DirectAttack(50, ImageDB.getBasicMonsterAttackView(), 800);
 	}
 	
@@ -58,7 +56,7 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	
 	@Override
 	public void run() {
-		while(state != 0 && getCurrentMap().isActive() && GameModel.isRunning()) {
+		while(isAlive() && getCurrentMap().isActive() && GameModel.isRunning()) {
 			Movable m = this;
 			if (isPlayerInView() && !isPlayerNearby()){
 				new TrackPlayer().move(m);
@@ -87,7 +85,7 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 
 	@Override
 	public boolean isDead() {
-		return state == 0;
+		return !isAlive();
 	}
 
 	@Override
@@ -154,11 +152,13 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
-		if(getStats().getHp() <= 0) {
-			state = 0;
+		notifyObservers();
+		if(isDead()) {
 			notifyObservers("dead");
 			getCurrentMap().notifyDead(this);
 		}
+		else
+			notifyObservers();
 	}
 	
 }
