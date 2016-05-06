@@ -118,7 +118,7 @@ public class BasicMove implements Movement, Serializable {
 		m.setDirectionFacing(dx, dy);
 		m.notifyObservers("changedDirection");
 		if(canMove(m, dx, dy)) {
-		Map map = m.getCurrentMap();
+			Map map = m.getCurrentMap();
 			setOldX(m.getX()); setOldY(m.getY());
 			setNewX(m.getX() + dx); setNewY(m.getY() + dy);
 			m.setPosition(m.getX() + dx, m.getY() + dy);

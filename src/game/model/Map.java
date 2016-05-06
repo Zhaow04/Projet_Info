@@ -180,7 +180,7 @@ public class Map implements Observable, Serializable {
 		}
 	}
 	/**
-	 * Adds the player to the map.
+	 * Adds the player to the map. Makes sure that the player is added to an empty cell.
 	 * @param player
 	 * @param x
 	 * @param y

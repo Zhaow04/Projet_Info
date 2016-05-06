@@ -152,7 +152,6 @@ public class Monster extends LivingBeing implements Runnable, SkillTarget, Skill
 	@Override
 	public void loseHp(int hp) {
 		getStats().loseHp(hp);
-		notifyObservers();
 		if(isDead()) {
 			notifyObservers("dead");
 			getCurrentMap().notifyDead(this);

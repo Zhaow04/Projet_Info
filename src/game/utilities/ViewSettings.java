@@ -8,7 +8,8 @@ import javafx.scene.image.Image;
  * Implements {@link Serializable}. <br/>
  * Class that serves for display. Stocks all the informations needed for display such as
  * the URL of the image, the x and y offsets, the width and the height of the wanted region, how much
- * the image should span in x and y.
+ * the image should span in x and y, the count (for animation purpose: how many "small images" on the sprite
+ * sheet the animation should use), the number of column of the sprite sheet, the position.
  * 
  *
  */
@@ -28,7 +29,8 @@ public class ViewSettings implements Serializable {
 	//****************************** Constructor ******************************
 	
 	/**
-	 * 
+	 * Constructor of {@link ViewSettings}. Sets the URL of the image, the x and y offsets,
+	 * the width and the height of the wanted region.
 	 * @param imageURL
 	 */
 	public ViewSettings(String imageURL) {
@@ -39,6 +41,16 @@ public class ViewSettings implements Serializable {
 		setHeight(image.getHeight());
 	}
 	
+	/**
+	 * Constructor of {@link ViewSettings}. Sets the URL of the image, the x and y offsets,
+	 * the width and the height of the wanted region and the position.
+	 * @param imageURL
+	 * @param offsetX
+	 * @param offsetY
+	 * @param width
+	 * @param height
+	 * @param position
+	 */
 	public ViewSettings(String imageURL, int offsetX, int offsetY, int width, int height, int[] position) {
 		setImageURL(imageURL);
 		setOffsetX(offsetX);
@@ -49,7 +61,16 @@ public class ViewSettings implements Serializable {
 	}
 	
 	/**
-	 * 
+	 * Constructor of {@link ViewSettings}. Sets the URL of the image, the x and y offsets,
+	 * the width and the height of the wanted region, the count, the number of column and the position.
+	 * @param imageURL
+	 * @param offsetX
+	 * @param offsetY
+	 * @param width
+	 * @param height
+	 * @param count
+	 * @param columns
+	 * @param position
 	 */
 	public ViewSettings(String imageURL, int offsetX, int offsetY, int width, int height,
 			int count, int columns, int[] position) {
@@ -63,6 +84,21 @@ public class ViewSettings implements Serializable {
 		setPosition(position);
 	}
 	
+	/**
+	 * Constructor of {@link ViewSettings}. Sets the URL of the image, the x and y offsets,
+	 * the width and the height of the wanted region, the count, the number of column, how much the image
+	 * should span in x and y and the position.
+	 * @param imageURL
+	 * @param offsetX
+	 * @param offsetY
+	 * @param width
+	 * @param height
+	 * @param count
+	 * @param columns
+	 * @param position
+	 * @param spanX
+	 * @param spanY
+	 */
 	public ViewSettings(String imageURL, int offsetX, int offsetY, int width, int height,
 			int count, int columns, int[] position, int spanX, int spanY) {
 		this(imageURL,offsetX,offsetY,width,height, count, columns, position);
@@ -162,58 +198,116 @@ public class ViewSettings implements Serializable {
 		this.height = height;
 	}
 	
+	/**
+	 * Gets the count.
+	 * @return
+	 */
 	public int getCount() {
 		return count;
 	}
 
+	/**
+	 * Sets the count.
+	 * @param count
+	 */
 	private void setCount(int count) {
 		this.count = count;
 	}
 
+	/**
+	 * Gets the number of columns.
+	 * @return
+	 */
 	public int getColumns() {
 		return columns;
 	}
 
+	/**
+	 * Sets the number of columns.
+	 * @param columns
+	 */
 	private void setColumns(int columns) {
 		this.columns = columns;
 	}
 
+	/**
+	 * Gets the span in x.
+	 * @return
+	 */
 	public int getSpanX() {
 		return spanX;
 	}
 
+	/**
+	 * Sets the span in x.
+	 * @param spanX
+	 */
 	private void setSpanX(int spanX) {
 		this.spanX = spanX;
 	}
 
+	/**
+	 * Gets the span in y.
+	 * @return
+	 */
 	public int getSpanY() {
 		return spanY;
 	}
 
+	/**
+	 * Sets the span in y.
+	 * @param spanY
+	 */
 	private void setSpanY(int spanY) {
 		this.spanY = spanY;
 	}
 	
+	/**
+	 * Sets the span in x and y.
+	 * @param spanX
+	 * @param spanY
+	 */
 	public void setSpan(int spanX, int spanY) {
 		this.spanX = spanX; this.spanY = spanY;
 	}
 	
+	/**
+	 * Gets the position.
+	 * @return
+	 */
 	public int[] getPosition() {
 		return position;
 	}
 
+	/**
+	 * Sets the position.
+	 * @param position
+	 */
 	private void setPosition(int[] position) {
 		this.position = position;
 	}
 	
+	/**
+	 * Gets the x coordinate.
+	 * @return
+	 */
 	public int getX() {
 		return position[0];
 	}
 
+	/**
+	 * Gets the y coordinate.
+	 * @return
+	 */
 	public int getY() {
 		return position[1];
 	}
 	
+	/**
+	 * Sets the x and y coordinates.
+	 * @param x
+	 * @param y
+	 */
 	public void setPosition(int x, int y) {
 		position[0] = x; position[1] = y;
 	}
@@ -221,6 +315,10 @@ public class ViewSettings implements Serializable {
 	
 	//******************************** Methods ********************************
 
+	/**
+	 * Updates the y offset to match the corresponding line of the sprite sheet.
+	 * @param i
+	 */
 	public void updateDirection(int i) {
 		offsetY = height*i;
 	}

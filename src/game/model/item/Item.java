@@ -28,6 +28,11 @@ public abstract class Item extends MapComponent implements Observable {
 	
 	//****************************** Constructor ******************************
 
+	/**
+	 * Creates an item with a number of uses.
+	 * @param viewSettings
+	 * @param numberOfUse
+	 */
 	public Item(ViewSettings viewSettings, int numberOfUse) {
 		super(viewSettings);
 		this.numberOfUse = numberOfUse;

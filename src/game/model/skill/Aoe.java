@@ -42,18 +42,34 @@ public class Aoe extends Skill {
 		return radius;
 	}
 	
+	/**
+	 * Gets the x position of the user.
+	 * @return
+	 */
 	protected int getUserX() {
 		return userX;
 	}
 
+	/**
+	 * Sets the x position of the user.
+	 * @param userX
+	 */
 	protected void setUserX(int userX) {
 		this.userX = userX;
 	}
 
+	/**
+	 * Gets the y position of the user.
+	 * @return
+	 */
 	protected int getUserY() {
 		return userY;
 	}
 
+	/**
+	 * Sets the y position of the user.
+	 * @param userY
+	 */
 	protected void setUserY(int userY) {
 		this.userY = userY;
 	}

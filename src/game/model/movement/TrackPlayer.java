@@ -19,6 +19,9 @@ public class TrackPlayer extends BasicMove {
 	
 	//****************************** Constructor ******************************
 
+	/**
+	 * Creates an movement which makes the user tracks the player.
+	 */
 	public TrackPlayer() {
 		super();
 	}

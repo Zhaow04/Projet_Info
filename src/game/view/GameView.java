@@ -126,6 +126,10 @@ public class GameView extends BorderPane implements Observer {
 		model.start();
 	}
 	
+	/**
+	 * Loads the {@code GameModel} previously saved. Creates the controller of the game and the view.
+	 * Finally, shows the view and starts the threads of the model.
+	 */
 	public void loadGame() {
 		model = ResourceManager.load();
 		model.getPlayer().addObserver(this);

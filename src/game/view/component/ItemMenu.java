@@ -41,8 +41,6 @@ public class ItemMenu extends MenuButton {
 			public void handle(ActionEvent event) {
 				player.useItem(index);
 				itemView.getChildren().clear();
-				//Pane parent = (Pane) itemView.getParent();
-				//parent.getChildren().remove(itemView);
 			}
 		});
 		MenuItem throwItem = new MenuItem("Jeter");
@@ -51,8 +49,6 @@ public class ItemMenu extends MenuButton {
 			public void handle(ActionEvent event) {
 				player.throwItem(index);
 				itemView.getChildren().clear();
-				//Pane parent = (Pane) itemView.getParent();
-				//parent.getChildren().remove(itemView);
 			}
 		});
 		this.getItems().addAll(useItem,throwItem);

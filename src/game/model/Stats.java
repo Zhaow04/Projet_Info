@@ -186,7 +186,7 @@ public class Stats implements Serializable {
 	// These two following methods are written in order to save and load the static int: level.
 	
 	/**
-	 * Writes the non-transient fields of the current class to this stream.
+	 * Writes the static field {@code level} of the current class to this stream.
 	 * @param ObjectOutputStream oos
 	 * @throws IOException
 	 */
@@ -196,7 +196,7 @@ public class Stats implements Serializable {
 	}
 
 	/**
-	 * Read the non-transient fields of the current class from this stream.
+	 * Read the static field {@code level} of the current class from this stream.
 	 * @param ObjectInputStream ois
 	 * @throws ClassNotFoundException
 	 * @throws IOException

@@ -84,7 +84,6 @@ public class ItemView extends StackPane implements Observer {
 			@Override
 			public void handle(ActionEvent event) {
 				mapView.remove(itemView);
-				//mapView.gameView.inventoryViewController.addItemView(itemView);
 			}
 		});
 		t.setToValue(0.9);

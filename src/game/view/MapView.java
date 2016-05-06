@@ -228,20 +228,6 @@ public class MapView extends Group implements Observer {
 		double translateY = getTranslateY(player);
 		new ObjectTranslate(Duration.millis(300), allLayers.getClip(),
 				translateX, translateY);
-		/*
-		int[] pos = player.getViewSettings().getPosition();
-		if(canTranslateX(player) && !canTranslateY(player)) {
-			new ObjectTranslate(Duration.millis(300), allLayers.getClip(),
-					(5-pos[0])*cellSize(), "x");
-		}
-		else if(!canTranslateX(player) && canTranslateY(player)) {
-			new ObjectTranslate(Duration.millis(300), allLayers.getClip(),
-					(5-pos[1])*cellSize(), "y");
-		}
-		else if(canTranslateX(player) && canTranslateY(player)) {
-			new ObjectTranslate(Duration.millis(300), allLayers.getClip(),
-					(5-pos[0])*cellSize(), (5-pos[1])*cellSize());
-		}*/
 	}
 	
 	/**
@@ -277,48 +263,13 @@ public class MapView extends Group implements Observer {
 			translateY = (pos[1]+0.5)*cellSize() - clip.getHeight()/2;
 		return translateY;
 	}
-	/*
-	public void centerOnTarget(Player player) {
-		int[] pos = player.getViewSettings().getPosition();
-		if(canTranslateX(player) && !canTranslateY(player)) {
-			System.out.println("ok");
-			double x = (5-pos[0])*cellSize();
-			this.setTranslateX(x);
-		}
-		else if(!canTranslateX(player) && canTranslateY(player)) {
-			System.out.println("ok");
-			double y = (5-pos[1])*cellSize();
-			this.setTranslateY(y);
-		}
-		else if(canTranslateX(player) && canTranslateY(player)) {
-			System.out.println("ok");
-			double x = (5-pos[0])*cellSize();
-			double y = (5-pos[1])*cellSize();
-			this.setTranslateX(x);
-			this.setTranslateY(y);
-		}
-	}*/
 	
 	/**
-	 * Returns the size of one cell of the map (currently 55.0).
+	 * Returns the size of one cell of the map (currently 60.0).
 	 * @return size of one cell
 	 */
 	public double cellSize() {
 		return 60.0;
 	}
-	/*
-	private boolean canTranslateX(Player player) {
-		int[] pos = player.getViewSettings().getPosition();
-		double maxX = bottomLayer.getPrefWidth();
-		return (pos[0]*cellSize() >= 5*cellSize() &&
-				pos[0]*cellSize() <= maxX - 6*cellSize());
-	}
 	
-	private boolean canTranslateY(Player player) {
-		int[] pos = player.getViewSettings().getPosition();
-		double maxY = bottomLayer.getPrefHeight();
-		return (pos[1]*cellSize() >= 5*cellSize() &&
-				pos[1]*cellSize() <= maxY- 6*cellSize());
-	}*/
-
 }

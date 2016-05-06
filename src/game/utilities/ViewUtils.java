@@ -4,12 +4,20 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Utility class which contains methods to create an {@link ImageView} with a {@link ViewSettings}.
+ *
+ */
 public abstract class ViewUtils {
 	
-	public ViewUtils() {
-		
-	}
-	
+	/**
+	 * Returns an {@link ImageView} based on the {@link ViewSettings} with a given size. The parameter
+	 * {@code d} defines the percentage (e.g. 1 for 100%, 0.8 for 80%) of the size the image should span.
+	 * @param viewSettings
+	 * @param size
+	 * @param d
+	 * @return
+	 */
 	public static ImageView initImageContainer(ViewSettings viewSettings, double size, double d) {
 		String imageURL = viewSettings.getImageURL();
 		double offsetX = viewSettings.getOffsetX();
@@ -26,10 +34,25 @@ public abstract class ViewUtils {
 		return imageContainer;
 	}
 	
+	/**
+	 * Returns an {@link ImageView} based on the {@link ViewSettings} with a given size. The image will fit
+	 * 80% of the size (by default).
+	 * @param viewSettings
+	 * @param size
+	 * @return
+	 */
 	public static ImageView initImageContainer(ViewSettings viewSettings, double size) {
 		return ViewUtils.initImageContainer(viewSettings,size,0.8);
 	}
 	
+	/**
+	 * Returns an {@link ImageView} based on the {@link ViewSettings} with a given size. The image will span
+	 * according to the settings of {@code ViewSettings} (e.g. spanX = 3 means the image will fit 3 times the
+	 * given size).
+	 * @param viewSettings
+	 * @param size
+	 * @return
+	 */
 	public static ImageView initImageView(ViewSettings viewSettings, double size) {
 		String imageURL = viewSettings.getImageURL();
 		double offsetX = viewSettings.getOffsetX();

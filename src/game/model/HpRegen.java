@@ -21,7 +21,7 @@ public class HpRegen {
 			@Override
 			public void run() {
 				if(livingBeing.isAlive() && GameModel.isRunning()) {
-					livingBeing.addHp(100);
+					livingBeing.addHp(livingBeing.getMaxHp()*3/100);
 				}
 				else
 					t.cancel();
